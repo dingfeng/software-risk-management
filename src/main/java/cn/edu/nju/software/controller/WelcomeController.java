@@ -2,6 +2,7 @@ package cn.edu.nju.software.controller;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -12,7 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class WelcomeController {
     @RequestMapping("/")
-    public String index(){
-        return "hello";
+    public String helloWorld(Model model) {
+        model.addAttribute("russian", "Добрый день");
+        return "hello-world";
     }
 }
