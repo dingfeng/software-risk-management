@@ -1,4 +1,4 @@
-package cn.edu.nju.software.model;
+package cn.edu.nju.software.entity;
 
 /**
  * @author 丁峰

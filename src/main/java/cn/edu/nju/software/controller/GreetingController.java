@@ -1,6 +1,6 @@
 package cn.edu.nju.software.controller;
 
-import cn.edu.nju.software.model.Greeting;
+import cn.edu.nju.software.entity.Greeting;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
