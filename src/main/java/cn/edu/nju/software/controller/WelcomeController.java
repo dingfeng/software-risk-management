@@ -25,13 +25,13 @@ public class WelcomeController {
     public void init()
     {
         DemoModel demoModel = new DemoModel();
-        demoModel.setValue("dww");
+//        demoModel.setValue("dww");
         demoModelDao.save(demoModel);
-        log.error("sdf");
+//        log.error("sdf");
     }
     @RequestMapping("/")
     public String helloWorld(Model model) {
         model.addAttribute("russian", "Добрый день");
-        return "hello-world";
+        return "index";
     }
 }
