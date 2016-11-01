@@ -1,8 +1,8 @@
-define(["backbone"], function(Backbone) {
+define(["backbone", "application/model/team"], function(Backbone, Team) {
    var Routers = Backbone.Router.extend({
     	initialize: function () {
-			Backbone.history.start();
-            console.log("Route initialize");
+			console.log("Route initialize");
+			Backbone.history.start({pushState : true});
         },
 	   // Hash maps for routes
 	   routes: {
@@ -15,7 +15,14 @@ define(["backbone"], function(Backbone) {
 	   
 	   index: function(){
 		   // Homepage
-		   alert("hh");
+		   var team = new Team({
+			   name : "name1",
+			   id: '11',
+		   });
+		   team.set({
+			   name : "name2"
+		   });
+		   team.fetch();
 	   },
 	   
 	   getTeams: function() {
@@ -24,7 +31,6 @@ define(["backbone"], function(Backbone) {
 	   },
 	   getTeamsCountry: function(country) {
 		   // Get list of teams for specific country
-		   alert(country);
 	   },
 	   getTeam: function(country, name) {
 		   // Get the teams for a specific country and with a specific name
