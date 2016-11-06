@@ -5,6 +5,7 @@ require.config({
         jquery: "lib/jquery-3.1.1",
         backbone: "lib/backbone",
         underscore: "lib/underscore",
+        text: "lib/text",
     },
 });
 require(["application/routers"], function(Routers) {

@@ -1,0 +1,19 @@
+form.login {
+    margin: 150px auto;
+    height: 200px;
+    width: 300px;
+    background: lawngreen;
+}
+
+form.login .errorMsg {
+    color: red;
+}
+
+form.login h2 {
+    text-align: center;
+}
+
+form.login div {
+    text-align: center;
+    height: 40px;
+}
