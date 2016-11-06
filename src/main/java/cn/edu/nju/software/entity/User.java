@@ -1,10 +1,7 @@
 package cn.edu.nju.software.entity;
 
 import cn.edu.nju.software.enums.UserRole;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.*;
 import org.hibernate.annotations.CascadeType;
 
@@ -13,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author 丁峰
@@ -20,10 +18,11 @@ import java.util.List;
  * @see User
  */
 @Data
-@EqualsAndHashCode
+@EqualsAndHashCode(exclude={"join_projects","own_projects","handle_risks","own_risks"})
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@ToString(exclude={"join_projects","own_projects","handle_risks","own_risks"})
 @Table(name="user")
 public class User implements Serializable {
     @Id
@@ -43,18 +42,19 @@ public class User implements Serializable {
     private UserRole role;  //角色
 
     @ManyToMany(targetEntity = Project.class,mappedBy = "collaborators")
-    @Cascade(value= CascadeType.ALL)
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Project> join_projects;//参与的项目
 
     @OneToMany(mappedBy = "author")
-    @Cascade(value= CascadeType.ALL)
-    private List<Project> own_projects; //创建的项目
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @Cascade(CascadeType.ALL)
+    private Set<Project> own_projects; //创建的项目
 
     @OneToMany(mappedBy = "handler")
-    @Cascade(value= CascadeType.ALL)
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Risk>  handle_risks; //处理的风险条目
 
     @OneToMany(mappedBy = "author")
-    @Cascade(value= CascadeType.ALL)
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Risk>  own_risks; //创建的风险条目
 }

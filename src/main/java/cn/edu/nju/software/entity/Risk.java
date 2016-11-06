@@ -3,10 +3,7 @@ package cn.edu.nju.software.entity;
 import cn.edu.nju.software.enums.RiskInfluence;
 import cn.edu.nju.software.enums.RiskPossibility;
 import cn.edu.nju.software.enums.RiskStatus;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.*;
 import org.hibernate.annotations.CascadeType;
 
@@ -21,7 +18,6 @@ import java.util.Date;
  * @see Risk
  */
 @Data
-@EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -46,22 +42,20 @@ public class Risk {
     @Column(nullable = false)
     private RiskInfluence influence;  //影响
 
+    @Column(name="risk_trigger")
     private String trigger; //触发器
 
     private String description; //文本描述
 
     @ManyToOne
-    @Cascade(value= CascadeType.ALL)
     @JoinColumn(name="author_id")
     private User author; //创建者
 
     @ManyToOne
-    @Cascade(value= CascadeType.ALL)
     @JoinColumn(name="handler_id")
     private User handler; //处理者
 
     @ManyToOne
-    @Cascade(value= CascadeType.ALL)
     @JoinColumn(name="project_id")
     private Project project ;// 所属项目
 

@@ -1,11 +1,10 @@
 package cn.edu.nju.software.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -17,10 +16,11 @@ import java.util.List;
  * @see Project
  */
 @Data
-@EqualsAndHashCode
+@EqualsAndHashCode(exclude = {"collaborators","risks"})
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@ToString(exclude = {"collaborators","risks"})
 @Table(name="project")
 public class Project {
     @Id
@@ -37,15 +37,14 @@ public class Project {
     private Date updated_at; //更新时间
 
     @ManyToOne
-    @Cascade(value=CascadeType.ALL)
     @JoinColumn(name="author_id")
     private User author; //创建者
 
     @ManyToMany(targetEntity = User.class)
-    @Cascade(value=CascadeType.ALL)
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<User> collaborators;//协作者
 
     @OneToMany(mappedBy = "project")
-    @Cascade(value=CascadeType.ALL)
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Risk> risks;
 }

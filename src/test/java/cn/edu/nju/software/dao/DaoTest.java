@@ -22,6 +22,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author 丁峰
@@ -98,20 +99,20 @@ public class DaoTest extends CommonTest{
             User user = getOneUser();
             user.setRole(UserRole.SYSTEM_MANAGER);
             user.setAccount("account"+(i+1));
-            userList.add(userDao.save(user));
+            userList.add(userDao.saveAndFlush(user));
         }
         //初始化软件项目数据
         for(int i=0;i<5;++i)
         {
             Project project = getProject(userList.get(i));
             project.setName("project"+i);
-            projectList.add(projectDao.save(project));
+            projectList.add(projectDao.saveAndFlush(project));
             //初始化风险条目
             for(int j=0; j<6; ++j)
             {
                 Risk risk = getOneRisk(project,userList.get(i),userList.get((i+1)%userList.size()));
                 risk.setTitle("title"+i);
-                riskList.add(riskDao.save(risk));
+                riskList.add(riskDao.saveAndFlush(risk));
             }
         }
         showAll();
@@ -126,9 +127,9 @@ public class DaoTest extends CommonTest{
     @Test
     public void test()
     {
-        User user = userDao.findOne(userList.get(0).getId());
-        List<Project> projects = user.getOwn_projects();
-        log.info("user = {} own project={}",user,projects.toString());
+        List<User> userList = userDao.findAll();
+        User user  = userList.get(0);
+        log.error("project size ={}",user.getOwn_projects().size());
     }
 
 }
