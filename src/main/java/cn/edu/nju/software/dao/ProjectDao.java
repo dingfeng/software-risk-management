@@ -1,6 +1,5 @@
 package cn.edu.nju.software.dao;
 
-import cn.edu.nju.software.entity.DemoModel;
 import cn.edu.nju.software.entity.Project;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
