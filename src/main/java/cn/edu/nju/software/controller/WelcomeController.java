@@ -21,14 +21,14 @@ public class WelcomeController {
     @Autowired
     private DemoModelDao demoModelDao;
 
-    @PostConstruct
-    public void init()
-    {
-        DemoModel demoModel = new DemoModel();
-//        demoModel.setValue("dww");
-        demoModelDao.save(demoModel);
-//        log.error("sdf");
-    }
+//    @PostConstruct
+//    public void init()
+//    {
+//        DemoModel demoModel = new DemoModel();
+////        demoModel.setValue("dww");
+//        demoModelDao.save(demoModel);
+////        log.error("sdf");
+//    }
     @RequestMapping("/")
     public String helloWorld(Model model) {
         model.addAttribute("russian", "Добрый день");
