@@ -3,12 +3,14 @@ package cn.edu.nju.software.serviceimpl;
 import cn.edu.nju.software.entity.User;
 import cn.edu.nju.software.service.UserService;
 import cn.edu.nju.software.util.ResultDTO;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
  * Created by zy118686 on 2016/11/6.
  */
+@Service
 public class UserServiceImpl implements UserService{
     @Override
     public ResultDTO<User> saveUser(User user) {
