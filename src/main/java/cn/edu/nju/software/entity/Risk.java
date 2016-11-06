@@ -59,7 +59,7 @@ public class Risk {
     @JoinColumn(name="project_id")
     private Project project ;// 所属项目
 
-    private Date created_at; //创建时间
+    private Date createdAt; //创建时间
 
-    private Date updated_at; //更新时间
+    private Date updatedAt; //更新时间
 }

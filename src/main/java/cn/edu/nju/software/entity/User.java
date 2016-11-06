@@ -18,11 +18,11 @@ import java.util.Set;
  * @see User
  */
 @Data
-@EqualsAndHashCode(exclude={"join_projects","own_projects","handle_risks","own_risks"})
+@EqualsAndHashCode(exclude={"joinProjects","ownProjects","handleRisks","ownRisks"})
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@ToString(exclude={"join_projects","own_projects","handle_risks","own_risks"})
+@ToString(exclude={"joinProjects","ownProjects","handleRisks","ownRisks"})
 @Table(name="user")
 public class User implements Serializable {
     @Id
@@ -43,18 +43,18 @@ public class User implements Serializable {
 
     @ManyToMany(targetEntity = Project.class,mappedBy = "collaborators")
     @LazyCollection(LazyCollectionOption.FALSE)
-    private List<Project> join_projects;//参与的项目
+    private List<Project> joinProjects;//参与的项目
 
     @OneToMany(mappedBy = "author")
     @LazyCollection(LazyCollectionOption.FALSE)
     @Cascade(CascadeType.ALL)
-    private Set<Project> own_projects; //创建的项目
+    private Set<Project> ownProjects; //创建的项目
 
     @OneToMany(mappedBy = "handler")
     @LazyCollection(LazyCollectionOption.FALSE)
-    private List<Risk>  handle_risks; //处理的风险条目
+    private List<Risk> handleRisks; //处理的风险条目
 
     @OneToMany(mappedBy = "author")
     @LazyCollection(LazyCollectionOption.FALSE)
-    private List<Risk>  own_risks; //创建的风险条目
+    private List<Risk> ownRisks; //创建的风险条目
 }

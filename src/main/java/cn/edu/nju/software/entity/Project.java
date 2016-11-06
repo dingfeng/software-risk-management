@@ -32,9 +32,9 @@ public class Project {
 
     private String description;  //描述
 
-    private Date created_at;  //创建时间
+    private Date createdAt;  //创建时间
 
-    private Date updated_at; //更新时间
+    private Date updatedAt; //更新时间
 
     @ManyToOne
     @JoinColumn(name="author_id")

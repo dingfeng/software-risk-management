@@ -1,6 +1,5 @@
 package cn.edu.nju.software.dao;
 
-import cn.edu.nju.software.TestApplication;
 import cn.edu.nju.software.common.CommonTest;
 import cn.edu.nju.software.entity.Project;
 import cn.edu.nju.software.entity.Risk;
@@ -13,16 +12,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author 丁峰
@@ -129,7 +124,7 @@ public class DaoTest extends CommonTest{
     {
         List<User> userList = userDao.findAll();
         User user  = userList.get(0);
-        log.error("project size ={}",user.getOwn_projects().size());
+        log.error("project size ={}",user.getOwnProjects().size());
     }
 
 }
