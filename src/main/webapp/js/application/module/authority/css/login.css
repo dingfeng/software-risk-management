@@ -1,8 +1,17 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    background: greenyellow;
+}
+
 form.login {
     margin: 150px auto;
     height: 200px;
     width: 300px;
-    background: lawngreen;
+    background: lightskyblue;
 }
 
 form.login .errorMsg {
@@ -11,9 +20,19 @@ form.login .errorMsg {
 
 form.login h2 {
     text-align: center;
+    padding: 10px;
 }
 
 form.login div {
     text-align: center;
     height: 40px;
+}
+
+form.login #login {
+    width: 100px;
+    height: 30px;
+}
+
+form.login #login:hover {
+    cursor: pointer;
 }

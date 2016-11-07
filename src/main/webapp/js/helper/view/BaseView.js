@@ -19,6 +19,11 @@ define(["jquery", "underscore", "backbone", "helper/model/BaseModel"],
             css: '',
             events: {},
             render: function () {
+                if ($(this.el).get(0).tagName.toLowerCase() === 'body') {
+                    _.each($('style'), function (value) {
+                        value.remove();
+                    });
+                }
                 if (this.title) $('title').html(this.title);
                 if (this.css) $('head').append($("<style>" + this.css + "</style>"))
                 $(this.el).html(_.template(this.tpl)(this.model.toJSON()));

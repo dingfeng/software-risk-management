@@ -1,0 +1,51 @@
+#inheader {
+    width: 100%;
+    height: 50px;
+}
+
+#inheader .logout {
+    float: right;
+    width: 100px;
+    height: 100%;
+    padding-right: 50px;
+}
+
+#inheader .logout a {
+    line-height: 50px;
+    text-align: center;
+    font-size: 15px;
+}
+
+#inheader .logout a:hover {
+    color: mediumvioletred;
+    cursor: pointer;
+}
+
+#inheader .username {
+    float: right;
+    width: 200px;
+    height: 100%;
+}
+
+#inheader .username p {
+    line-height: 50px;
+    font-size: 15px;
+    text-align: center;
+}
+
+#inheader .username p span {
+    color: mediumvioletred;
+}
+
+#inheader .logo {
+    float: left;
+    padding-left: 50px;
+    width: 400px;
+    height: 100%;
+}
+
+#inheader .logo p {
+    line-height: 50px;
+    font-size: 20px;
+    text-align: left;
+}
