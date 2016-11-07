@@ -85,6 +85,30 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    public ResultDTO<User> queryUserByName(String userName) {
+        ResultDTO<User> resultDTO = new ResultDTO<User>();
+
+        try {
+            User u =userDao.findByAccount(userName);
+            if(u==null){
+                log.warn("no such User the username is " + userName);
+                resultDTO.setSuccess(false);
+                resultDTO.setData(u);
+                resultDTO.setErrorMsg(null);
+                return resultDTO;
+            }
+            resultDTO.setData(u);
+            resultDTO.setSuccess(true);
+        }catch(Exception e){
+            log.error("error in query User by username the username is "+userName,e);
+            resultDTO.setErrorMsg(e.getMessage());
+            resultDTO.setSuccess(false);
+            resultDTO.setData(null);
+        }
+        return resultDTO;
+    }
+
+    @Override
     public ResultDTO<List<User>> queryUser() {
         return null;
     }

@@ -48,8 +48,8 @@ public class DaoTest extends CommonTest{
     public Project getProject(User user)
     {
         Project project = new Project();
-        project.setCreated_at(new Date());
-        project.setUpdated_at(new Date());
+        project.setCreatedAt(new Date());
+        project.setUpdatedAt(new Date());
         project.setName("test project");
         project.setDescription("It is a test project");
         project.setAuthor(user);
@@ -60,8 +60,8 @@ public class DaoTest extends CommonTest{
     {
         Risk risk = new Risk();
         risk.setAuthor(author);
-        risk.setCreated_at(new Date());
-        risk.setUpdated_at(new Date());
+        risk.setCreatedAt(new Date());
+        risk.setUpdatedAt(new Date());
         risk.setHandler(handler);
         risk.setDescription("It is a risk");
         risk.setInfluence(RiskInfluence.HIGH);

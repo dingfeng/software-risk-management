@@ -16,6 +16,8 @@ public interface UserService {
 
     public ResultDTO<User> queryUserById(String Id);
 
+    public ResultDTO<User> queryUserByName(String userName);
+
     //查询接口的参数有待商榷,可能要开多个接口
     public ResultDTO<List<User>> queryUser();
 }
