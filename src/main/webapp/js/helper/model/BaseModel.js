@@ -3,13 +3,9 @@
  */
 define(["backbone"], function (Backbone) {
     var BaseModel = Backbone.Model.extend({
-        // initialize: function (config) {
-        //     this.config = config || {};
-        //     for (var c in this.config) {
-        //         this[c] = this.config[c];
-        //     }
-        // },
-        // defaults: {},
+        initialize: function () {
+        },
+        defaults: {},
     });
     return BaseModel;
 });

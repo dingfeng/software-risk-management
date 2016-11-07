@@ -1,11 +1,10 @@
 define(["helper/util", "helper/view/BaseView", "../model/LoginModel", "text!../template/login.tpl", "text!../css/login.css"],
     function (Util, BaseView, LoginModel, LoginTpl, LoginCss) {
-        var LoginView = Util.extend(BaseView, {
+        var LoginView = BaseView.extend({
             initialize: function () {
-                this.render();
-                this.model.on("change", this.render, this);
-                LoginView.superclass.initialize.call(this);
+                LoginView.__super__.initialize.call(this);
             },
+            sync: true,
             title: '登录',
             el: 'body',
             model: new LoginModel,
@@ -14,11 +13,6 @@ define(["helper/util", "helper/view/BaseView", "../model/LoginModel", "text!../t
             },
             tpl: LoginTpl,
             css: LoginCss,
-            render: function () {
-                $('title').html(this.title);
-                $('head').append($("<style>" + this.css + "</style>"))
-                $(this.el).html(_.template(this.tpl)(this.model.toJSON()));
-            },
             login: function (e) {
                 var data = {};
                 $("form.login").serializeArray().map(function (x) {
