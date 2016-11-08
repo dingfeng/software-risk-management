@@ -1,6 +1,6 @@
 node {
     stage('SCM') {
-        git 'https://github.com/dingfeng/software-risk-management.git'
+        git 'git@github.com:dingfeng/software-risk-management.git'
     }
     stage('QA') {
         sh 'sonar-scanner'
