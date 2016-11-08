@@ -94,7 +94,7 @@ public class UserServiceImpl implements UserService{
                 log.warn("no such User the username is " + userName);
                 resultDTO.setSuccess(false);
                 resultDTO.setData(u);
-                resultDTO.setErrorMsg(null);
+                resultDTO.setErrorMsg("no such User");
                 return resultDTO;
             }
             resultDTO.setData(u);
