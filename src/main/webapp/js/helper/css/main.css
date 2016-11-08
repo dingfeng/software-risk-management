@@ -1,0 +1,30 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+#header {
+    width: 100%;
+    background: lightskyblue;
+    border-bottom: 1px solid darkslateblue;
+}
+
+#main {
+    width: 100%;
+    height: 500px;
+    padding-top: 50px;
+    background: greenyellow;
+}
+
+#main #aside {
+
+}
+
+#main #content {
+
+}
+
+#footer {
+    width: 100%;
+    border-top: 1px solid #ccc;
+}
