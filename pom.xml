@@ -123,13 +123,13 @@
     <repositories>
         <repository>
             <id>spring-releases</id>
-            <url>https://repo.spring.io/libs-release</url>
+            <url>http://maven.springframework.org/release/org/springframework/</url>
         </repository>
     </repositories>
     <pluginRepositories>
         <pluginRepository>
             <id>spring-releases</id>
-            <url>https://repo.spring.io/libs-release</url>
+            <url>http://maven.springframework.org/release/org/springframework/</url>
         </pluginRepository>
     </pluginRepositories>
 </project>
