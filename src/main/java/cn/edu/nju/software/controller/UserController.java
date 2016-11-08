@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 /**
  * Created by zy118686 on 2016/11/7.
@@ -26,7 +27,8 @@ public class UserController {
     UserService userService;
 
     @RequestMapping("/login")
-    public String login(@RequestParam(value="userName", defaultValue="") String userName , @RequestParam(value="password", defaultValue="") String password) {
+    public String login(@RequestParam(value="userName", defaultValue="") String userName , @RequestParam(value="password", defaultValue="") String password , HttpSession httpSession) {
+
         JSONObject jsonObject = new JSONObject();
         try{
             ResultDTO<User> userResultDTO  = userService.queryUserByName(userName);
@@ -45,9 +47,16 @@ public class UserController {
 
             User user = userResultDTO.getData();
 
+            if(password.equals(user.getPassword())){
+                jsonObject.put("isSuccess", true);
+                jsonObject.put("data" , user );
+                httpSession.setAttribute("userId",user.getId());
+                httpSession.setAttribute("userName",user.getAccount());
+            }else{
+                jsonObject.put("isSuccess", false);
+                jsonObject.put("errMsg", "密码错误");
+            }
 
-            jsonObject.put("isSuccess", true);
-            jsonObject.put("data" , user );
             return jsonObject.toJSONString();
 
 
@@ -59,6 +68,12 @@ public class UserController {
             return jsonObject.toJSONString();
         }
 
+    }
+
+    //这个update参数 还不确定
+    @RequestMapping("update")
+    public String update(){
+        return null ;
     }
 
     @RequestMapping("/register")
@@ -191,5 +206,23 @@ public class UserController {
             return jsonObject.toJSONString();
         }
 
+    }
+
+    @RequestMapping("/logout")
+    public String logout(HttpSession httpSession){
+
+        JSONObject jsonObject = new JSONObject();
+
+        try{
+            httpSession.removeAttribute("userId");
+            httpSession.removeAttribute("userName");
+            jsonObject.put("isSuccess",true);
+            return jsonObject.toJSONString();
+        }catch (Exception e){
+            log.error("exception in user_logout " , e);
+            jsonObject.put("isSuccess",false);
+            jsonObject.put("errMsg","服务器异常");
+            return jsonObject.toJSONString();
+        }
     }
 }
