@@ -10,11 +10,12 @@ import java.util.List;
  */
 public interface ProjectService {
 
-    public ResultDTO<Project> saveProject(Project project);
-
-    public ResultDTO<Project> updateProject(Project project);
+    //update的时候，传入的Project请务必有Id
+    public ResultDTO<Project>  saveorUpdateProject(Project project);
 
     public ResultDTO<Project> deleteProject(Project project);
+
+    public ResultDTO<Project> queryProjectById(String Id);
 
     //查询接口的参数有待商榷,可能要开多个接口
     public ResultDTO<List<Project>> queryProject();

@@ -10,11 +10,13 @@ import java.util.List;
  */
 public interface UserService {
 
-    public ResultDTO<User> saveUser(User user);
-
-    public ResultDTO<User> updateUser(User user);
+    public ResultDTO<User> saveorUpdateUser(User user);
 
     public ResultDTO<User> deleteUser(User user);
+
+    public ResultDTO<User> queryUserById(String Id);
+
+    public ResultDTO<User> queryUserByName(String userName);
 
     //查询接口的参数有待商榷,可能要开多个接口
     public ResultDTO<List<User>> queryUser();
