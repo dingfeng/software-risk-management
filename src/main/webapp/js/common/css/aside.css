@@ -1,0 +1,25 @@
+#inaside {
+    width: 250px;
+    height: 100%;
+    background: deepskyblue;
+}
+
+#inaside .item {
+    width: 100%;
+    height: 40px;
+}
+
+#inaside .item:hover{
+    background: darkslategray;
+    cursor: pointer;
+}
+
+#inaside .item p{
+    display: block;
+    width: 100%;
+    height: 100%;
+    line-height: 40px;
+    font-size: 18px;
+    color: whitesmoke;
+    text-align: center;
+}

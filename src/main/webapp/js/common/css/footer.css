@@ -1,8 +1,12 @@
 #infooter {
     width: 100%;
+    min-width: 950px;
+    background: darkslategray;
+    border-top: 1px solid lightslategray;
 }
 #infooter p {
     line-height: 60px;
+    width: 100%;
     text-align: center;
-    color: #666;
+    color: whitesmoke;
 }

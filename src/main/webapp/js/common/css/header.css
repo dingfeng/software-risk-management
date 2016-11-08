@@ -1,6 +1,9 @@
 #inheader {
     width: 100%;
+    min-width: 950px;
     height: 50px;
+    background: darkslategray;
+    border-bottom: 1px solid lightslategray;
 }
 
 #inheader .logout {
@@ -14,33 +17,35 @@
     line-height: 50px;
     text-align: center;
     font-size: 15px;
+    color: antiquewhite;
 }
 
 #inheader .logout a:hover {
-    color: mediumvioletred;
+    color: deepskyblue;
     cursor: pointer;
 }
 
-#inheader .username {
+#inheader .role, #inheader .username {
     float: right;
-    width: 200px;
+    width: 180px;
     height: 100%;
 }
 
-#inheader .username p {
+#inheader .role p, #inheader .username p {
     line-height: 50px;
     font-size: 15px;
-    text-align: center;
+    text-align: left;
+    color: whitesmoke;
 }
 
-#inheader .username p span {
-    color: mediumvioletred;
+#inheader .role p span, #inheader .username p span {
+    color: wheat;
 }
 
 #inheader .logo {
     float: left;
     padding-left: 50px;
-    width: 400px;
+    color: whitesmoke;
     height: 100%;
 }
 

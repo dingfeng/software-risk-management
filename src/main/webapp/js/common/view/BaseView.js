@@ -9,12 +9,12 @@ define(["jquery", "underscore", "backbone", "../model/BaseModel"],
             //     BaseView.prototype.constructor.apply(this, config);
             // },
             initialize: function () {
-                if (this.sync) this.model.on("change", this.render, this);
+                if (this.sync) this.model.on("change", this.setTpl, this);
                 this.render();
             },
             sync: false,
             title: '',
-            model: new BaseModel(),
+            model: new BaseModel,
             tpl: '',
             css: '',
             events: {},
@@ -26,8 +26,11 @@ define(["jquery", "underscore", "backbone", "../model/BaseModel"],
                 }
                 if (this.title) $('title').html(this.title);
                 if (this.css) $('head').append($("<style>" + this.css + "</style>"))
-                $(this.el).html(_.template(this.tpl)(this.model.toJSON()));
+                this.setTpl();
             },
+            setTpl: function() {
+                $(this.el).html(_.template(this.tpl)(this.model.toJSON()));
+            }
         });
         return BaseView;
     });

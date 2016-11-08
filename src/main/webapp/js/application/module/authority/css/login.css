@@ -4,17 +4,20 @@
 }
 
 body {
-    background: greenyellow;
+    background: darkslategray;
 }
 
 form.login {
     margin: 150px auto;
     height: 200px;
     width: 300px;
-    background: lightskyblue;
+    border-radius: 5px;
+    background: deepskyblue;
 }
 
 form.login .errorMsg {
+    width: 100%;
+    text-align: center;
     color: red;
 }
 

@@ -8,6 +8,7 @@ define(["../model/BaseModel"], function (BaseModel) {
         },
         defaults: {
             username: 'zyxin13',
+            role: '管理员',
         },
     });
     return HeaderModel;

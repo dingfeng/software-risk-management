@@ -2,6 +2,9 @@
     <div class="logout">
         <a id="logout">退出登录</a>
     </div>
+    <div class="role">
+        <p>角色：<span><%= role %></span></p>
+    </div>
     <div class="username">
         <p>用户名：<span><%= username %></span></p>
     </div>

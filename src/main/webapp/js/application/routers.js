@@ -1,5 +1,5 @@
-define(["backbone", "application/model/team", "./module/authority/view/LoginView", "helper/view/MainView", "helper/util"],
-    function (Backbone, Team, LoginView, MainView, Util) {
+define(["backbone", "./module/authority/view/LoginView", "./module/admin/view/AddUserView", "common/util"],
+    function (Backbone, LoginView, AdminAddUserView, Util) {
         var Routers = Backbone.Router.extend({
             initialize: function () {
                 console.log("Route initialize");
@@ -27,11 +27,11 @@ define(["backbone", "application/model/team", "./module/authority/view/LoginView
             },
 
             index: function () {
+                // new AdminAddUserView();
                 this.navigate('login', {trigger: true, replace: true});
             },
 
             login: function () {
-                // new MainView();
                 new LoginView();
             },
 
@@ -60,7 +60,7 @@ define(["backbone", "application/model/team", "./module/authority/view/LoginView
             },
 
             adminAddUser: function () {
-                new MainView();
+                new AdminAddUserView();
             },
 
             getTeams: function () {
