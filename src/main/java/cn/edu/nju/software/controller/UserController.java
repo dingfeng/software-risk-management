@@ -29,45 +29,45 @@ public class UserController {
     @RequestMapping("/login")
     public String login(@RequestParam(value="userName", defaultValue="") String userName , @RequestParam(value="password", defaultValue="") String password , HttpSession httpSession) {
 
-        JSONObject jsonObject = new JSONObject();
-        try{
-            ResultDTO<User> userResultDTO  = userService.queryUserByName(userName);
-
-            if(!userResultDTO.isSuccess()){
-                if("no such User".equals(userResultDTO.getErrorMsg())){
-                    jsonObject.put("isSuccess", false);
-                    jsonObject.put("errMsg", "用户名不存在");
-                    return jsonObject.toJSONString();
-                }else{
-                    jsonObject.put("isSuccess", false);
-                    jsonObject.put("errMsg", "服务器异常");
-                    return jsonObject.toJSONString();
-                }
-            }
-
-            User user = userResultDTO.getData();
-
-            if(password.equals(user.getPassword())){
-                jsonObject.put("isSuccess", true);
-                jsonObject.put("data" , user );
-                httpSession.setAttribute("userId",user.getId());
-                httpSession.setAttribute("userName",user.getAccount());
-            }else{
-                jsonObject.put("isSuccess", false);
-                jsonObject.put("errMsg", "密码错误");
-            }
-
-            return jsonObject.toJSONString();
-
-
-
-        }catch(Exception e){
-            log.error("exception in user_login ", e);
-            jsonObject.put("isSuccess", false);
-            jsonObject.put("errMsg", "服务器异常");
-            return jsonObject.toJSONString();
-        }
-
+//        JSONObject jsonObject = new JSONObject();
+//        try{
+//            ResultDTO<User> userResultDTO  = userService.queryUserByName(userName);
+//
+//            if(!userResultDTO.isSuccess()){
+//                if("no such User".equals(userResultDTO.getErrorMsg())){
+//                    jsonObject.put("isSuccess", false);
+//                    jsonObject.put("errMsg", "用户名不存在");
+//                    return jsonObject.toJSONString();
+//                }else{
+//                    jsonObject.put("isSuccess", false);
+//                    jsonObject.put("errMsg", "服务器异常");
+//                    return jsonObject.toJSONString();
+//                }
+//            }
+//
+//            User user = userResultDTO.getData();
+//
+//            if(password.equals(user.getPassword())){
+//                jsonObject.put("isSuccess", true);
+//                jsonObject.put("data" , user );
+//                httpSession.setAttribute("userId",user.getId());
+//                httpSession.setAttribute("userName",user.getAccount());
+//            }else{
+//                jsonObject.put("isSuccess", false);
+//                jsonObject.put("errMsg", "密码错误");
+//            }
+//
+//            return jsonObject.toJSONString();
+//
+//
+//
+//        }catch(Exception e){
+//            log.error("exception in user_login ", e);
+//            jsonObject.put("isSuccess", false);
+//            jsonObject.put("errMsg", "服务器异常");
+//            return jsonObject.toJSONString();
+//        }
+        return null;
     }
 
     //这个update参数 还不确定
