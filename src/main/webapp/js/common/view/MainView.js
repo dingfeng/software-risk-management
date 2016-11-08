@@ -1,7 +1,7 @@
 /**
  * Created by 邹玉鑫 on 2016/11/7.
  */
-define(["helper/view/BaseView", "helper/view/HeaderView", "helper/view/FooterView", "text!../template/main.tpl", "text!../css/main.css"],
+define(["../view/BaseView", "../view/HeaderView", "../view/FooterView", "text!../template/main.tpl", "text!../css/main.css"],
     function (BaseView, HeaderView, FooterView, MainTpl, MainCss) {
         var MainView = BaseView.extend({
             initialize: function () {

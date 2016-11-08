@@ -1,7 +1,7 @@
 /**
  * Created by 邹玉鑫 on 2016/11/6.
  */
-define(["jquery", "underscore", "backbone", "helper/model/BaseModel"],
+define(["jquery", "underscore", "backbone", "../model/BaseModel"],
     function ($, _, Backbone, BaseModel) {
         var BaseView = Backbone.View.extend({
             // constructor: function (config) {

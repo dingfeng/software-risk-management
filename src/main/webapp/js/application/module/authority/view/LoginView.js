@@ -1,4 +1,4 @@
-define(["helper/view/BaseView", "../model/LoginModel", "text!../template/login.tpl", "text!../css/login.css"],
+define(["common/view/BaseView", "../model/LoginModel", "text!../template/login.tpl", "text!../css/login.css"],
     function (BaseView, LoginModel, LoginTpl, LoginCss) {
         var LoginView = BaseView.extend({
             initialize: function () {

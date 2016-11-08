@@ -1,7 +1,7 @@
 /**
  * Created by 邹玉鑫 on 2016/11/7.
  */
-define(["helper/util", "helper/view/BaseView", "../model/HeaderModel", "text!../template/header.tpl", "text!../css/header.css"],
+define(["../util", "../view/BaseView", "../model/HeaderModel", "text!../template/header.tpl", "text!../css/header.css"],
     function (Util, BaseView, HeaderModel, HeaderTpl, HeaderCss) {
         var HeaderView = BaseView.extend({
             initialize: function () {

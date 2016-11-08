@@ -1,7 +1,7 @@
 /**
  * Created by 邹玉鑫 on 2016/11/7.
  */
-define(["helper/model/BaseModel"], function (BaseModel) {
+define(["../model/BaseModel"], function (BaseModel) {
     var HeaderModel = BaseModel.extend({
         initialize: function () {
             HeaderModel.__super__.initialize.call(this);
