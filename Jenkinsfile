@@ -3,7 +3,7 @@ node {
         git 'git@github.com:dingfeng/software-risk-management.git'
     }
     stage('QA') {
-        sh 'sonar-runner'
+        sh 'sonar-scanner'
     }
     stage('build') {
         def mvnHome = tool 'MAVEN_HOME'
