@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,7 +24,7 @@ public class LoginController {
 
     @RequestMapping(value = "/verify", method = RequestMethod.POST)
     @ResponseBody
-    public String verifyUser(@RequestParam String username, @RequestParam String password) {
+    public String verifyUser(@RequestParam String username, @RequestParam String password , HttpSession httpSession) {
         JSONObject jsonObject = new JSONObject();
         try{
             ResultDTO<User> userResultDTO  = userService.queryUserByName(username);
