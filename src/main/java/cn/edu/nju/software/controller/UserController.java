@@ -3,6 +3,7 @@ package cn.edu.nju.software.controller;
 import cn.edu.nju.software.entity.User;
 import cn.edu.nju.software.service.UserService;
 import cn.edu.nju.software.util.ResultDTO;
+import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,14 +15,12 @@ import javax.annotation.Resource;
  * Created by zy118686 on 2016/11/7.
  */
 @RestController
+
 @Slf4j
 public class UserController {
 
     @Resource
     UserService userService;
-
-
-    /** 方法返回值还会改 **/
 
     @RequestMapping("/login")
     public User login(@RequestParam(value="userName", defaultValue="") String userName , @RequestParam(value="password", defaultValue="") String password) {
@@ -40,20 +39,29 @@ public class UserController {
     }
 
     @RequestMapping("/index")
-    public User index(@RequestParam(value="userId", defaultValue="") String userId){
+    public String index(@RequestParam(value="userId", defaultValue="") String userId){
+
+        JSONObject jsonObject = new JSONObject();
+
         try{
+
             ResultDTO<User> userResultDTO = userService.queryUserById(userId);
+
             if(!userResultDTO.isSuccess()){
-                if(userResultDTO.getErrorMsg() == null){
-
-                }else{
-
-                }
+                jsonObject.put("isSuccess",false);
+                jsonObject.put("errMsg",userResultDTO.getErrorMsg());
+                return jsonObject.toJSONString();
             }
+
+            jsonObject.put("data",userResultDTO.getData());
+            jsonObject.put("isSuccess",true);
+            return jsonObject.toJSONString();
         }catch (Exception e){
             log.error("exception in user_index ", e);
+            jsonObject.put("isSuccess",false);
+            jsonObject.put("errMsg",e.getMessage());
+            return jsonObject.toJSONString();
         }
 
-        return null;
     }
 }
