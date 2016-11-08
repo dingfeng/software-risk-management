@@ -10,11 +10,11 @@ import java.util.List;
  */
 public interface RiskService {
 
-    public ResultDTO<Risk> saveRisk(Risk risk);
-
-    public ResultDTO<Risk> updateRisk(Risk risk);
+    public ResultDTO<Risk> saveorUpdateRisk(Risk risk);
 
     public ResultDTO<Risk> deleteRisk(Risk risk);
+
+    public ResultDTO<Risk> queryRiskById(String Id);
 
     //查询接口的参数有待商榷,可能要开多个接口
     public ResultDTO<List<Risk>> queryRisks();
