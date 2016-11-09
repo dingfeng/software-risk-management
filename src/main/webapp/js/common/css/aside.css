@@ -9,6 +9,10 @@
     height: 40px;
 }
 
+#inaside .item.active {
+    background: darkslategray;
+}
+
 #inaside .item:hover{
     background: darkslategray;
     cursor: pointer;

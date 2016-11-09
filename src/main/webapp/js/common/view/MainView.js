@@ -7,7 +7,6 @@ define(["../view/BaseView", "../view/HeaderView", "../view/FooterView", "../view
             initialize: function () {
                 MainView.__super__.initialize.call(this);
             },
-            sync: true,
             title: '',
             el: 'body',
             tpl: MainTpl,
@@ -15,6 +14,7 @@ define(["../view/BaseView", "../view/HeaderView", "../view/FooterView", "../view
             headerView: null,
             footerView: null,
             asideView: null,
+            contentView: null,
             render: function () {
                 MainView.__super__.render.call(this);
                 this.headerView = new HeaderView();

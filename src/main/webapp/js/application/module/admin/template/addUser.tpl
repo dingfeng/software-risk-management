@@ -1,25 +1,42 @@
 <div id="adminAddUser">
     <form class="addUser">
         <div>
-            <p class="errMsg"><%= errorMsg %>　</p>
+            <p class="errMsg"><%= data.errorMsg %>　</p>
         </div>
         <div>
             <label for="username">用户名：</label>
-            <input id="username" name="username" type="text" value="<%= username %>"
+            <input id="username" name="username" type="text" value="<%= data.username %>"
                    onKeyUp="value=value.replace(/[^0-9a-zA-Z@.]/g,'')">
         </div>
         <div>
             <label for="password">密　码：</label>
-            <input id="password" name="password" type="password" value="<%= password %>"
+            <input id="password" name="password" type="password" value="<%= data.password %>"
                    onKeyUp="value=value.replace(/[^0-9a-zA-Z]/g,'')">
         </div>
         <div>
             <label for="role">角　色：</label>
             <select name="role" id="role">
-                <option value="admin">管理员</option>
-                <option value="manager">主管</option>
-                <option value="ordinary">普通用户</option>
+                <% if(data.role=="admin") { %>
+                    <option value="admin" selected>管理员</option>
+                    <option value="manager">主管</option>
+                    <option value="ordinary">普通用户</option>
+                <% } else if(data.role=="manager") { %>
+                    <option value="admin">管理员</option>
+                    <option value="manager" selected>主管</option>
+                    <option value="ordinary">普通用户</option>
+                <% } else if(data.role=="ordinary") { %>
+                    <option value="admin">管理员</option>
+                    <option value="manager">主管</option>
+                    <option value="ordinary" selected>普通用户</option>
+                <% } else { %>
+                    <option value="admin">管理员</option>
+                    <option value="manager">主管</option>
+                    <option value="ordinary">普通用户</option>
+                <% } %>
             </select>
+        </div>
+        <div>
+            <input class="submit" type="button" value="创建">
         </div>
     </form>
 </div>

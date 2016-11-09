@@ -4,7 +4,6 @@ define(["common/view/BaseView", "../model/LoginModel", "text!../template/login.t
             initialize: function () {
                 LoginView.__super__.initialize.call(this);
             },
-            sync: true,
             title: '登录',
             el: 'body',
             model: new LoginModel,

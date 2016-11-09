@@ -5,9 +5,9 @@ define(["../util", "../view/BaseView", "../model/AsideCollection", "text!../temp
     function (Util, BaseView, AsideCollection, AsideTpl, AsideCss) {
         var AsideView = BaseView.extend({
             initialize: function () {
+                if (this.sync) this.model.on("add", this.setTpl, this);
                 AsideView.__super__.initialize.call(this);
             },
-            sync: true,
             title: '',
             el: 'aside#aside',
             events: {
@@ -39,7 +39,8 @@ define(["../util", "../view/BaseView", "../model/AsideCollection", "text!../temp
                 // });
             },
             goto: function (event) {
-                window.location.href = "#login";
+                alert(JSON.stringify(event));
+                // window.location.href = "#login";
             }
         });
         return AsideView;

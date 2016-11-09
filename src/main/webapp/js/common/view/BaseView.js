@@ -12,7 +12,7 @@ define(["jquery", "underscore", "backbone", "../model/BaseModel"],
                 if (this.sync) this.model.on("change", this.setTpl, this);
                 this.render();
             },
-            sync: false,
+            sync: true,
             title: '',
             model: new BaseModel,
             tpl: '',
@@ -28,8 +28,8 @@ define(["jquery", "underscore", "backbone", "../model/BaseModel"],
                 if (this.css) $('head').append($("<style>" + this.css + "</style>"))
                 this.setTpl();
             },
-            setTpl: function() {
-                $(this.el).html(_.template(this.tpl)(this.model.toJSON()));
+            setTpl: function () {
+                $(this.el).html(_.template(this.tpl, {variable: 'data'})(this.model.toJSON()));
             }
         });
         return BaseView;

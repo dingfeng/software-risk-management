@@ -1,5 +1,5 @@
-define(["backbone", "./module/authority/view/LoginView", "./module/admin/view/AddUserView", "common/util"],
-    function (Backbone, LoginView, AdminAddUserView, Util) {
+define(["backbone", "common/view/MainView", "./module/authority/view/LoginView", "./module/admin/view/AddUserView", "common/model/AsideModel", "common/util"],
+    function (Backbone, MainView, LoginView, AdminAddUserView, AsideModel, Util) {
         var Routers = Backbone.Router.extend({
             initialize: function () {
                 console.log("Route initialize");
@@ -60,7 +60,21 @@ define(["backbone", "./module/authority/view/LoginView", "./module/admin/view/Ad
             },
 
             adminAddUser: function () {
-                new AdminAddUserView();
+                var mainView = new MainView();
+                mainView.asideView.model.reset();
+                mainView.asideView.model.add(new AsideModel({
+                    id: '0',
+                    name: '创建用户',
+                    url: '#admin/addUser',
+                    active: true,
+                }));
+                mainView.asideView.model.add(new AsideModel({
+                    id: '1',
+                    name: '查找用户',
+                    url: '#admin/searchUser',
+                    active: false,
+                }));
+                mainView.contentView = new AdminAddUserView();
             },
 
             getTeams: function () {

@@ -7,7 +7,6 @@ define(["../util", "../view/BaseView", "../model/HeaderModel", "text!../template
             initialize: function () {
                 HeaderView.__super__.initialize.call(this);
             },
-            sync: true,
             title: '',
             el: 'header#header',
             events: {

@@ -7,7 +7,6 @@ define(["../view/BaseView", "text!../template/footer.tpl", "text!../css/footer.c
             initialize: function () {
                 FooterView.__super__.initialize.call(this);
             },
-            sync: true,
             title: '',
             el: 'footer#footer',
             tpl: FooterTpl,
