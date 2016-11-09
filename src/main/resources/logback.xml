@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration scan="false"  debug="false">
+
+    <!-- 定义日志的根目录 -->
+    <property name="LOG_HOME" value="/${user.home}/log" />
+
+    <!-- 定义日志文件名称 分三个文件,每个文件一个g,超过3g,自动删除前面的日志 -->
+    <property name="appName" value="software-risk-management"></property>
+
+    <appender name="traceAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_HOME}/software-risk-management.log</file>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/software-risk-management.%i.log</fileNamePattern>
+            <minIndex>1</minIndex>
+            <maxIndex>3</maxIndex>
+        </rollingPolicy>
+
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <maxFileSize>1GB</maxFileSize>
+        </triggeringPolicy>
+        <encoder>
+            <pattern>%date [%thread] %-5level %logger{10} [%file:%line] %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+
+
+
+    <logger name="cn.edu.nju.software" level="warn" additivity="false">
+        <appender-ref ref="traceAppender" />
+    </logger>
+
+    <root level="info">
+        <appender-ref ref="stdout" />
+        <appender-ref ref="appLogAppender" />
+    </root>
+</configuration>

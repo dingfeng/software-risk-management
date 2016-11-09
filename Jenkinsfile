@@ -7,10 +7,10 @@ node {
         sh "${mvnHome}/bin/mvn -B clean package"
     }
     stage('deploy') {
-        sh "docker stop my || true"
-        sh "docker rm my || true"
-        sh "docker run --name my -p 11111:8080 -d tomcat"
-        sh "docker cp target/*.war my:/usr/local/tomcat/webapps"
+        sh "echo 'Fengxian123' | sudo docker stop my || true"
+        sh "echo 'Fengxian123' | sudo docker rm my || true"
+        sh "echo 'Fengxian123' | sudo docker run --name my -p 11111:8080 -d linux/tomcat"
+        sh "echo 'Fengxian123' | sudo docker cp target/*.war my:/usr/local/tomcat/webapps"
     }
     stage('results') {
         archiveArtifacts artifacts: '**/target/*.war', fingerprint: true
