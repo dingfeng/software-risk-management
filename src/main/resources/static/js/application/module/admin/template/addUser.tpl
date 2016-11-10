@@ -5,8 +5,7 @@
         </div>
         <div>
             <label for="username">项目名：</label>
-            <input id="username" name="projectName" type="text" value=""
-                   onKeyUp="value=value.replace(/[^0-9a-zA-Z@.]/g,'')">
+            <input id="username" name="projectName" type="text" value="">
         </div>
         <div>
             <label for="password">项目描述：</label>
