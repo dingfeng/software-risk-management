@@ -9,6 +9,7 @@ import cn.edu.nju.software.enums.RiskStatus;
 import cn.edu.nju.software.enums.UserRole;
 import cn.edu.nju.software.service.ProjectService;
 import cn.edu.nju.software.service.RiskService;
+import cn.edu.nju.software.service.UserService;
 import cn.edu.nju.software.util.ResultDTO;
 import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
@@ -25,6 +26,7 @@ import java.util.List;
  * Created by zy118686 on 2016/11/7.
  */
 @RestController
+@RequestMapping("/risk")
 @Slf4j
 public class RiskController {
 
@@ -33,6 +35,44 @@ public class RiskController {
 
     @Resource
     ProjectService  projectService;
+
+    @Resource
+    UserService userService;
+
+    @RequestMapping("/checkHandler")
+    public String checkHandler( @RequestParam(value="handlerName", defaultValue="") String handlerName){
+        JSONObject jsonObject = new JSONObject();
+
+        try{
+            ResultDTO<User> riskResultDTO = new ResultDTO<>();
+
+            riskResultDTO = userService.queryUserByName(handlerName);
+
+            if(!riskResultDTO.isSuccess()){
+                if(riskResultDTO.getErrorMsg() == null){
+                    jsonObject.put("isSuccess", false);
+                    jsonObject.put("errMsg", "用户不存在");
+                    return jsonObject.toJSONString();
+                }else{
+                    jsonObject.put("isSuccess", false);
+                    jsonObject.put("errMsg", "服务器异常");
+                    return jsonObject.toJSONString();
+                }
+            }
+
+
+            jsonObject.put("data",riskResultDTO.getData());
+            jsonObject.put("isSuccess",true);
+            return jsonObject.toJSONString();
+
+
+        }catch (Exception e){
+            log.error("Exception in risk_checkHandler ",e);
+            jsonObject.put("isSuccess", false);
+            jsonObject.put("errMsg", "服务器异常");
+            return jsonObject.toJSONString();
+        }
+    }
 
     @RequestMapping("/createRisk")
     public String createRisk(@RequestParam(value="title", defaultValue="") String title ,
@@ -284,7 +324,7 @@ public class RiskController {
     }
 
     @RequestMapping("/accepptRisk")
-    public String accepptRisk( @RequestParam(value="riskId", defaultValue="") String riskId){
+    public String accepptRisk( @RequestParam(value="riskId", defaultValue="") String riskId ,HttpSession httpSession){
 
         ResultDTO<Risk> queryRiskDTO = riskService.queryRiskById(riskId);
 
@@ -292,33 +332,41 @@ public class RiskController {
 
         JSONObject jsonObject = new JSONObject();
 
-        if(!queryRiskDTO.isSuccess()){
-            if(queryRiskDTO.getErrorMsg() == null){
-                jsonObject.put("isSuccess", false);
-                jsonObject.put("errMsg", "risk不存在");
-                return jsonObject.toJSONString();
-            }else{
+        try {
+            if (!queryRiskDTO.isSuccess()) {
+                if (queryRiskDTO.getErrorMsg() == null) {
+                    jsonObject.put("isSuccess", false);
+                    jsonObject.put("errMsg", "risk不存在");
+                    return jsonObject.toJSONString();
+                } else {
+                    jsonObject.put("isSuccess", false);
+                    jsonObject.put("errMsg", "服务器异常");
+                    return jsonObject.toJSONString();
+                }
+            }
+
+
+            Risk risk = queryRiskDTO.getData();
+
+            risk.setStatus(RiskStatus.DOING);
+
+            riskResultDTO = riskService.saveorUpdateRisk(risk);
+
+            if (!riskResultDTO.isSuccess()) {
                 jsonObject.put("isSuccess", false);
                 jsonObject.put("errMsg", "服务器异常");
                 return jsonObject.toJSONString();
             }
-        }
 
-        Risk risk = queryRiskDTO.getData();
-
-        risk.setStatus(RiskStatus.DOING);
-
-        riskResultDTO = riskService.saveorUpdateRisk(risk);
-
-        if (!riskResultDTO.isSuccess()){
-            jsonObject.put("isSuccess",false);
-            jsonObject.put("errMsg","服务器异常");
+            jsonObject.put("data", riskResultDTO.getData());
+            jsonObject.put("isSuccess", true);
+            return jsonObject.toJSONString();
+        }catch (Exception e){
+            log.error("exception in risk_acceptRisk",e);
+            jsonObject.put("isSuccess", false);
+            jsonObject.put("errMsg", "服务器异常");
             return jsonObject.toJSONString();
         }
-
-        jsonObject.put("data",riskResultDTO.getData());
-        jsonObject.put("isSuccess",true);
-        return jsonObject.toJSONString();
     }
 
     @RequestMapping("/doneRisk")
@@ -330,33 +378,40 @@ public class RiskController {
 
         JSONObject jsonObject = new JSONObject();
 
-        if(!queryRiskDTO.isSuccess()){
-            if(queryRiskDTO.getErrorMsg() == null){
-                jsonObject.put("isSuccess", false);
-                jsonObject.put("errMsg", "risk不存在");
-                return jsonObject.toJSONString();
-            }else{
+        try {
+            if (!queryRiskDTO.isSuccess()) {
+                if (queryRiskDTO.getErrorMsg() == null) {
+                    jsonObject.put("isSuccess", false);
+                    jsonObject.put("errMsg", "risk不存在");
+                    return jsonObject.toJSONString();
+                } else {
+                    jsonObject.put("isSuccess", false);
+                    jsonObject.put("errMsg", "服务器异常");
+                    return jsonObject.toJSONString();
+                }
+            }
+
+            Risk risk = queryRiskDTO.getData();
+
+            risk.setStatus(RiskStatus.DONE);
+
+            riskResultDTO = riskService.saveorUpdateRisk(risk);
+
+            if (!riskResultDTO.isSuccess()) {
                 jsonObject.put("isSuccess", false);
                 jsonObject.put("errMsg", "服务器异常");
                 return jsonObject.toJSONString();
             }
-        }
 
-        Risk risk = queryRiskDTO.getData();
-
-        risk.setStatus(RiskStatus.DONE);
-
-        riskResultDTO = riskService.saveorUpdateRisk(risk);
-
-        if (!riskResultDTO.isSuccess()){
-            jsonObject.put("isSuccess",false);
-            jsonObject.put("errMsg","服务器异常");
+            jsonObject.put("data", riskResultDTO.getData());
+            jsonObject.put("isSuccess", true);
+            return jsonObject.toJSONString();
+        }catch (Exception e){
+            log.error("exception in risk_doneRisk");
+            jsonObject.put("isSuccess", false);
+            jsonObject.put("errMsg", "服务器异常");
             return jsonObject.toJSONString();
         }
-
-        jsonObject.put("data",riskResultDTO.getData());
-        jsonObject.put("isSuccess",true);
-        return jsonObject.toJSONString();
 
     }
 
@@ -368,33 +423,40 @@ public class RiskController {
 
         JSONObject jsonObject = new JSONObject();
 
-        if(!queryRiskDTO.isSuccess()){
-            if(queryRiskDTO.getErrorMsg() == null){
-                jsonObject.put("isSuccess", false);
-                jsonObject.put("errMsg", "risk不存在");
-                return jsonObject.toJSONString();
-            }else{
+        try {
+            if (!queryRiskDTO.isSuccess()) {
+                if (queryRiskDTO.getErrorMsg() == null) {
+                    jsonObject.put("isSuccess", false);
+                    jsonObject.put("errMsg", "risk不存在");
+                    return jsonObject.toJSONString();
+                } else {
+                    jsonObject.put("isSuccess", false);
+                    jsonObject.put("errMsg", "服务器异常");
+                    return jsonObject.toJSONString();
+                }
+            }
+
+            Risk risk = queryRiskDTO.getData();
+
+            risk.setStatus(RiskStatus.REJECTED);
+
+            riskResultDTO = riskService.saveorUpdateRisk(risk);
+
+            if (!riskResultDTO.isSuccess()) {
                 jsonObject.put("isSuccess", false);
                 jsonObject.put("errMsg", "服务器异常");
                 return jsonObject.toJSONString();
             }
-        }
 
-        Risk risk = queryRiskDTO.getData();
-
-        risk.setStatus(RiskStatus.REJECTED);
-
-        riskResultDTO = riskService.saveorUpdateRisk(risk);
-
-        if (!riskResultDTO.isSuccess()){
-            jsonObject.put("isSuccess",false);
-            jsonObject.put("errMsg","服务器异常");
+            jsonObject.put("data", riskResultDTO.getData());
+            jsonObject.put("isSuccess", true);
+            return jsonObject.toJSONString();
+        }catch (Exception e){
+            log.error("exception in risk_rejectRisk");
+            jsonObject.put("isSuccess", false);
+            jsonObject.put("errMsg", "服务器异常");
             return jsonObject.toJSONString();
         }
-
-        jsonObject.put("data",riskResultDTO.getData());
-        jsonObject.put("isSuccess",true);
-        return jsonObject.toJSONString();
     }
 
         private void setInfluence(Risk risk , String influence ) throws Exception{

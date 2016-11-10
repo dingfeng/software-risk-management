@@ -19,7 +19,7 @@ import javax.servlet.http.HttpSession;
  * Created by zy118686 on 2016/11/7.
  */
 @RestController
-
+@RequestMapping("/user")
 @Slf4j
 public class UserController {
 
@@ -72,12 +72,102 @@ public class UserController {
 
     //这个update参数 还不确定
     @RequestMapping("update")
-    public String update(){
-        return null ;
+    public String update(@RequestParam(value="role", defaultValue="") String role , @RequestParam(value="username", defaultValue="") String username ,HttpSession httpSession ){
+
+        JSONObject jsonObject = new JSONObject();
+        try{
+
+            Long userId = Long.parseLong((String)httpSession.getAttribute("userId"));
+
+            ResultDTO<User> queryId = userService.queryUserByName(String.valueOf(userId));
+
+            if(!queryId.isSuccess()){
+                if(queryId.getErrorMsg() == null){
+                    jsonObject.put("isSuccess", false);
+                    jsonObject.put("errMsg", "您的权限不够");
+                    return jsonObject.toJSONString();
+                }else{
+                    jsonObject.put("isSuccess", false);
+                    jsonObject.put("errMsg", "服务器异常");
+                    return jsonObject.toJSONString();
+                }
+            }
+
+            if(!queryId.getData().getRole().equals(UserRole.SYSTEM_MANAGER)){
+                jsonObject.put("isSuccess", false);
+                jsonObject.put("errMsg", "您的权限不够");
+                return jsonObject.toJSONString();
+            }
+
+            ResultDTO<User> query = userService.queryUserByName(username);
+
+            if(!query.isSuccess()){
+                if("no such User".equals(query.getErrorMsg())){
+                    jsonObject.put("isSuccess", false);
+                    jsonObject.put("errMsg", "用户名不存在");
+                    return jsonObject.toJSONString();
+                }else{
+                    jsonObject.put("isSuccess", false);
+                    jsonObject.put("errMsg", "服务器异常");
+                    return jsonObject.toJSONString();
+                }
+            }
+
+            User user = query.getData();
+
+            Integer roleInt = Integer.parseInt(role);
+
+            switch (roleInt) {
+                case 1: {
+                    user.setRole(UserRole.SYSTEM_MANAGER);
+                    break;
+                }
+
+                case 2: {
+                    user.setRole(UserRole.DIRECTOR);
+                    break;
+                }
+
+                case 3: {
+                    user.setRole(UserRole.NORMAL);
+                    break;
+                }
+
+                default: {
+                    jsonObject.put("isSuccess", false);
+                    jsonObject.put("errMsg", "用户角色出错");
+                    return jsonObject.toJSONString();
+                }
+            }
+
+            ResultDTO<User> update = userService.saveorUpdateUser(user);
+
+            if(update.isSuccess()){
+                if(queryId.getErrorMsg() == null){
+                    jsonObject.put("isSuccess", false);
+                    jsonObject.put("errMsg", "用户不存在");
+                    return jsonObject.toJSONString();
+                }else{
+                    jsonObject.put("isSuccess", false);
+                    jsonObject.put("errMsg", "服务器异常");
+                    return jsonObject.toJSONString();
+                }
+            }
+            jsonObject.put("isSuccess", true);
+            jsonObject.put("data", update.getData());
+            return jsonObject.toJSONString();
+
+
+        }catch (Exception e){
+            log.error("exception in user_update " , e);
+            jsonObject.put("isSuccess",false);
+            jsonObject.put("errMsg","服务器异常");
+            return jsonObject.toJSONString();
+        }
     }
 
     @RequestMapping("/register")
-    public String register(@RequestParam(value="userName", defaultValue="") String userName , @RequestParam(value="password", defaultValue="") String password, @RequestParam(value="email", defaultValue="") String email ,  @RequestParam(value="role", defaultValue="") String role ){
+    public String register(@RequestParam(value="username", defaultValue="") String userName , @RequestParam(value="password", defaultValue="") String password, @RequestParam(value="email", defaultValue="") String email ,  @RequestParam(value="role", defaultValue="") String role ){
 
         //这边默认已经调用过checkUserName的方法了
         JSONObject jsonObject = new JSONObject();
@@ -206,6 +296,143 @@ public class UserController {
             return jsonObject.toJSONString();
         }
 
+    }
+
+    @RequestMapping("/getRisksCreate")
+    public String getRisksCreate(HttpSession httpSession){
+
+        JSONObject jsonObject = new JSONObject();
+
+        try{
+            Long userId = Long.parseLong((String)httpSession.getAttribute("userId"));
+
+            ResultDTO<User> userResultDTO = userService.queryUserById(String.valueOf(userId));
+
+            if(!userResultDTO.isSuccess()){
+                if(userResultDTO.getErrorMsg() == null){
+                    jsonObject.put("isSuccess",false);
+                    jsonObject.put("errMsg","用户不存在");
+                    return jsonObject.toJSONString();
+                }else {
+                    jsonObject.put("isSuccess",false);
+                    jsonObject.put("errMsg","服务器异常");
+                    return jsonObject.toJSONString();
+                }
+            }
+
+            jsonObject.put("isSuccess",true);
+            jsonObject.put("data",userResultDTO.getData().getOwnRisks());
+            return jsonObject.toJSONString();
+
+        }catch (Exception e){
+            log.error("exception in user_ getRisksCreate" , e);
+            jsonObject.put("isSuccess",false);
+            jsonObject.put("errMsg","服务器异常");
+            return jsonObject.toJSONString();
+        }
+    }
+
+    @RequestMapping("/getRisksHandler")
+    public String getRisksHandler(HttpSession httpSession){
+
+        JSONObject jsonObject = new JSONObject();
+
+        try{
+            Long userId = Long.parseLong((String)httpSession.getAttribute("userId"));
+
+            ResultDTO<User> userResultDTO = userService.queryUserById(String.valueOf(userId));
+
+            if(!userResultDTO.isSuccess()){
+                if(userResultDTO.getErrorMsg() == null){
+                    jsonObject.put("isSuccess",false);
+                    jsonObject.put("errMsg","用户不存在");
+                    return jsonObject.toJSONString();
+                }else {
+                    jsonObject.put("isSuccess",false);
+                    jsonObject.put("errMsg","服务器异常");
+                    return jsonObject.toJSONString();
+                }
+            }
+
+            jsonObject.put("isSuccess",true);
+            jsonObject.put("data",userResultDTO.getData().getHandleRisks());
+            return jsonObject.toJSONString();
+
+        }catch (Exception e){
+            log.error("exception in user_ getRisksHandler" , e);
+            jsonObject.put("isSuccess",false);
+            jsonObject.put("errMsg","服务器异常");
+            return jsonObject.toJSONString();
+        }
+    }
+
+    @RequestMapping("/getProjectCreate")
+    public String getProjectCreate(HttpSession httpSession){
+
+        JSONObject jsonObject = new JSONObject();
+
+        try{
+            Long userId = Long.parseLong((String)httpSession.getAttribute("userId"));
+
+            ResultDTO<User> userResultDTO = userService.queryUserById(String.valueOf(userId));
+
+            if(!userResultDTO.isSuccess()){
+                if(userResultDTO.getErrorMsg() == null){
+                    jsonObject.put("isSuccess",false);
+                    jsonObject.put("errMsg","用户不存在");
+                    return jsonObject.toJSONString();
+                }else {
+                    jsonObject.put("isSuccess",false);
+                    jsonObject.put("errMsg","服务器异常");
+                    return jsonObject.toJSONString();
+                }
+            }
+
+            jsonObject.put("isSuccess",true);
+            jsonObject.put("data",userResultDTO.getData().getOwnProjects());
+            return jsonObject.toJSONString();
+
+        }catch (Exception e){
+            log.error("exception in user_ getProjectCreate" , e);
+            jsonObject.put("isSuccess",false);
+            jsonObject.put("errMsg","服务器异常");
+            return jsonObject.toJSONString();
+        }
+    }
+
+
+    @RequestMapping("/getProjectJoin")
+    public String getProjectJoin(HttpSession httpSession){
+
+        JSONObject jsonObject = new JSONObject();
+
+        try{
+            Long userId = Long.parseLong((String)httpSession.getAttribute("userId"));
+
+            ResultDTO<User> userResultDTO = userService.queryUserById(String.valueOf(userId));
+
+            if(!userResultDTO.isSuccess()){
+                if(userResultDTO.getErrorMsg() == null){
+                    jsonObject.put("isSuccess",false);
+                    jsonObject.put("errMsg","用户不存在");
+                    return jsonObject.toJSONString();
+                }else {
+                    jsonObject.put("isSuccess",false);
+                    jsonObject.put("errMsg","服务器异常");
+                    return jsonObject.toJSONString();
+                }
+            }
+
+            jsonObject.put("isSuccess",true);
+            jsonObject.put("data",userResultDTO.getData().getJoinProjects());
+            return jsonObject.toJSONString();
+
+        }catch (Exception e){
+            log.error("exception in user_ getProjectJoin" , e);
+            jsonObject.put("isSuccess",false);
+            jsonObject.put("errMsg","服务器异常");
+            return jsonObject.toJSONString();
+        }
     }
 
     @RequestMapping("/logout")

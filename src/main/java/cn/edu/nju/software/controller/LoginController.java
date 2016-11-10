@@ -4,6 +4,8 @@ import cn.edu.nju.software.entity.User;
 import cn.edu.nju.software.service.UserService;
 import cn.edu.nju.software.util.ResultDTO;
 import com.alibaba.fastjson.JSONObject;
+import com.google.common.base.Charsets;
+import com.google.common.hash.Hashing;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +25,7 @@ public class LoginController {
     @Resource
     UserService userService;
 
-    @RequestMapping(value = "/verify", method = RequestMethod.POST)
+    @RequestMapping(value = "/verify")
     @ResponseBody
     public String verifyUser(@RequestParam String username, @RequestParam String password , HttpSession httpSession) {
         JSONObject jsonObject = new JSONObject();
@@ -44,10 +46,12 @@ public class LoginController {
 
             User user = userResultDTO.getData();
 
-            if(password.equals(user.getPassword())){
+            String pwd = Hashing.md5().newHasher().putString(password, Charsets.UTF_8).hash().toString();
+
+            if(pwd.equals(user.getPassword())){
                 jsonObject.put("isSuccess", true);
                 jsonObject.put("data" , user );
-                httpSession.setAttribute("userId",user.getId());
+                httpSession.setAttribute("userId",String.valueOf(user.getId()));
                 httpSession.setAttribute("userName",user.getAccount());
             }else{
                 jsonObject.put("isSuccess", false);
