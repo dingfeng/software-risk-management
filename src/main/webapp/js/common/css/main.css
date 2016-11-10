@@ -1,0 +1,40 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+#header {
+    width: 100%;
+}
+
+#main {
+    width: 100%;
+    min-width: 950px;
+    height: 550px;
+}
+
+#main #leftBlank {
+    height: 100%;
+    width: 40px;
+    background: darkslategray;
+    float: left;
+}
+
+#main #aside {
+    height: 100%;
+    float: left;
+}
+
+#main #content {
+    float: right;
+    margin: 30px;
+    height: 489px;
+    width: 60%;
+    background: #DDDDFF;
+    border: 1px solid beige;
+    border-radius: 5px;
+}
+
+#footer {
+    width: 100%;
+}

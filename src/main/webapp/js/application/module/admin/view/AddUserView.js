@@ -1,20 +1,23 @@
-define(["common/view/BaseView", "../model/LoginModel", "text!../template/login.tpl", "text!../css/login.css"],
-    function (BaseView, LoginModel, LoginTpl, LoginCss) {
-        var LoginView = BaseView.extend({
+/**
+ * Created by 邹玉鑫 on 2016/11/8.
+ */
+define(["common/view/BaseView", "../model/AddUserModel", "text!../template/addUser.tpl", "text!../css/addUser.css"],
+    function (BaseView, AddUserModel, AddUserTpl, AddUserCss) {
+        var AddUserView = BaseView.extend({
             initialize: function () {
-                LoginView.__super__.initialize.call(this);
+                AddUserView.__super__.initialize.call(this);
             },
-            title: '登录',
-            el: 'body',
-            model: new LoginModel,
+            el: '#content',
+            title: '创建用户',
+            model: new AddUserModel,
+            tpl: AddUserTpl,
+            css: AddUserCss,
             events: {
-                "click #login": "login"
+                "click .submit": "create"
             },
-            tpl: LoginTpl,
-            css: LoginCss,
-            login: function (e) {
+            create: function () {
                 var data = {};
-                $("form.login").serializeArray().map(function (x) {
+                $("form.addUser").serializeArray().map(function (x) {
                     data[x.name] = x.value;
                 });
                 this.model.set(data);
@@ -30,8 +33,7 @@ define(["common/view/BaseView", "../model/LoginModel", "text!../template/login.t
                             errorMsg: '',
                         });
                     }
-
-                    window.location.href = '#main';
+                    alert("创建成功！");
                 });
             },
             verify: function (data, callback) {
@@ -41,8 +43,8 @@ define(["common/view/BaseView", "../model/LoginModel", "text!../template/login.t
                 }
                 $.ajax({
                     type: "POST",
-                    url: "/login/verify",
-                    data: _.pick(data, 'username', 'password'),
+                    url: "/admin/add",
+                    data: _.pick(data, 'username', 'password', 'role'),
                     // async: false,
                     error: function () {
                         callback('服务器验证错误');
@@ -51,11 +53,11 @@ define(["common/view/BaseView", "../model/LoginModel", "text!../template/login.t
                         if (data) {
                             callback('');
                         } else {
-                            callback('用户名或密码错误');
+                            callback('创建失败！');
                         }
                     }
                 });
             }
         });
-        return LoginView;
+        return AddUserView;
     });
