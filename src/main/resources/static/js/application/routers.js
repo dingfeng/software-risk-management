@@ -1,5 +1,5 @@
-define(["backbone", "common/view/MainView", "./module/authority/view/LoginView", "./module/admin/view/AddUserView", "common/model/AsideModel", "common/util"],
-    function (Backbone, MainView, LoginView, AdminAddUserView, AsideModel, Util) {
+define(["backbone", "common/view/MainView", "./module/authority/view/LoginView", "./module/admin/view/AddUserView", "./module/admin/view/SearchProjectView", "common/model/AsideModel", "common/util"],
+    function (Backbone, MainView, LoginView, AdminAddUserView, SearchProjectView, AsideModel, Util) {
         var Routers = Backbone.Router.extend({
             initialize: function () {
                 console.log("Route initialize");
@@ -19,6 +19,7 @@ define(["backbone", "common/view/MainView", "./module/authority/view/LoginView",
 
                 "ordinary": "adminAddUser",
 
+                "ordinary/searchProject": "ordinarySearchProject",
 
                 "teams": "getTeams",
                 "teams/:country": "getTeamsCountry",
@@ -75,6 +76,19 @@ define(["backbone", "common/view/MainView", "./module/authority/view/LoginView",
                     active: false,
                 }));
                 mainView.contentView = new AdminAddUserView();
+            },
+
+            ordinarySearchProject: function() {
+                var mainView = new MainView();
+                mainView.asideView.model.reset();
+                mainView.asideView.model.add(new AsideModel({
+                    id: '0',
+                    name: '查看项目',
+                    url: '#admin/addUser',
+                    active: true,
+                }));
+                // $("#inaside.item").on("click", mainView.asideView.goto, mainView.asideView);
+                mainView.contentView = new SearchProjectView();
             },
 
             getTeams: function () {

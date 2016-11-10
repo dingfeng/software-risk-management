@@ -7,40 +7,27 @@ define(["../util", "../view/BaseView", "../model/AsideCollection", "text!../temp
             initialize: function () {
                 if (this.sync) this.model.on("add", this.setTpl, this);
                 AsideView.__super__.initialize.call(this);
+                this.model.on("add", this.setGotoEvent, this);
             },
             title: '',
             el: 'aside#aside',
-            events: {
-                "click .item": "goto"
-            },
+            // events: {
+            //     "click #inaside .item": "goto"
+            // },
             model: new AsideCollection,
             tpl: AsideTpl,
             css: AsideCss,
-            render: function () {
-                AsideView.__super__.render.call(this);
+            setGotoEvent: function () {
                 var that = this;
-                // $.ajax({
-                //     type: "POST",
-                //     url: "/login/username",
-                //     data: "sessionid=" + Util.getSessionId(),
-                //     // async: false,
-                //     error: function () {
-                //         window.location.href = "#login";
-                //     },
-                //     success: function (data) {
-                //         if (data) {
-                //             that.model.set({
-                //                 username: data,
-                //             });
-                //         } else {
-                //             window.location.href = "#login";
-                //         }
-                //     }
-                // });
-            },
-            goto: function (event) {
-                alert(JSON.stringify(event));
-                // window.location.href = "#login";
+                $("#inaside .item").off("click");
+                $("#inaside .item").on("click", function () {
+                    for (var i = 0; i < that.model.length; i++) {
+                        var value = that.model.get(i);
+                        if (value.get("id") == $(this).attr("name")) {
+                            window.location.href = value.get("url");
+                        }
+                    }
+                });
             }
         });
         return AsideView;
