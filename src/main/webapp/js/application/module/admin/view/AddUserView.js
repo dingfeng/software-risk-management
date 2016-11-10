@@ -8,7 +8,7 @@ define(["common/view/BaseView", "../model/AddUserModel", "text!../template/addUs
                 AddUserView.__super__.initialize.call(this);
             },
             el: '#content',
-            title: '创建用户',
+            title: '创建项目',
             model: new AddUserModel,
             tpl: AddUserTpl,
             css: AddUserCss,
@@ -37,23 +37,27 @@ define(["common/view/BaseView", "../model/AddUserModel", "text!../template/addUs
                 });
             },
             verify: function (data, callback) {
-                if (!data.username || !data.password) {
-                    callback('用户名或密码不能为空');
-                    return;
-                }
+                //if (!data.username || !data.password) {
+                //    callback('用户名或密码不能为空');
+                //    return;
+                //}
                 $.ajax({
                     type: "POST",
-                    url: "/admin/add",
-                    data: _.pick(data, 'username', 'password', 'role'),
+                    url: "/project/createProject",
+                    data: _.pick(data, 'projectName', 'description'),
                     // async: false,
                     error: function () {
+                        alert("error")
                         callback('服务器验证错误');
                     },
                     success: function (data) {
-                        if (data) {
+
+                        var obj =eval("("+data+")");
+
+                        if (obj.isSuccess) {
                             callback('');
                         } else {
-                            callback('创建失败！');
+                            callback(obj.errMsg);
                         }
                     }
                 });

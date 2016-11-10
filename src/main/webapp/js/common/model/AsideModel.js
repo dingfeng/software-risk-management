@@ -8,7 +8,7 @@ define(["../model/BaseModel"], function (BaseModel) {
         },
         defaults: {
             id: '',
-            name: '创建用户',
+            name: '创建项目',
             url: '#admin/addUser',
             active: false,
         },
