@@ -13,6 +13,6 @@ node {
         sh "/opt/docker-deploy.sh"
     }
     stage('results') {
-        archiveArtifacts artifacts: '**/target/*.war', fingerprint: true
+        archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
     }
 }
