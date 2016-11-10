@@ -6,7 +6,7 @@
         <p>角色：<span><%= data.role %></span></p>
     </div>
     <div class="username">
-        <p>用户名：<span><%= data.username %></span></p>
+            <p>用户名：<span><%= data.username %></span></p>
     </div>
     <div class="logo">
         <p>项目风险管理系统</p>

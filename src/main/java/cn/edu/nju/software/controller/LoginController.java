@@ -1,6 +1,7 @@
 package cn.edu.nju.software.controller;
 
 import cn.edu.nju.software.entity.User;
+import cn.edu.nju.software.enums.UserRole;
 import cn.edu.nju.software.service.UserService;
 import cn.edu.nju.software.util.ResultDTO;
 import com.alibaba.fastjson.JSONObject;
@@ -53,6 +54,26 @@ public class LoginController {
                 jsonObject.put("data" , user );
                 httpSession.setAttribute("userId",String.valueOf(user.getId()));
                 httpSession.setAttribute("userName",user.getAccount());
+                switch (user.getRole()) {
+                    case SYSTEM_MANAGER: {
+                        httpSession.setAttribute("userRole","系统管理员");
+                        break;
+                    }
+
+                    case DIRECTOR: {
+                        httpSession.setAttribute("userRole","主管");
+                        break;
+                    }
+
+                    case NORMAL: {
+                        httpSession.setAttribute("userRole","普通用户");
+                        break;
+                    }
+
+                    default: {
+                        httpSession.setAttribute("userRole","角色异常");
+                    }
+                }
             }else{
                 jsonObject.put("isSuccess", false);
                 jsonObject.put("errMsg", "密码错误");
@@ -70,17 +91,20 @@ public class LoginController {
         }
     }
 
-    @RequestMapping(value = "/role", method = RequestMethod.POST)
+    @RequestMapping(value = "/role")
     @ResponseBody
-    public String getRole(@RequestParam String sessionid) {
-        System.out.println(sessionid);
+    public String getRole(HttpSession httpSession) {
         return "admin";
     }
 
     @RequestMapping(value = "/username", method = RequestMethod.POST)
     @ResponseBody
-    public String getUsername(@RequestParam String sessionid) {
-        System.out.println(sessionid);
-        return "larry.zou";
+    public String getUsername(HttpSession httpSession) {
+       try{
+           return (String)httpSession.getAttribute("userName");
+       }catch (Exception e){
+           log.error("exception in login_getUsername ",e);
+           return "用户名异常";
+       }
     }
 }

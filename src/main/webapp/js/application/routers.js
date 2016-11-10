@@ -64,7 +64,7 @@ define(["backbone", "common/view/MainView", "./module/authority/view/LoginView",
                 mainView.asideView.model.reset();
                 mainView.asideView.model.add(new AsideModel({
                     id: '0',
-                    name: '创建用户',
+                    name: '创建项目',
                     url: '#admin/addUser',
                     active: true,
                 }));

@@ -4,15 +4,16 @@
             <p class="errMsg"><%= data.errorMsg %>　</p>
         </div>
         <div>
-            <label for="username">用户名：</label>
-            <input id="username" name="username" type="text" value="<%= data.username %>"
+            <label for="username">项目名：</label>
+            <input id="username" name="projectName" type="text" value=""
                    onKeyUp="value=value.replace(/[^0-9a-zA-Z@.]/g,'')">
         </div>
         <div>
-            <label for="password">密　码：</label>
-            <input id="password" name="password" type="password" value="<%= data.password %>"
-                   onKeyUp="value=value.replace(/[^0-9a-zA-Z]/g,'')">
+            <label for="password">项目描述：</label>
+            <textarea id="password" name="description" type="description" value=""
+                   onKeyUp="value=value.replace(/[^0-9a-zA-Z]/g,'')"></textarea>
         </div>
+        <!--
         <div>
             <label for="role">角　色：</label>
             <select name="role" id="role">
@@ -35,6 +36,7 @@
                 <% } %>
             </select>
         </div>
+        -->
         <div>
             <input class="submit" type="button" value="创建">
         </div>

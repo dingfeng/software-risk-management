@@ -48,10 +48,13 @@ define(["common/view/BaseView", "../model/LoginModel", "text!../template/login.t
                         callback('服务器验证错误');
                     },
                     success: function (data) {
-                        if (data) {
+
+                        var obj =eval("("+data+")");
+
+                        if (obj.isSuccess) {
                             callback('');
                         } else {
-                            callback('用户名或密码错误');
+                            callback(obj.errMsg);
                         }
                     }
                 });
