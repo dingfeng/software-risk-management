@@ -10,7 +10,7 @@
         <div>
             <label for="password">项目描述：</label>
             <textarea id="password" name="description" type="description" value=""
-                   onKeyUp="value=value.replace(/[^0-9a-zA-Z]/g,'')"></textarea>
+                   ></textarea>
         </div>
         <!--
         <div>
