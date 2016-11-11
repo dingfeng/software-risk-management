@@ -7,8 +7,10 @@ define(["common/model/BaseModel"], function (BaseModel) {
             AddUserModel.__super__.initialize.call(this);
         },
         defaults: {
-            username: 'username',
-            password: 'password',
+            username: '',
+            password: '',
+            email: '',
+            role: 'admin',
             errorMsg: '',
             role: '',
         },
