@@ -1,0 +1,21 @@
+#searchUser {
+    width: 100%;
+    height:100%;
+}
+#searchUser table {
+    border-collapse:collapse;
+    width: 100%;
+}
+
+#searchUser table th, #searchUser table td {
+    border:#333 solid 1px;
+}
+
+#searchUser table th {
+    height: 30px;
+}
+
+#searchUser table td {
+    height: 20px;
+    text-align: center;
+}

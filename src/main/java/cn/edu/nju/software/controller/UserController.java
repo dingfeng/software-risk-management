@@ -2,6 +2,7 @@ package cn.edu.nju.software.controller;
 
 import cn.edu.nju.software.VO.ProjectVO;
 import cn.edu.nju.software.VO.RiskVO;
+import cn.edu.nju.software.VO.UserVO;
 import cn.edu.nju.software.entity.Project;
 import cn.edu.nju.software.entity.Risk;
 import cn.edu.nju.software.entity.User;
@@ -12,6 +13,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.google.common.base.Charsets;
 import com.google.common.hash.Hashing;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -536,4 +538,20 @@ public class UserController {
             return jsonObject.toJSONString();
         }
     }
+
+    @RequestMapping("/allUser")
+    public String allUser(HttpSession httpSession){
+        JSONObject jsonObject = new JSONObject();
+        ResultDTO<List<User>> userListResult = userService.queryUser();
+        List<User> userList = userListResult.getData();
+        List<UserVO> userVoList = new ArrayList<>();
+        for(User user : userList)
+        {
+            userVoList.add(new UserVO(user));
+        }
+        jsonObject.put("isSuccess",true);
+        jsonObject.put("data",userVoList);
+        return jsonObject.toJSONString();
+    }
+
 }

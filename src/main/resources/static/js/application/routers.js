@@ -15,6 +15,8 @@ define(["backbone", "common/view/MainView", "./module/authority/view/LoginView",
 
                 "admin/searchProject":"searchProject",
 
+                "admin/searchUser":"searchUser",
+
                 "manager": "adminAddUser",
 
 
@@ -58,14 +60,19 @@ define(["backbone", "common/view/MainView", "./module/authority/view/LoginView",
 
                 mainView.asideView.model.add(new AsideModel({
                     id: '0',
-                    name: '创建项目',
+                    name: '创建用户',
                     url: '#admin/add',
                     active: false,
                 }));
-
+                mainView.asideView.model.add(new AsideModel({
+                    id: '2',
+                    name: '系统用户',
+                    url: '#admin/searchUser',
+                    active: true,
+                }));
                 mainView.asideView.model.add(new AsideModel({
                     id: '1',
-                    name: '我创建的项目',
+                    name: '软件项目',
                     url: '#admin/searchProject',
                     active: true,
                 }));
@@ -73,23 +80,57 @@ define(["backbone", "common/view/MainView", "./module/authority/view/LoginView",
             },
 
             adminAddUser: function () {
-                var mainView = new MainView();
-                mainView.asideView.model.reset();
-                mainView.asideView.model.add(new AsideModel({
-                    id: '0',
-                    name: '创建项目',
-                    url: '#admin/add',
-                    active: true,
-                }));
-                mainView.asideView.model.add(new AsideModel({
-                    id: '1',
-                    name: '我创建的项目',
-                    url: '#admin/searchProject',
-                    active: false,
-                }));
-                mainView.contentView = new AdminAddUserView();
-            },
+                 var mainView = new MainView();
 
+                 mainView.asideView.model.reset();
+
+                 mainView.asideView.model.add(new AsideModel({
+                         id: '0',
+                         name: '创建用户',
+                         url: '#admin/add',
+                         active: false,
+                 }));
+                 mainView.asideView.model.add(new AsideModel({
+                           id: '2',
+                           name: '系统用户',
+                           url: '#admin/searchUser',
+                           active: true,
+                 }));
+                 mainView.asideView.model.add(new AsideModel({
+                           id: '1',
+                           name: '软件项目',
+                           url: '#admin/searchProject',
+                           active: true,
+                 }));
+                mainView.contentView = new AddUserView();
+            },
+            searchUser : function()
+            {
+                var mainView = new MainView();
+
+                mainView.asideView.model.reset();
+
+                mainView.asideView.model.add(new AsideModel({
+                           id: '0',
+                           name: '创建用户',
+                           url: '#admin/add',
+                           active: false,
+                }));
+                mainView.asideView.model.add(new AsideModel({
+                             id: '2',
+                             name: '系统用户',
+                             url: '#admin/searchUser',
+                             active: true,
+                }));
+                 mainView.asideView.model.add(new AsideModel({
+                           id: '1',
+                           name: '软件项目',
+                           url: '#admin/searchProject',
+                           active: true,
+                 }));
+                mainView.contentView = new SearchUserView();
+            }
+            ,
             getTeams: function () {
                 // List all teams
                 alert("getTeams");

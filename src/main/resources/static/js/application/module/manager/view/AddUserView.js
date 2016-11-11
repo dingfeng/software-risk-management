@@ -8,7 +8,7 @@ define(["common/view/BaseView", "../model/AddUserModel", "text!../template/addUs
                 AddUserView.__super__.initialize.call(this);
             },
             el: '#content',
-            title: '创建用户',
+            title: '创建项目',
             model: new AddUserModel,
             tpl: AddUserTpl,
             css: AddUserCss,
@@ -43,12 +43,12 @@ define(["common/view/BaseView", "../model/AddUserModel", "text!../template/addUs
                 //}
                 $.ajax({
                     type: "POST",
-                    url: "/user/register",
-                    data: _.pick(data, 'account', 'password','role','email'),
+                    url: "/project/createProject",
+                    data: _.pick(data, 'projectName', 'description'),
                     // async: false,
                     error: function () {
                         alert("error")
-                        callback('服务器故障');
+                        callback('服务器验证错误');
                     },
                     success: function (data) {
 

@@ -4,17 +4,15 @@
             <p class="errMsg"><%= data.errorMsg %>　</p>
         </div>
         <div>
-            <label for="username">账户：</label>
-            <input id="username" name="username" type="text" value="">
+            <label for="username">项目名：</label>
+            <input id="username" name="projectName" type="text" value="">
         </div>
         <div>
-            <label for="password">密码：</label>
-            <input id="password" name="password" type="text" value="">
+            <label for="password">项目描述：</label>
+            <textarea id="password" name="description" type="description" value=""
+                   ></textarea>
         </div>
-         <div>
-              <label for="email">邮件：</label>
-              <input id="email" name="email" type="text" value="">
-         </div>
+        <!--
         <div>
             <label for="role">角　色：</label>
             <select name="role" id="role">
@@ -37,6 +35,7 @@
                 <% } %>
             </select>
         </div>
+        -->
         <div>
             <input class="submit" type="button" value="创建">
         </div>

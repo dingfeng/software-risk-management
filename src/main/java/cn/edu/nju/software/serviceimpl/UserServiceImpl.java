@@ -110,6 +110,17 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public ResultDTO<List<User>> queryUser() {
-        return null;
+        ResultDTO<List<User>> resultDTO = new ResultDTO<>();
+        try {
+            List<User> list =  userDao.findAll();
+            resultDTO.setData(list);
+            resultDTO.setSuccess(true);
+        }catch(Exception e){
+            log.error("no users ");
+            resultDTO.setErrorMsg(e.getMessage());
+            resultDTO.setSuccess(false);
+            resultDTO.setData(null);
+        }
+        return resultDTO;
     }
 }
