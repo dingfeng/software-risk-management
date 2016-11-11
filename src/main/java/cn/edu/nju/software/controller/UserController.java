@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -316,6 +318,9 @@ public class UserController {
 
             List<RiskVO> riskVOs = new ArrayList<>();
 
+            DateFormat fmt =new
+                    SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
             if(!userResultDTO.isSuccess()){
                 if(userResultDTO.getErrorMsg() == null){
                     jsonObject.put("isSuccess",false);
@@ -331,10 +336,10 @@ public class UserController {
             for(Risk risk: userResultDTO.getData().getOwnRisks()){
                 RiskVO riskVO = new RiskVO();
                 riskVO.setId(risk.getId());
-                riskVO.setUpdatedAt(risk.getUpdatedAt());
+                riskVO.setUpdatedAt(fmt.format(risk.getUpdatedAt()));
                 riskVO.setDescription(risk.getDescription());
                 riskVO.setAuthor(risk.getAuthor().getAccount());
-                riskVO.setCreatedAt(risk.getCreatedAt());
+                riskVO.setCreatedAt(fmt.format(risk.getCreatedAt()));
                 riskVO.setHandler(risk.getHandler().getAccount());
                 riskVO.setProject(risk.getProject().getName());
                 riskVO.setTrigger(risk.getTrigger());
@@ -369,6 +374,9 @@ public class UserController {
 
             List<RiskVO> riskVOs = new ArrayList<>();
 
+            DateFormat fmt =new
+                    SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
             if(!userResultDTO.isSuccess()){
                 if(userResultDTO.getErrorMsg() == null){
                     jsonObject.put("isSuccess",false);
@@ -384,10 +392,10 @@ public class UserController {
             for(Risk risk: userResultDTO.getData().getHandleRisks()){
                 RiskVO riskVO = new RiskVO();
                 riskVO.setId(risk.getId());
-                riskVO.setUpdatedAt(risk.getUpdatedAt());
+                riskVO.setUpdatedAt(fmt.format(risk.getUpdatedAt()));
                 riskVO.setDescription(risk.getDescription());
                 riskVO.setAuthor(risk.getAuthor().getAccount());
-                riskVO.setCreatedAt(risk.getCreatedAt());
+                riskVO.setCreatedAt(fmt.format(risk.getCreatedAt()));
                 riskVO.setHandler(risk.getHandler().getAccount());
                 riskVO.setProject(risk.getProject().getName());
                 riskVO.setTrigger(risk.getTrigger());
@@ -422,6 +430,9 @@ public class UserController {
 
             List<ProjectVO> projectVOs = new ArrayList<>();
 
+            DateFormat fmt =new
+                    SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
             if(!userResultDTO.isSuccess()){
                 if(userResultDTO.getErrorMsg() == null){
                     jsonObject.put("isSuccess",false);
@@ -437,8 +448,8 @@ public class UserController {
             for(Project project : userResultDTO.getData().getOwnProjects()){
                  ProjectVO projectVO = new ProjectVO();
                  projectVO.setId(project.getId());
-                 projectVO.setUpdatedAt(project.getUpdatedAt());
-                 projectVO.setCreatedAt(project.getCreatedAt());
+                 projectVO.setUpdatedAt(fmt.format(project.getUpdatedAt()));
+                 projectVO.setCreatedAt(fmt.format(project.getCreatedAt()));
                  projectVO.setCreatedBy((String)httpSession.getAttribute("userName"));
                  projectVO.setDescription(project.getDescription());
                  projectVO.setName(project.getName());
@@ -470,6 +481,9 @@ public class UserController {
 
             List<ProjectVO> projectVOs = new ArrayList<>();
 
+            DateFormat fmt =new
+                    SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
             if(!userResultDTO.isSuccess()){
                 if(userResultDTO.getErrorMsg() == null){
                     jsonObject.put("isSuccess",false);
@@ -485,8 +499,8 @@ public class UserController {
             for(Project project : userResultDTO.getData().getOwnProjects()){
                 ProjectVO projectVO = new ProjectVO();
                 projectVO.setId(project.getId());
-                projectVO.setUpdatedAt(project.getUpdatedAt());
-                projectVO.setCreatedAt(project.getCreatedAt());
+                projectVO.setUpdatedAt(fmt.format(project.getUpdatedAt()));
+                projectVO.setCreatedAt(fmt.format(project.getCreatedAt()));
                 projectVO.setCreatedBy(project.getAuthor().getAccount());
                 projectVO.setDescription(project.getDescription());
                 projectVO.setName(project.getName());

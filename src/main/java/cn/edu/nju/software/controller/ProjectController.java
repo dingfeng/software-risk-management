@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import javax.jws.soap.SOAPBinding;
 import javax.servlet.http.HttpSession;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -196,6 +198,9 @@ public class ProjectController {
             ProjectVO projectVO = new ProjectVO();
 
 
+            DateFormat fmt =new
+                    SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
             if(!queryResultDTO.isSuccess()){
                 if(queryResultDTO.getErrorMsg() == null ){
                     jsonObject.put("isSuccess", false);
@@ -211,21 +216,22 @@ public class ProjectController {
             Project project = queryResultDTO.getData();
 
             projectVO.setId(project.getId());
-            projectVO.setUpdatedAt(project.getUpdatedAt());
-            projectVO.setCreatedAt(project.getCreatedAt());
+            projectVO.setUpdatedAt(fmt.format(project.getUpdatedAt()));
+            projectVO.setCreatedAt(fmt.format(project.getCreatedAt()));
             projectVO.setCreatedBy(project.getAuthor().getAccount());
             projectVO.setDescription(project.getDescription());
             projectVO.setName(project.getName());
 
             List<RiskVO> riskVOs = new ArrayList<>();
 
+
             for(Risk risk: project.getRisks()){
                 RiskVO riskVO = new RiskVO();
                 riskVO.setId(risk.getId());
-                riskVO.setUpdatedAt(risk.getUpdatedAt());
+                riskVO.setUpdatedAt(fmt.format(risk.getUpdatedAt()));
                 riskVO.setDescription(risk.getDescription());
                 riskVO.setAuthor(risk.getAuthor().getAccount());
-                riskVO.setCreatedAt(risk.getCreatedAt());
+                riskVO.setCreatedAt(fmt.format(risk.getCreatedAt()));
                 riskVO.setHandler(risk.getHandler().getAccount());
                 riskVO.setProject(risk.getProject().getName());
                 riskVO.setTrigger(risk.getTrigger());

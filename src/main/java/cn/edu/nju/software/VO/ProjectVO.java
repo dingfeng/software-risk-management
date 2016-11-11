@@ -17,11 +17,27 @@ public class ProjectVO {
 
     private String name; //项目名称
 
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public String getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
     private String description;  //描述
 
-    private Date createdAt;  //创建时间
+    private String createdAt;  //创建时间
 
-    private Date updatedAt; //更新时间
+    private String updatedAt; //更新时间
 
     private String createdBy; //创建者
 
@@ -78,20 +94,5 @@ public class ProjectVO {
         this.description = description;
     }
 
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Date getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
-    }
 
 }

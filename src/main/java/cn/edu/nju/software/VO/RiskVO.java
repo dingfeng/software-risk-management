@@ -90,21 +90,6 @@ public class RiskVO {
         this.project = project;
     }
 
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Date getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
-    }
 
     private String status; //状态
 
@@ -133,8 +118,23 @@ public class RiskVO {
     private String project ;// 所属项目
 
 
-    private Date createdAt; //创建时间
+    private String createdAt; //创建时间
 
+    public String getCreatedAt() {
+        return createdAt;
+    }
 
-    private Date updatedAt; //更新时间
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public String getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    private String updatedAt; //更新时间
 }
