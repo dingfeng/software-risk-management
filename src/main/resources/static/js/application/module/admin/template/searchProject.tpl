@@ -6,6 +6,8 @@
             <th>描述</th>
             <th>创建人</th>
             <th>创建时间</th>
+            <th>编辑时间</th>
+            <th>修改</th>
         </tr>
         <% _.each(data, function (item) { %>
         <tr>
@@ -14,6 +16,8 @@
             <td><%= item.description %></td>
             <td><%= item.createdBy %></td>
             <td><%= item.createdAt %></td>
+            <td><%= item.updatedAt %></td>
+            <td><a href ="#" >修改</a></td>
         </tr>
         <% }); %>
     </table>

@@ -1,6 +1,9 @@
 package cn.edu.nju.software.controller;
 
+import cn.edu.nju.software.VO.ProjectVO;
+import cn.edu.nju.software.VO.RiskVO;
 import cn.edu.nju.software.entity.Project;
+import cn.edu.nju.software.entity.Risk;
 import cn.edu.nju.software.entity.User;
 import cn.edu.nju.software.service.ProjectService;
 import cn.edu.nju.software.service.UserService;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import javax.jws.soap.SOAPBinding;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -189,6 +193,9 @@ public class ProjectController {
 
             queryResultDTO = projectService.queryProjectById(projectId);
 
+            ProjectVO projectVO = new ProjectVO();
+
+
             if(!queryResultDTO.isSuccess()){
                 if(queryResultDTO.getErrorMsg() == null ){
                     jsonObject.put("isSuccess", false);
@@ -201,8 +208,45 @@ public class ProjectController {
                 }
             }
 
+            Project project = queryResultDTO.getData();
+
+            projectVO.setId(project.getId());
+            projectVO.setUpdatedAt(project.getUpdatedAt());
+            projectVO.setCreatedAt(project.getCreatedAt());
+            projectVO.setCreatedBy(project.getAuthor().getAccount());
+            projectVO.setDescription(project.getDescription());
+            projectVO.setName(project.getName());
+
+            List<RiskVO> riskVOs = new ArrayList<>();
+
+            for(Risk risk: project.getRisks()){
+                RiskVO riskVO = new RiskVO();
+                riskVO.setId(risk.getId());
+                riskVO.setUpdatedAt(risk.getUpdatedAt());
+                riskVO.setDescription(risk.getDescription());
+                riskVO.setAuthor(risk.getAuthor().getAccount());
+                riskVO.setCreatedAt(risk.getCreatedAt());
+                riskVO.setHandler(risk.getHandler().getAccount());
+                riskVO.setProject(risk.getProject().getName());
+                riskVO.setTrigger(risk.getTrigger());
+                riskVO.setTitle(risk.getTitle());
+                riskVO.setInfluence(risk.getInfluence().getDescription());
+                riskVO.setPossibility(risk.getPossibility().getDescription());
+                riskVO.setStatus(risk.getStatus().getDescription());
+                riskVOs.add(riskVO);
+            }
+
+            projectVO.setRiskVOs(riskVOs);
+
+            List<String> joniners = new ArrayList<>();
+            for(User user : project.getCollaborators()){
+                joniners.add(user.getAccount());
+            }
+
+            projectVO.setJoiners(joniners);
+
             jsonObject.put("isSuccess",true);
-            jsonObject.put("data",queryResultDTO.getData());
+            jsonObject.put("data",projectVO);
             return jsonObject.toJSONString();
         }catch(Exception e){
             log.error("exception in project_queryProjectById",e);

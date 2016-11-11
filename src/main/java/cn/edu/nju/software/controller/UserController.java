@@ -1,5 +1,9 @@
 package cn.edu.nju.software.controller;
 
+import cn.edu.nju.software.VO.ProjectVO;
+import cn.edu.nju.software.VO.RiskVO;
+import cn.edu.nju.software.entity.Project;
+import cn.edu.nju.software.entity.Risk;
 import cn.edu.nju.software.entity.User;
 import cn.edu.nju.software.enums.UserRole;
 import cn.edu.nju.software.service.UserService;
@@ -14,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by zy118686 on 2016/11/7.
@@ -308,6 +314,8 @@ public class UserController {
 
             ResultDTO<User> userResultDTO = userService.queryUserById(String.valueOf(userId));
 
+            List<RiskVO> riskVOs = new ArrayList<>();
+
             if(!userResultDTO.isSuccess()){
                 if(userResultDTO.getErrorMsg() == null){
                     jsonObject.put("isSuccess",false);
@@ -320,8 +328,25 @@ public class UserController {
                 }
             }
 
+            for(Risk risk: userResultDTO.getData().getOwnRisks()){
+                RiskVO riskVO = new RiskVO();
+                riskVO.setId(risk.getId());
+                riskVO.setUpdatedAt(risk.getUpdatedAt());
+                riskVO.setDescription(risk.getDescription());
+                riskVO.setAuthor(risk.getAuthor().getAccount());
+                riskVO.setCreatedAt(risk.getCreatedAt());
+                riskVO.setHandler(risk.getHandler().getAccount());
+                riskVO.setProject(risk.getProject().getName());
+                riskVO.setTrigger(risk.getTrigger());
+                riskVO.setTitle(risk.getTitle());
+                riskVO.setInfluence(risk.getInfluence().getDescription());
+                riskVO.setPossibility(risk.getPossibility().getDescription());
+                riskVO.setStatus(risk.getStatus().getDescription());
+                riskVOs.add(riskVO);
+            }
+
             jsonObject.put("isSuccess",true);
-            jsonObject.put("data",userResultDTO.getData().getOwnRisks());
+            jsonObject.put("data",riskVOs);
             return jsonObject.toJSONString();
 
         }catch (Exception e){
@@ -342,6 +367,8 @@ public class UserController {
 
             ResultDTO<User> userResultDTO = userService.queryUserById(String.valueOf(userId));
 
+            List<RiskVO> riskVOs = new ArrayList<>();
+
             if(!userResultDTO.isSuccess()){
                 if(userResultDTO.getErrorMsg() == null){
                     jsonObject.put("isSuccess",false);
@@ -354,8 +381,25 @@ public class UserController {
                 }
             }
 
+            for(Risk risk: userResultDTO.getData().getHandleRisks()){
+                RiskVO riskVO = new RiskVO();
+                riskVO.setId(risk.getId());
+                riskVO.setUpdatedAt(risk.getUpdatedAt());
+                riskVO.setDescription(risk.getDescription());
+                riskVO.setAuthor(risk.getAuthor().getAccount());
+                riskVO.setCreatedAt(risk.getCreatedAt());
+                riskVO.setHandler(risk.getHandler().getAccount());
+                riskVO.setProject(risk.getProject().getName());
+                riskVO.setTrigger(risk.getTrigger());
+                riskVO.setTitle(risk.getTitle());
+                riskVO.setInfluence(risk.getInfluence().getDescription());
+                riskVO.setPossibility(risk.getPossibility().getDescription());
+                riskVO.setStatus(risk.getStatus().getDescription());
+                riskVOs.add(riskVO);
+            }
+
             jsonObject.put("isSuccess",true);
-            jsonObject.put("data",userResultDTO.getData().getHandleRisks());
+            jsonObject.put("data",riskVOs);
             return jsonObject.toJSONString();
 
         }catch (Exception e){
@@ -376,6 +420,8 @@ public class UserController {
 
             ResultDTO<User> userResultDTO = userService.queryUserById(String.valueOf(userId));
 
+            List<ProjectVO> projectVOs = new ArrayList<>();
+
             if(!userResultDTO.isSuccess()){
                 if(userResultDTO.getErrorMsg() == null){
                     jsonObject.put("isSuccess",false);
@@ -388,8 +434,19 @@ public class UserController {
                 }
             }
 
+            for(Project project : userResultDTO.getData().getOwnProjects()){
+                 ProjectVO projectVO = new ProjectVO();
+                 projectVO.setId(project.getId());
+                 projectVO.setUpdatedAt(project.getUpdatedAt());
+                 projectVO.setCreatedAt(project.getCreatedAt());
+                 projectVO.setCreatedBy((String)httpSession.getAttribute("userName"));
+                 projectVO.setDescription(project.getDescription());
+                 projectVO.setName(project.getName());
+                 projectVOs.add(projectVO);
+            }
+
             jsonObject.put("isSuccess",true);
-            jsonObject.put("data",userResultDTO.getData().getOwnProjects());
+            jsonObject.put("data",projectVOs);
             return jsonObject.toJSONString();
 
         }catch (Exception e){
@@ -411,6 +468,8 @@ public class UserController {
 
             ResultDTO<User> userResultDTO = userService.queryUserById(String.valueOf(userId));
 
+            List<ProjectVO> projectVOs = new ArrayList<>();
+
             if(!userResultDTO.isSuccess()){
                 if(userResultDTO.getErrorMsg() == null){
                     jsonObject.put("isSuccess",false);
@@ -423,8 +482,19 @@ public class UserController {
                 }
             }
 
+            for(Project project : userResultDTO.getData().getOwnProjects()){
+                ProjectVO projectVO = new ProjectVO();
+                projectVO.setId(project.getId());
+                projectVO.setUpdatedAt(project.getUpdatedAt());
+                projectVO.setCreatedAt(project.getCreatedAt());
+                projectVO.setCreatedBy(project.getAuthor().getAccount());
+                projectVO.setDescription(project.getDescription());
+                projectVO.setName(project.getName());
+                projectVOs.add(projectVO);
+            }
+
             jsonObject.put("isSuccess",true);
-            jsonObject.put("data",userResultDTO.getData().getJoinProjects());
+            jsonObject.put("data",projectVOs);
             return jsonObject.toJSONString();
 
         }catch (Exception e){

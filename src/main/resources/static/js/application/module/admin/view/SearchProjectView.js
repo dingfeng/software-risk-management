@@ -19,26 +19,34 @@ define(["common/view/BaseView", "../model/SearchProjectCollection", "../model/Se
             render: function () {
                 SearchProjectView.__super__.render.call(this);
                 this.model.reset();
+
+                var that = this;
                 $.ajax({
                     type: "POST",
-                    url: "/ordinary/searchProject",
+                    url: "/user/getProjectCreate",
                     data: "sessionid=" + Util.getSessionId(),
                     // error: function () {
                     //     window.location.href = "#login";
                     // },
+
+
+
                     success: function (data) {
-                        _.each(data, function (value) {
-                            this.model.add(new SearchProjectModel(value));
+
+                        var obj =eval("("+data+")");
+                        _.each(obj.data, function (value) {
+                            that.model.add(new SearchProjectModel(value));
                         });
                     }
                 });
-                this.model.add(new SearchProjectModel({
-                    id: '编号1',
-                    name: '项目名1',
-                    description: '描述1',
-                    createdBy: '创建人1',
-                    createdAt: '创建时间1',
-                }));
+
+                // this.model.add(new SearchProjectModel({
+                //     id: '编号1',
+                //     name: '项目名1',
+                //     description: '描述1',
+                //     createdBy: '创建人1',
+                //     createdAt: '创建时间1',
+                // }));
             },
             detail: function() {
 

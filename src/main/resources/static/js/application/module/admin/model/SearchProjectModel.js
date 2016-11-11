@@ -12,6 +12,7 @@ define(["common/model/BaseModel"], function (BaseModel) {
             description: '描述',
             createdBy: '创建人',
             createdAt: '创建时间',
+            updatedAt: '编辑时间',
         },
     });
     return SearchProjectModel;

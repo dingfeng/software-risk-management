@@ -13,13 +13,12 @@ define(["backbone", "common/view/MainView", "./module/authority/view/LoginView",
                 "main": "main",
                 "admin/add": "adminAddUser",
 
+                "admin/searchProject":"searchProject",
 
                 "manager": "adminAddUser",
 
 
                 "ordinary": "adminAddUser",
-
-                "ordinary/searchProject": "ordinarySearchProject",
 
                 "teams": "getTeams",
                 "teams/:country": "getTeamsCountry",
@@ -47,17 +46,30 @@ define(["backbone", "common/view/MainView", "./module/authority/view/LoginView",
                         that.navigate('login', {trigger: true, replace: true});
                     },
                     success: function (data) {
-                        if (data === 'admin') {
-                            that.navigate('admin/add', {trigger: true, replace: true});
-                        } else if (data === 'manager') {
-                            that.navigate('manager', {trigger: true, replace: true});
-                        } else if (data === 'ordinary') {
-                            that.navigate('ordinary', {trigger: true, replace: true});
-                        } else {
-                            that.navigate('login', {trigger: true, replace: true});
-                        }
+                        that.navigate('admin/add', {trigger: true, replace: true});
                     }
                 });
+            },
+
+            searchProject: function () {
+                var mainView = new MainView();
+
+                mainView.asideView.model.reset();
+
+                mainView.asideView.model.add(new AsideModel({
+                    id: '0',
+                    name: '创建项目',
+                    url: '#admin/add',
+                    active: false,
+                }));
+
+                mainView.asideView.model.add(new AsideModel({
+                    id: '1',
+                    name: '我创建的项目',
+                    url: '#admin/searchProject',
+                    active: true,
+                }));
+                mainView.contentView = new  SearchProjectView();
             },
 
             adminAddUser: function () {
@@ -66,29 +78,16 @@ define(["backbone", "common/view/MainView", "./module/authority/view/LoginView",
                 mainView.asideView.model.add(new AsideModel({
                     id: '0',
                     name: '创建项目',
-                    url: '#admin/addUser',
+                    url: '#admin/add',
                     active: true,
                 }));
                 mainView.asideView.model.add(new AsideModel({
                     id: '1',
-                    name: '查找用户',
-                    url: '#admin/searchUser',
+                    name: '我创建的项目',
+                    url: '#admin/searchProject',
                     active: false,
                 }));
                 mainView.contentView = new AdminAddUserView();
-            },
-
-            ordinarySearchProject: function() {
-                var mainView = new MainView();
-                mainView.asideView.model.reset();
-                mainView.asideView.model.add(new AsideModel({
-                    id: '0',
-                    name: '查看项目',
-                    url: '#admin/addUser',
-                    active: true,
-                }));
-                // $("#inaside.item").on("click", mainView.asideView.goto, mainView.asideView);
-                mainView.contentView = new SearchProjectView();
             },
 
             getTeams: function () {

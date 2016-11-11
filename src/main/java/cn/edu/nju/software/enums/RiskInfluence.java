@@ -6,5 +6,21 @@ package cn.edu.nju.software.enums;
  * @see RiskInfluence
  */
 public enum RiskInfluence {
-    HIGH,MEDIUM,LOW
+
+    HIGH(1,"高"),
+    MEDIUM(2, "中"),
+    LOW(3, "低");
+
+
+    private Integer type;
+    private String description;
+
+    RiskInfluence(Integer type, String desc) {
+        this.type = type;
+        this.description = desc;
+    }
+
+    public String getDescription() {
+        return description;
+    }
 }

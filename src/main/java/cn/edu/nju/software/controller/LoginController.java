@@ -91,9 +91,10 @@ public class LoginController {
         }
     }
 
-    @RequestMapping(value = "/role")
+    @RequestMapping(value = "/role", method = RequestMethod.POST)
     @ResponseBody
     public String getRole(HttpSession httpSession) {
+        //System.out.println(sessionid);
         return "admin";
     }
 
