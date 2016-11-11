@@ -1,5 +1,5 @@
-define(["backbone", "common/view/MainView", "./module/authority/view/LoginView", "./module/admin/view/AddUserView", "./module/admin/view/SearchProjectView", "common/model/AsideModel", "common/util"],
-    function (Backbone, MainView, LoginView, AdminAddUserView, SearchProjectView, AsideModel, Util) {
+define(["backbone", "common/view/MainView", "./module/authority/view/LoginView", "./module/admin/view/AddUserView", "./module/admin/view/SearchProjectView", "./module/admin/view/DetailProjectView", "./module/admin/view/DetailRiskView", "./module/admin/view/DetailProjectAddPersonView", "common/model/AsideModel", "common/util"],
+    function (Backbone, MainView, LoginView, AdminAddUserView, SearchProjectView, DetailProjectView, DetailRiskView, DetailProjectAddPersonView, AsideModel, Util) {
         var Routers = Backbone.Router.extend({
             initialize: function () {
                 console.log("Route initialize");
@@ -13,7 +13,10 @@ define(["backbone", "common/view/MainView", "./module/authority/view/LoginView",
                 "main": "main",
                 "admin/add": "adminAddUser",
 
-                "admin/searchProject":"searchProject",
+                "admin/searchProject": "searchProject",
+                "admin/detailProject/:id": "detailProject",
+                "admin/detailProject/:projectId/addPerson": "projectAddPerson",
+                "admin/detailProject/:projectId/addRisk": "projectAddRisk",
 
                 "manager": "adminAddUser",
 
@@ -28,7 +31,8 @@ define(["backbone", "common/view/MainView", "./module/authority/view/LoginView",
 
             index: function () {
                 // new AdminAddUserView();
-                this.navigate('login', {trigger: true, replace: true});
+                // this.navigate('login', {trigger: true, replace: true});
+                this.navigate('admin/detailProject/1', {trigger: true, replace: true});
             },
 
             login: function () {
@@ -69,7 +73,29 @@ define(["backbone", "common/view/MainView", "./module/authority/view/LoginView",
                     url: '#admin/searchProject',
                     active: true,
                 }));
-                mainView.contentView = new  SearchProjectView();
+                mainView.contentView = new SearchProjectView();
+            },
+
+            detailProject: function (id) {
+                var mainView = new MainView();
+
+                mainView.asideView.model.reset();
+
+                mainView.asideView.model.add(new AsideModel({
+                    id: '0',
+                    name: '创建项目',
+                    url: '#admin/add',
+                    active: false,
+                }));
+
+                mainView.asideView.model.add(new AsideModel({
+                    id: '1',
+                    name: '我创建的项目',
+                    url: '#admin/searchProject',
+                    active: true,
+                }));
+                mainView.contentView = new DetailProjectView();
+                mainView.contentView.projectId = id;
             },
 
             adminAddUser: function () {
@@ -88,6 +114,49 @@ define(["backbone", "common/view/MainView", "./module/authority/view/LoginView",
                     active: false,
                 }));
                 mainView.contentView = new AdminAddUserView();
+            },
+            projectAddPerson: function (projectId) {
+                var mainView = new MainView();
+
+                mainView.asideView.model.reset();
+
+                mainView.asideView.model.add(new AsideModel({
+                    id: '0',
+                    name: '创建项目',
+                    url: '#admin/add',
+                    active: false,
+                }));
+
+                mainView.asideView.model.add(new AsideModel({
+                    id: '1',
+                    name: '我创建的项目',
+                    url: '#admin/searchProject',
+                    active: true,
+                }));
+                mainView.contentView = new DetailProjectAddPersonView();
+                mainView.contentView.projectId = projectId;
+            },
+
+            projectAddRisk: function (projectId) {
+                var mainView = new MainView();
+
+                mainView.asideView.model.reset();
+
+                mainView.asideView.model.add(new AsideModel({
+                    id: '0',
+                    name: '创建项目',
+                    url: '#admin/add',
+                    active: false,
+                }));
+
+                mainView.asideView.model.add(new AsideModel({
+                    id: '1',
+                    name: '我创建的项目',
+                    url: '#admin/searchProject',
+                    active: true,
+                }));
+                mainView.contentView = new DetailRiskView();
+                mainView.contentView.projectId = projectId;
             },
 
             getTeams: function () {
