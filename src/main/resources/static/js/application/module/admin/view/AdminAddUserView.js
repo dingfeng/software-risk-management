@@ -3,7 +3,7 @@
  */
 define(["common/view/BaseView", "../model/AddUserModel", "text!../template/addUser.tpl", "text!../css/addUser.css"],
     function (BaseView, AddUserModel, AddUserTpl, AddUserCss) {
-        var AddUserView = BaseView.extend({
+        var AdminAddUserView = BaseView.extend({
             initialize: function () {
                 AddUserView.__super__.initialize.call(this);
             },
@@ -63,5 +63,5 @@ define(["common/view/BaseView", "../model/AddUserModel", "text!../template/addUs
                 });
             }
         });
-        return AddUserView;
+        return AdminAddUserView;
     });

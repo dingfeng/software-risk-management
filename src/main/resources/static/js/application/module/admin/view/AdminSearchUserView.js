@@ -3,10 +3,10 @@
  */
 define(["common/view/BaseView", "../model/SearchUserCollection", "../model/SearchUserModel", "text!../template/searchUser.tpl", "text!../css/searchUser.css", "common/util"],
     function (BaseView, SearchUserCollection, SearchUserModel, SearchUserTpl, SearchUserCss, Util) {
-        var SearchUserView = BaseView.extend({
+        var AdminSearchUserView = BaseView.extend({
             initialize: function () {
                 if (this.sync) this.model.on("add", this.setTpl, this);
-                SearchUserView.__super__.initialize.call(this);
+                AdminSearchUserView.__super__.initialize.call(this);
             },
             el: '#content',
             title: '查看人员',
@@ -37,7 +37,6 @@ define(["common/view/BaseView", "../model/SearchUserCollection", "../model/Searc
                               window.location.reload();
                       }
                      });
-               console.log("deleteUser");
             }
             ,
             render: function () {
@@ -76,5 +75,5 @@ define(["common/view/BaseView", "../model/SearchUserCollection", "../model/Searc
 
             }
         });
-        return SearchUserView;
+        return AdminSearchUserView;
     });
