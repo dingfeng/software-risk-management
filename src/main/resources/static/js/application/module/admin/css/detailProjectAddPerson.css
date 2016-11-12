@@ -1,0 +1,17 @@
+#detailProjectAddPerson {
+    width: 100%;
+    height:100%;
+}
+
+#detailProjectAddPerson div {
+    height: 40px;
+}
+
+#detailProjectAddPerson button {
+    width: 100px;
+    height: 30px;
+}
+
+#detailProjectAddPerson button:hover {
+    cursor: pointer;
+}
