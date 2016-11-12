@@ -11,8 +11,8 @@ define(["common/model/BaseModel"], function (BaseModel) {
         defaults: {
             // urlRoot : '/specialTeams',
             // url : '/specialTeams',
-            username: 'username',
-            password: 'password',
+            username: '',
+            password: '',
             errorMsg: '',
         },
         changeEvent: function () {

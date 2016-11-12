@@ -190,17 +190,17 @@ public class UserController {
             Integer roleInt = Integer.parseInt(role);
 
             switch (roleInt) {
-                case 1: {
+                case 0: {
                     user.setRole(UserRole.SYSTEM_MANAGER);
                     break;
                 }
 
-                case 2: {
+                case 1: {
                     user.setRole(UserRole.DIRECTOR);
                     break;
                 }
 
-                case 3: {
+                case 2: {
                     user.setRole(UserRole.NORMAL);
                     break;
                 }

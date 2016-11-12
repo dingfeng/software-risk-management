@@ -20,7 +20,7 @@
     color: red;
 }
 
-#adminAddUser form.addUser #username, #adminAddUser form.addUser #password, #adminAddUser form.addUser #role {
+#adminAddUser form.addUser #username, #adminAddUser form.addUser #password, #adminAddUser form.addUser #email, #adminAddUser form.addUser #role {
     width: 200px;
 }
 

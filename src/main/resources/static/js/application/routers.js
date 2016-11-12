@@ -1,5 +1,5 @@
-define(["backbone", "common/view/MainView", "./module/authority/view/LoginView", "./module/admin/view/AddUserView", "./module/admin/view/SearchProjectView", "common/model/AsideModel", "common/util"],
-    function (Backbone, MainView, LoginView, AddUserView, SearchProjectView, AsideModel, Util) {
+define(["backbone", "common/view/MainView", "./module/authority/view/LoginView", "./module/admin/view/AddUserView", "./module/admin/view/SearchProjectView", "./module/admin/view/SearchUserView","common/model/AsideModel", "common/util"],
+    function (Backbone, MainView, LoginView, AddUserView, SearchProjectView, SearchUserView,AsideModel, Util) {
         var Routers = Backbone.Router.extend({
             initialize: function () {
                 console.log("Route initialize");

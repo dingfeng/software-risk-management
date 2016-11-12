@@ -2,22 +2,22 @@
  * Created by 邹玉鑫 on 2016/11/10.
  */
 define(["common/view/BaseView", "../model/SearchUserCollection", "../model/SearchUserModel", "text!../template/searchUser.tpl", "text!../css/searchUser.css", "common/util"],
-    function (BaseView, SearchProjectCollection, SearchProjectModel, SearchProjectTpl, SearchProjectCss, Util) {
-        var SearchProjectView = BaseView.extend({
+    function (BaseView, SearchUserCollection, SearchUserModel, SearchUserTpl, SearchUserCss, Util) {
+        var SearchUserView = BaseView.extend({
             initialize: function () {
                 if (this.sync) this.model.on("add", this.setTpl, this);
-                SearchProjectView.__super__.initialize.call(this);
+                SearchUserView.__super__.initialize.call(this);
             },
             el: '#content',
             title: '查看人员',
-            model: new SearchProjectCollection,
-            tpl: SearchProjectTpl,
-            css: SearchProjectCss,
+            model: new SearchUserCollection,
+            tpl: SearchUserTpl,
+            css: SearchUserCss,
             events: {
                 "click .item": "detail"
             },
             render: function () {
-                SearchProjectView.__super__.render.call(this);
+                SearchUserView.__super__.render.call(this);
                 this.model.reset();
 
                 var that = this;
@@ -35,7 +35,7 @@ define(["common/view/BaseView", "../model/SearchUserCollection", "../model/Searc
 
                         var obj =eval("("+data+")");
                         _.each(obj.data, function (value) {
-                            that.model.add(new SearchProjectModel(value));
+                            that.model.add(new SearchUserModel(value));
                         });
                     }
                 });
@@ -52,5 +52,5 @@ define(["common/view/BaseView", "../model/SearchUserCollection", "../model/Searc
 
             }
         });
-        return SearchProjectView;
+        return SearchUserView;
     });

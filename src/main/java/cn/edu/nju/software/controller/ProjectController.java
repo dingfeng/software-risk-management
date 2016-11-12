@@ -2,6 +2,7 @@ package cn.edu.nju.software.controller;
 
 import cn.edu.nju.software.VO.ProjectVO;
 import cn.edu.nju.software.VO.RiskVO;
+import cn.edu.nju.software.VO.UserVO;
 import cn.edu.nju.software.entity.Project;
 import cn.edu.nju.software.entity.Risk;
 import cn.edu.nju.software.entity.User;
@@ -263,6 +264,27 @@ public class ProjectController {
 
     }
 
-
+    @RequestMapping("/allProject")
+    public String allProject(HttpSession httpSession){
+        JSONObject jsonObject = new JSONObject();
+        ResultDTO<List<Project>> projectListResult = projectService.queryProject();
+        List<Project> projectList = projectListResult.getData();
+        DateFormat fmt =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        List<ProjectVO>  projectVOList = new ArrayList<>();
+        for(Project project : projectList)
+        {
+            ProjectVO projectVO = new ProjectVO();
+            projectVO.setId(project.getId());
+            projectVO.setUpdatedAt(fmt.format(project.getUpdatedAt()));
+            projectVO.setCreatedAt(fmt.format(project.getCreatedAt()));
+            projectVO.setCreatedBy(project.getAuthor().getAccount());
+            projectVO.setDescription(project.getDescription());
+            projectVO.setName(project.getName());
+            projectVOList.add(projectVO);
+        }
+        jsonObject.put("isSuccess",true);
+        jsonObject.put("data",projectVOList);
+        return jsonObject.toJSONString();
+    }
 
 }

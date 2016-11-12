@@ -23,7 +23,7 @@ define(["common/view/BaseView", "../model/SearchProjectCollection", "../model/Se
                 var that = this;
                 $.ajax({
                     type: "POST",
-                    url: "/user/getProjectCreate",
+                    url: "/project/allProject",
                     data: "sessionid=" + Util.getSessionId(),
                     // error: function () {
                     //     window.location.href = "#login";

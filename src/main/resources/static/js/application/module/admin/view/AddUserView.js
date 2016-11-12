@@ -44,7 +44,7 @@ define(["common/view/BaseView", "../model/AddUserModel", "text!../template/addUs
                 $.ajax({
                     type: "POST",
                     url: "/user/register",
-                    data: _.pick(data, 'account', 'password','role','email'),
+                    data: _.pick(data, 'username', 'password','role','email'),
                     // async: false,
                     error: function () {
                         alert("error")
