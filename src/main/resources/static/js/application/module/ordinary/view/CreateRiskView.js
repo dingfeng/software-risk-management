@@ -1,37 +1,39 @@
-define(["common/view/BaseView", "../model/DetailRiskModel", "text!../template/detailRisk.tpl", "text!../css/detailRisk.css", "common/util"],
-    function (BaseView, DetailRiskModel, DetailRiskTpl, DetailRiskCss, Util) {
-        var DetailRiskView = BaseView.extend({
+/**
+ * Created by 邹玉鑫 on 2016/11/12.
+ */
+define(["common/view/BaseView", "../model/DetailRiskModel", "text!../template/createRisk.tpl", "text!../css/createRisk.css", "common/util"],
+    function (BaseView, DetailRiskModel, CreateRiskTpl, CreateRiskCss, Util) {
+        var CreateRiskView = BaseView.extend({
             initialize: function () {
-                DetailRiskView.__super__.initialize.call(this);
+                CreateRiskView.__super__.initialize.call(this);
             },
             el: '#content',
             title: '创建新风险',
             model: new DetailRiskModel,
-            tpl: DetailRiskTpl,
-            css: DetailRiskCss,
+            tpl: CreateRiskTpl,
+            css: CreateRiskCss,
             projectId: '',
-            riskId: '',
             events: {
                 "click button.ok": "ok",
                 "click button.cancel": "cancel",
             },
             render: function () {
-                DetailRiskView.__super__.render.call(this);
+                CreateRiskView.__super__.render.call(this);
                 var that = this;
-                // $.ajax({
-                //     type: "POST",
-                //     url: "/user/getProjectCreate",
-                //     data: "sessionid=" + Util.getSessionId(),
-                //     // error: function () {
-                //     //     window.location.href = "#login";
-                //     // },
-                //     success: function (data) {
-                //         var obj =eval("("+data+")");
-                //         _.each(obj.data, function (value) {
-                //             that.model.add(new SearchProjectModel(value));
-                //         });
-                //     }
-                // });
+                $.ajax({
+                    type: "POST",
+                    url: "/user/getProjectCreate",
+                    data: "projectId=" + that.projectId,
+                    // error: function () {
+                    //     window.location.href = "#login";
+                    // },
+                    success: function (data) {
+                        var obj = eval("(" + data + ")");
+                        _.each(obj.data, function (value) {
+                            that.model.add(new SearchProjectModel(value));
+                        });
+                    }
+                });
 
                 // this.model.add(new SearchProjectModel({
                 //     id: '编号1',
@@ -43,14 +45,15 @@ define(["common/view/BaseView", "../model/DetailRiskModel", "text!../template/de
             },
             ok: function () {
                 var data = {};
-                $("#detailRisk form").serializeArray().map(function (x) {
+                $("form.createRisk").serializeArray().map(function (x) {
                     data[x.name] = x.value;
                 });
                 this.model.set(data);
+                data.projectId = this.projectId;
                 $.ajax({
                     type: "POST",
                     url: "/project/createProject",
-                    data: this.model.attributes,
+                    data: data, //_.pick(data, 'projectName', 'description'),
                     // async: false,
                     error: function () {
                         alert("服务器错误");
@@ -58,7 +61,7 @@ define(["common/view/BaseView", "../model/DetailRiskModel", "text!../template/de
                     success: function (data) {
                         var obj = eval("(" + data + ")");
                         if (obj.isSuccess) {
-                            alert("保存成功！");
+                            alert("创建成功！");
                         } else {
                             alert(obj.errMsg);
                         }
@@ -69,5 +72,5 @@ define(["common/view/BaseView", "../model/DetailRiskModel", "text!../template/de
                 window.location.href = "#ordinary/detailProject/" + this.projectId;
             },
         });
-        return DetailRiskView;
+        return CreateRiskView;
     });

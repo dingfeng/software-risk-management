@@ -1,8 +1,8 @@
 /**
  * Created by zy118686 on 2016/11/12.
  */
-define(["common/view/BaseView", "../model/SearchProjectCollection", "../model/SearchProjectModel", "text!../template/searchMyJoinProject.tpl", "text!../css/searchProject.css", "common/util"],
-    function (BaseView, SearchProjectCollection, SearchProjectModel, SearchProjectTpl, SearchProjectCss, Util) {
+define(["common/view/BaseView", "../model/SearchProjectCollection", "../model/DetailProjectModel", "text!../template/searchMyJoinProject.tpl", "text!../css/searchProject.css", "common/util"],
+    function (BaseView, SearchProjectCollection, DetailProjectModel, SearchProjectTpl, SearchProjectCss, Util) {
         var SearchProjectView = BaseView.extend({
             initialize: function () {
                 if (this.sync) this.model.on("add", this.setTpl, this);
@@ -35,12 +35,12 @@ define(["common/view/BaseView", "../model/SearchProjectCollection", "../model/Se
 
                         var obj =eval("("+data+")");
                         _.each(obj.data, function (value) {
-                            that.model.add(new SearchProjectModel(value));
+                            that.model.add(new DetailProjectModel(value));
                         });
                     }
                 });
 
-                // this.model.add(new SearchProjectModel({
+                // this.model.add(new DetailProjectModel({
                 //     id: '编号1',
                 //     name: '项目名1',
                 //     description: '描述1',

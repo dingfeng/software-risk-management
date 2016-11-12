@@ -1,15 +1,15 @@
 /**
  * Created by 邹玉鑫 on 2016/11/12.
  */
-define(["common/view/BaseView", "../model/CreateProjectModel", "text!../template/createProject.tpl", "text!../css/createProject.css"],
-    function (BaseView, CreateProjectModel, CreateProjectTpl, CreateProjectCss) {
+define(["common/view/BaseView", "../model/DetailProjectModel", "text!../template/createProject.tpl", "text!../css/createProject.css"],
+    function (BaseView, DetailProjectModel, CreateProjectTpl, CreateProjectCss) {
         var CreateProjectView = BaseView.extend({
             initialize: function () {
                 CreateProjectView.__super__.initialize.call(this);
             },
             el: '#content',
             title: '创建项目',
-            model: new CreateProjectModel,
+            model: new DetailProjectModel,
             tpl: CreateProjectTpl,
             css: CreateProjectCss,
             events: {
@@ -21,7 +21,6 @@ define(["common/view/BaseView", "../model/CreateProjectModel", "text!../template
                     data[x.name] = x.value;
                 });
                 this.model.set(data);
-                var that = this;
                 $.ajax({
                     type: "POST",
                     url: "/project/createProject",
