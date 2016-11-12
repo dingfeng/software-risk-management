@@ -14,8 +14,8 @@
             <td><%= item.account %></td>
             <td><%= item.email %></td>
             <td><%= item.role %></td>
-            <td><a href ="#" >修改</a></td>
-            <th><a href ="#" >删除</a></th>
+            <td><input class="modify" type="button"  value="修改"></td>
+            <th><input class="deleteUser" id="<%= item.id%>" type="button" value="删除"></th>
         </tr>
         <% }); %>
     </table>

@@ -90,6 +90,10 @@ public class ProjectServiceImpl implements ProjectService{
 
     @Override
     public ResultDTO<List<Project>> queryProject() {
-        return null;
+        List<Project> projectList = projectDao.findAll();
+        ResultDTO<List<Project>> projectListResult = new ResultDTO<>();
+        projectListResult.setSuccess(true);
+        projectListResult.setData(projectList);
+        return projectListResult;
     }
 }

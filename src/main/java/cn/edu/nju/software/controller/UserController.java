@@ -13,6 +13,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.google.common.base.Charsets;
 import com.google.common.hash.Hashing;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -553,5 +554,16 @@ public class UserController {
         jsonObject.put("data",userVoList);
         return jsonObject.toJSONString();
     }
+
+    @RequestMapping(value="/delete")
+    public String delete(@RequestParam(value="userId", defaultValue="") String userId,HttpSession httpSession){
+        userService.deleteUser(Long.parseLong(userId));
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("isSuccess",true);
+        jsonObject.put("data","");
+        return jsonObject.toJSONString();
+    }
+
+
 
 }

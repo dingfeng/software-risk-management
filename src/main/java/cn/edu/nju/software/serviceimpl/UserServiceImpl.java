@@ -45,10 +45,10 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public ResultDTO<User> deleteUser(User user) {
+    public ResultDTO<User> deleteUser(Long id ) {
         ResultDTO<User> resultDTO = new ResultDTO<User>();
         try {
-            userDao.delete(user);
+            userDao.delete(id);
             resultDTO.setData(null);
             resultDTO.setSuccess(true);
         }catch(Exception e){

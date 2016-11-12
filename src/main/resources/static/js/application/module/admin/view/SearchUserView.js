@@ -14,8 +14,32 @@ define(["common/view/BaseView", "../model/SearchUserCollection", "../model/Searc
             tpl: SearchUserTpl,
             css: SearchUserCss,
             events: {
-                "click .item": "detail"
+                "click .item": "detail",
+                 "click .modify" : "modify",
+                 "click .deleteUser" : "deleteUser"
             },
+            modify : function (e)
+            {
+              console.log(e);
+              console.log("modify clicked");
+            },
+
+            deleteUser : function (e)
+            {
+               var target = e.target;
+               var userId = $(target).attr("id");
+               $.ajax({
+                     type: "POST",
+                      url: "/user/delete",
+                      data: "userId="+userId,
+                      success: function (data) {
+                              console.log("success");
+                              window.location.reload();
+                      }
+                     });
+               console.log("deleteUser");
+            }
+            ,
             render: function () {
                 SearchUserView.__super__.render.call(this);
                 this.model.reset();

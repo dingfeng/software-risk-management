@@ -12,7 +12,7 @@ public interface UserService {
 
     public ResultDTO<User> saveorUpdateUser(User user);
 
-    public ResultDTO<User> deleteUser(User user);
+    public ResultDTO<User> deleteUser(Long id);
 
     public ResultDTO<User> queryUserById(String Id);
 
