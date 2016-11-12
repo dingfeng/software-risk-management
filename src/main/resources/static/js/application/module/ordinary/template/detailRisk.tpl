@@ -1,7 +1,7 @@
 <div id="detailRisk">
     <form>
         <div class="title">
-            <label for="title">项 目 名：</label>
+            <label for="title">标　　题：</label>
             <input id="title" name="title" type="text" value="<%= data.title %>">
         </div>
         <div class="description">
