@@ -22,46 +22,24 @@ define(["common/view/BaseView", "../model/CreateProjectModel", "text!../template
                 });
                 this.model.set(data);
                 var that = this;
-                this.verify(data, function (errorMsg) {
-                    if (errorMsg) {
-                        that.model.set({
-                            errorMsg: errorMsg,
-                        });
-                        return;
-                    } else {
-                        that.model.set({
-                            errorMsg: '',
-                        });
-                    }
-                    alert("创建成功！");
-                });
-            },
-            verify: function (data, callback) {
-                //if (!data.username || !data.password) {
-                //    callback('用户名或密码不能为空');
-                //    return;
-                //}
                 $.ajax({
                     type: "POST",
                     url: "/project/createProject",
-                    data: _.pick(data, 'projectName', 'description'),
+                    data: data, //_.pick(data, 'projectName', 'description'),
                     // async: false,
                     error: function () {
-                        alert("error")
-                        callback('服务器验证错误');
+                        alert("服务器验证错误");
                     },
                     success: function (data) {
-
-                        var obj =eval("("+data+")");
-
+                        var obj = eval("(" + data + ")");
                         if (obj.isSuccess) {
-                            callback('');
+                            alert("创建成功！");
                         } else {
-                            callback(obj.errMsg);
+                            alert(obj.errMsg);
                         }
                     }
                 });
-            }
+            },
         });
         return CreateProjectView;
     });

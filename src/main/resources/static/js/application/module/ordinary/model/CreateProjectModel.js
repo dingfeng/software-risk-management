@@ -9,7 +9,6 @@ define(["common/model/BaseModel"], function (BaseModel) {
         defaults: {
             projectName: 'username',
             description: 'password',
-            errorMsg: '',
         },
     });
     return CreateProjectModel;

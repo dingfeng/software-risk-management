@@ -1,9 +1,6 @@
 <div id="createProject">
     <form class="createProject">
         <div>
-            <p class="errMsg"><%= data.errorMsg %>　</p>
-        </div>
-        <div>
             <label for="projectName">项目名：</label>
             <input id="projectName" name="projectName" type="text" value="<%= data.projectName %>">
         </div>
