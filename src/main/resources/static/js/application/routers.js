@@ -1,5 +1,17 @@
-define(["backbone", "common/view/MainView", "./module/authority/view/LoginView", "./module/admin/view/AddUserView", "./module/ordinary/view/SearchProjectView", "./module/ordinary/view/SearchRiskView", "./module/ordinary/view/SearchMyJoinProjectView", "./module/ordinary/view/SearchMyHandlerRiskView", "./module/ordinary/view/DetailProjectView", "./module/ordinary/view/DetailRiskView", "./module/ordinary/view/DetailProjectAddPersonView", "common/model/AsideModel", "common/util"],
-    function (Backbone, MainView, LoginView, AdminAddUserView, SearchProjectView, SearchRiskView, SearchMyJoinProjectView, SearchMyHandlerRiskView, DetailProjectView, DetailRiskView, DetailProjectAddPersonView, AsideModel, Util) {
+define(["backbone",
+        "common/view/MainView",
+        "./module/authority/view/LoginView",
+        "./module/ordinary/view/CreateProjectView",
+        "./module/ordinary/view/SearchProjectView",
+        "./module/ordinary/view/SearchRiskView",
+        "./module/ordinary/view/SearchMyJoinProjectView",
+        "./module/ordinary/view/SearchMyHandlerRiskView",
+        "./module/ordinary/view/DetailProjectView",
+        "./module/ordinary/view/DetailRiskView",
+        "./module/ordinary/view/DetailProjectAddPersonView",
+        "common/model/AsideModel",
+        "common/util"],
+    function (Backbone, MainView, LoginView, CreateProjectView, SearchProjectView, SearchRiskView, SearchMyJoinProjectView, SearchMyHandlerRiskView, DetailProjectView, DetailRiskView, DetailProjectAddPersonView, AsideModel, Util) {
         var Routers = Backbone.Router.extend({
             initialize: function () {
                 console.log("Route initialize");
@@ -13,7 +25,7 @@ define(["backbone", "common/view/MainView", "./module/authority/view/LoginView",
                 "main": "main",
                 "admin/add": "adminAddUser",
 
-                "ordinary/addProject": "adminAddUser",
+                "ordinary/createProject": "createProject",
                 "ordinary/searchMyJoinProjectView": "searchMyJoinProjectView",
                 "ordinary/searchMyHandlerRiskView": "searchMyHandlerRiskView",
                 "ordinary/searchRisk": "searchRisk",
@@ -48,7 +60,7 @@ define(["backbone", "common/view/MainView", "./module/authority/view/LoginView",
                     },
                     success: function (data) {
                         if (data === 'admin') {
-                            that.navigate('admin/add', {trigger: true, replace: true});
+                            that.navigate('ordinary/createProject', {trigger: true, replace: true});
                         } else if (data === 'ordinary') {
                             that.navigate('ordinary', {trigger: true, replace: true});
                         } else {
@@ -63,7 +75,7 @@ define(["backbone", "common/view/MainView", "./module/authority/view/LoginView",
                 asideCollections.add(new AsideModel({
                     id: '0',
                     name: '创建项目',
-                    url: '#ordinary/addProject',
+                    url: '#ordinary/createProject',
                     active: activeId == 0 ? true : false,
                 }));
 
@@ -132,7 +144,11 @@ define(["backbone", "common/view/MainView", "./module/authority/view/LoginView",
                 this.createOrdinaryAside(0, mainView.asideView.model);
                 mainView.contentView = new AdminAddUserView();
             },
-
+            createProject: function () {
+                var mainView = new MainView();
+                this.createOrdinaryAside(0, mainView.asideView.model);
+                mainView.contentView = new CreateProjectView();
+            },
             projectAddPerson: function (projectId) {
                 var mainView = new MainView();
                 this.createOrdinaryAside(1, mainView.asideView.model);
