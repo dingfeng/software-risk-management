@@ -36,18 +36,11 @@ define(["common/view/BaseView", "../model/SearchProjectCollection", "../model/Se
             render: function () {
                 AdminSearchProjectView.__super__.render.call(this);
                 this.model.reset();
-
                 var that = this;
                 $.ajax({
                     type: "POST",
                     url: "/project/allProject",
                     data: "sessionid=" + Util.getSessionId(),
-                    // error: function () {
-                    //     window.location.href = "#login";
-                    // },
-
-
-
                     success: function (data) {
 
                         var obj =eval("("+data+")");

@@ -40,7 +40,7 @@ define(["common/view/BaseView", "../model/SearchUserCollection", "../model/Searc
             }
             ,
             render: function () {
-                SearchUserView.__super__.render.call(this);
+                AdminSearchUserView.__super__.render.call(this);
                 this.model.reset();
 
                 var that = this;

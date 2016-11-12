@@ -5,7 +5,7 @@ define(["common/view/BaseView", "../model/AddUserModel", "text!../template/addUs
     function (BaseView, AddUserModel, AddUserTpl, AddUserCss) {
         var AdminAddUserView = BaseView.extend({
             initialize: function () {
-                AddUserView.__super__.initialize.call(this);
+                AdminAddUserView.__super__.initialize.call(this);
             },
             el: '#content',
             title: '创建用户',
