@@ -13,7 +13,7 @@ public interface ProjectService {
     //update的时候，传入的Project请务必有Id
     public ResultDTO<Project>  saveorUpdateProject(Project project);
 
-    public ResultDTO<Project> deleteProject(Project project);
+    public ResultDTO<Project> deleteProject(Long id);
 
     public ResultDTO<Project> queryProjectById(String Id);
 

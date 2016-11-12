@@ -287,4 +287,14 @@ public class ProjectController {
         return jsonObject.toJSONString();
     }
 
+
+    @RequestMapping("/delete")
+    public String delete(HttpSession httpSession,@RequestParam(value="projectId", defaultValue="") String projectId){
+        JSONObject jsonObject = new JSONObject();
+        projectService.deleteProject(Long.parseLong(projectId));
+        jsonObject.put("isSuccess",true);
+        jsonObject.put("data",null);
+        return jsonObject.toJSONString();
+    }
+
 }

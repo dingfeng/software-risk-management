@@ -7,7 +7,6 @@
             <th>创建人</th>
             <th>创建时间</th>
             <th>编辑时间</th>
-            <th>修改</th>
             <th>删除</th>
         </tr>
         <% _.each(data, function (item) { %>
@@ -18,8 +17,7 @@
             <td><%= item.createdBy %></td>
             <td><%= item.createdAt %></td>
             <td><%= item.updatedAt %></td>
-            <td><a href ="#" >修改</a></td>
-            <td><a href ="#" >删除</a></td>
+            <td><input class="deleteProject" id="<%= item.id%>" type="button" value="删除"></td>
         </tr>
         <% }); %>
     </table>

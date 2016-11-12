@@ -6,6 +6,7 @@ import cn.edu.nju.software.service.ProjectService;
 import cn.edu.nju.software.util.ResultDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -45,13 +46,11 @@ public class ProjectServiceImpl implements ProjectService{
         return resultDTO;
     }
 
-    @Override
-    public ResultDTO<Project> deleteProject(Project project) {
 
+    public ResultDTO<Project> deleteProject(Long  id) {
         ResultDTO<Project> resultDTO = new ResultDTO<Project>();
-
         try {
-            projectDao.delete(project);
+            projectDao.delete(id);
             resultDTO.setData(null);
             resultDTO.setSuccess(true);
         }catch(Exception e){

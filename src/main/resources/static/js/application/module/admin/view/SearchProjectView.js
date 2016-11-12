@@ -14,8 +14,25 @@ define(["common/view/BaseView", "../model/SearchProjectCollection", "../model/Se
             tpl: SearchProjectTpl,
             css: SearchProjectCss,
             events: {
-                "click .item": "detail"
+                "click .item": "detail",
+                "click .deleteProject" : "deleteProject"
             },
+            deleteProject :function(e)
+            {
+                   var target = e.target;
+                   var projectId = $(target).attr("id");
+                   $.ajax({
+                         type: "POST",
+                          url: "/project/delete",
+                          data: "projectId="+projectId,
+                          success: function (data) {
+                                console.log("success");
+                                window.location.reload();
+                          }
+                    });
+                   console.log("deleteProject");
+            }
+            ,
             render: function () {
                 SearchProjectView.__super__.render.call(this);
                 this.model.reset();

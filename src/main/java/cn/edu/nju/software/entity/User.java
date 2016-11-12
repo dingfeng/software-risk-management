@@ -45,8 +45,7 @@ public class User implements Serializable {
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Project> joinProjects;//参与的项目
 
-    @OneToMany(mappedBy = "author")
-    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(mappedBy = "author",orphanRemoval=true)
     @Cascade(CascadeType.ALL)
     private Set<Project> ownProjects; //创建的项目
 
