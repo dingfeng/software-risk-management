@@ -2,9 +2,9 @@
  * Created by 邹玉鑫 on 2016/11/10.
  */
 define(["common/model/BaseModel"], function (BaseModel) {
-    var SearchProjectModel = BaseModel.extend({
+    var AdminSearchProjectModel = BaseModel.extend({
         initialize: function () {
-            SearchProjectModel.__super__.initialize.call(this);
+            AdminSearchProjectModel.__super__.initialize.call(this);
         },
         defaults: {
             id: '编号',
@@ -15,5 +15,5 @@ define(["common/model/BaseModel"], function (BaseModel) {
             updatedAt: '编辑时间',
         },
     });
-    return SearchProjectModel;
+    return AdminSearchProjectModel;
 });

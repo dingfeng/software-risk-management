@@ -1,8 +1,8 @@
 /**
  * Created by 邹玉鑫 on 2016/11/10.
  */
-define(["common/view/BaseView", "../model/SearchProjectCollection", "../model/SearchProjectModel", "text!../template/searchProject.tpl", "text!../css/searchProject.css", "common/util"],
-    function (BaseView, SearchProjectCollection, SearchProjectModel, SearchProjectTpl, SearchProjectCss, Util) {
+define(["common/view/BaseView", "../model/AdminSearchProjectCollection", "../model/AdminSearchProjectModel", "text!../template/searchProject.tpl", "text!../css/searchProject.css", "common/util"],
+    function (BaseView, AdminSearchProjectCollection, AdminSearchProjectModel, SearchProjectTpl, SearchProjectCss, Util) {
         var AdminSearchProjectView = BaseView.extend({
             initialize: function () {
                 if (this.sync) this.model.on("add", this.setTpl, this);
@@ -10,7 +10,7 @@ define(["common/view/BaseView", "../model/SearchProjectCollection", "../model/Se
             },
             el: '#content',
             title: '查看项目',
-            model: new SearchProjectCollection,
+            model: new AdminSearchProjectCollection,
             tpl: SearchProjectTpl,
             css: SearchProjectCss,
             events: {
@@ -42,15 +42,15 @@ define(["common/view/BaseView", "../model/SearchProjectCollection", "../model/Se
                     url: "/project/allProject",
                     data: "sessionid=" + Util.getSessionId(),
                     success: function (data) {
-
+                        console.log("data:"+data);
                         var obj =eval("("+data+")");
                         _.each(obj.data, function (value) {
-                            that.model.add(new AdminSearchProjectView(value));
+                            that.model.add(new AdminSearchProjectModel(value));
                         });
                     }
                 });
 
-                // this.model.add(new SearchProjectModel({
+                // this.model.add(new AdminSearchProjectModel({
                 //     id: '编号1',
                 //     name: '项目名1',
                 //     description: '描述1',

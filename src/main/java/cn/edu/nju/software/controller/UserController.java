@@ -134,10 +134,6 @@ public class UserController {
                     break;
                 }
 
-                case 2: {
-                    user.setRole(UserRole.DIRECTOR);
-                    break;
-                }
 
                 case 3: {
                     user.setRole(UserRole.NORMAL);
@@ -197,11 +193,6 @@ public class UserController {
                 }
 
                 case 1: {
-                    user.setRole(UserRole.DIRECTOR);
-                    break;
-                }
-
-                case 2: {
                     user.setRole(UserRole.NORMAL);
                     break;
                 }

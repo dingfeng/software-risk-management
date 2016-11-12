@@ -20,8 +20,7 @@
             <label for="role">角 色：</label>
             <select name="role" id="role">
                   <option value="0" selected>管理员</option>
-                  <option value="1">主管</option>
-                  <option value="2">普通用户</option>
+                  <option value="1">普通用户</option>
             </select>
         </div>
         <div>

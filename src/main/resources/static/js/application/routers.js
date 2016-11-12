@@ -65,7 +65,7 @@ define(["backbone",
                         if (data === 'admin') {
                             that.navigate('admin/add', {trigger: true, replace: true});
                         } else if (data === 'ordinary') {
-                            that.navigate('ordinary', {trigger: true, replace: true});
+                            that.navigate('ordinary/createProject', {trigger: true, replace: true});
                         } else {
                             that.navigate('login', {trigger: true, replace: true});
                         }

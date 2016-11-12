@@ -60,10 +60,6 @@ public class LoginController {
                         break;
                     }
 
-                    case DIRECTOR: {
-                        httpSession.setAttribute("userRole","主管");
-                        break;
-                    }
 
                     case NORMAL: {
                         httpSession.setAttribute("userRole","普通用户");
@@ -95,7 +91,12 @@ public class LoginController {
     @ResponseBody
     public String getRole(HttpSession httpSession) {
         //System.out.println(sessionid);
-        return "admin";
+        Long userId = Long.parseLong((String)httpSession.getAttribute("userId"));
+        ResultDTO<User> userResultDTO = userService.queryUserById(String.valueOf(userId));
+        User user = userResultDTO.getData();
+        UserRole userRole = user.getRole();
+        String routeName = UserRole.getRouteName(userRole);
+        return routeName;
     }
 
     @RequestMapping(value = "/username", method = RequestMethod.POST)
