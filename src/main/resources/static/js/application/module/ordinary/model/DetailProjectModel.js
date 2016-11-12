@@ -1,4 +1,4 @@
-define(["common/model/BaseModel"], function (BaseModel) {
+define(["common/model/BaseModel", "../model/SearchRiskCollection"], function (BaseModel, SearchRiskCollection) {
     var DetailProjectModel = BaseModel.extend({
         initialize: function () {
             DetailProjectModel.__super__.initialize.call(this);
@@ -11,7 +11,7 @@ define(["common/model/BaseModel"], function (BaseModel) {
             createdBy: '创建人',
             createdAt: '创建时间',
             updatedAt: '编辑时间',
-            riskList: [],
+            riskList: new SearchRiskCollection,
         },
     });
     return DetailProjectModel;

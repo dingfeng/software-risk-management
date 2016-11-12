@@ -1,0 +1,21 @@
+#createRisk {
+    width: 100%;
+    height: 100%;
+}
+
+#createRisk div {
+    height: 40px;
+}
+
+#createRisk input, #createRisk textarea {
+    width: 200px;
+}
+
+#createRisk button {
+    width: 100px;
+    height: 30px;
+}
+
+#createRisk button:hover {
+    cursor: pointer;
+}

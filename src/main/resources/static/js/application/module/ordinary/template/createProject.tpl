@@ -1,8 +1,8 @@
 <div id="createProject">
     <form class="createProject">
         <div>
-            <label for="projectName">项目名：</label>
-            <input id="projectName" name="projectName" type="text" value="<%= data.projectName %>">
+            <label for="name">项 目 名：</label>
+            <input id="name" name="name" type="text" value="<%= data.name %>">
         </div>
         <div>
             <label for="description">项目描述：</label>

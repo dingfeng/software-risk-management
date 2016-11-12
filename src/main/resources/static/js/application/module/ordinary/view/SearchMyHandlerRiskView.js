@@ -1,8 +1,8 @@
 /**
  * Created by zy118686 on 2016/11/12.
  */
-define(["common/view/BaseView", "../model/SearchRiskCollection", "../model/SearchRiskModel", "text!../template/searchRisk.tpl", "text!../css/searchRisk.css", "common/util"],
-    function (BaseView, SearchRiskCollection, SearchRiskModel, SearchRiskTpl, SearchRiskCss, Util) {
+define(["common/view/BaseView", "../model/SearchRiskCollection", "../model/DetailRiskModel", "text!../template/searchRisk.tpl", "text!../css/searchRisk.css", "common/util"],
+    function (BaseView, SearchRiskCollection, DetailRiskModel, SearchRiskTpl, SearchRiskCss, Util) {
         var SearchRiskView = BaseView.extend({
             initialize: function () {
                 if (this.sync) this.model.on("add", this.setTpl, this);
@@ -35,7 +35,7 @@ define(["common/view/BaseView", "../model/SearchRiskCollection", "../model/Searc
 
                         var obj =eval("("+data+")");
                         _.each(obj.data, function (value) {
-                            that.model.add(new SearchRiskModel(value));
+                            that.model.add(new DetailRiskModel(value));
                         });
                     }
                 });

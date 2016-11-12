@@ -8,10 +8,11 @@ define(["backbone",
         "./module/ordinary/view/SearchMyHandlerRiskView",
         "./module/ordinary/view/DetailProjectView",
         "./module/ordinary/view/DetailRiskView",
+        "./module/ordinary/view/CreateRiskView",
         "./module/ordinary/view/DetailProjectAddPersonView",
         "common/model/AsideModel",
         "common/util"],
-    function (Backbone, MainView, LoginView, CreateProjectView, SearchProjectView, SearchRiskView, SearchMyJoinProjectView, SearchMyHandlerRiskView, DetailProjectView, DetailRiskView, DetailProjectAddPersonView, AsideModel, Util) {
+    function (Backbone, MainView, LoginView, CreateProjectView, SearchProjectView, SearchRiskView, SearchMyJoinProjectView, SearchMyHandlerRiskView, DetailProjectView, DetailRiskView, CreateRiskView, DetailProjectAddPersonView, AsideModel, Util) {
         var Routers = Backbone.Router.extend({
             initialize: function () {
                 console.log("Route initialize");
@@ -33,6 +34,7 @@ define(["backbone",
                 "ordinary/detailProject/:id": "detailProject",
                 "ordinary/detailProject/:projectId/addPerson": "projectAddPerson",
                 "ordinary/detailProject/:projectId/addRisk": "projectAddRisk",
+                "ordinary/detailProject/:projectId/detailRisk/:riskId": "detailRisk",
 
                 "teams": "getTeams",
                 "teams/:country": "getTeamsCountry",
@@ -139,6 +141,14 @@ define(["backbone",
                 mainView.contentView.projectId = id;
             },
 
+            detailRisk: function(projectId, riskId) {
+                var mainView = new MainView();
+                this.createOrdinaryAside(1, mainView.asideView.model);
+                mainView.contentView = new DetailRiskView();
+                mainView.contentView.projectId = projectId;
+                mainView.contentView.riskId = riskId;
+            },
+
             adminAddUser: function () {
                 var mainView = new MainView();
                 this.createOrdinaryAside(0, mainView.asideView.model);
@@ -159,7 +169,7 @@ define(["backbone",
             projectAddRisk: function (projectId) {
                 var mainView = new MainView();
                 this.createOrdinaryAside(1, mainView.asideView.model);
-                mainView.contentView = new DetailRiskView();
+                mainView.contentView = new CreateRiskView();
                 mainView.contentView.projectId = projectId;
             },
 
