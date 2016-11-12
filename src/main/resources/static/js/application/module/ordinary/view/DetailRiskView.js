@@ -11,9 +11,8 @@ define(["common/view/BaseView", "../model/DetailRiskModel", "text!../template/de
             css: DetailRiskCss,
             projectId: '',
             events: {
-                "click button.saveBtn": "saveBtn",
-                "click button.addPersonBtn": "addPersonBtn",
-                "click button.addRiskBtn": "addRiskBtn",
+                "click button.ok": "ok",
+                "click button.cancel": "cancel",
             },
             render: function () {
                 DetailRiskView.__super__.render.call(this);
@@ -41,14 +40,11 @@ define(["common/view/BaseView", "../model/DetailRiskModel", "text!../template/de
                 //     createdAt: '创建时间1',
                 // }));
             },
-            saveBtn: function () {
+            ok: function () {
 
             },
-            addPersonBtn: function () {
-                window.location.href = "#admin/detailProject/" + this.projectId + "/addPerson";
-            },
-            addRiskBtn: function () {
-
+            cancel: function () {
+                window.location.href = "#ordinary/detailProject/" + this.projectId;
             },
         });
         return DetailRiskView;

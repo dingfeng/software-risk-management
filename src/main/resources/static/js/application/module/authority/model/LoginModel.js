@@ -5,14 +5,11 @@ define(["common/model/BaseModel"], function (BaseModel) {
     console.log("Load application/module/authority/model/Login.js");
     var LoginModel = BaseModel.extend({
         initialize: function () {
-//            this.on("change", this.changeEvent);
             LoginModel.__super__.initialize.call(this);
         },
         defaults: {
-            // urlRoot : '/specialTeams',
-            // url : '/specialTeams',
-            username: 'username',
-            password: 'password',
+            username: 'zhouyao',
+            password: '123456',
             errorMsg: '',
         },
         changeEvent: function () {

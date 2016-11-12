@@ -1,5 +1,5 @@
-define(["backbone", "common/view/MainView", "./module/authority/view/LoginView", "./module/admin/view/AddUserView", "./module/admin/view/SearchProjectView", "./module/admin/view/SearchRiskView", "./module/admin/view/SearchMyJoinProjectView","./module/admin/view/SearchMyHandlerRiskView","./module/admin/view/DetailProjectView", "./module/admin/view/DetailRiskView", "./module/admin/view/DetailProjectAddPersonView","common/model/AsideModel", "common/util"],
-    function (Backbone, MainView, LoginView, AdminAddUserView, SearchProjectView,SearchRiskView, SearchMyJoinProjectView,SearchMyHandlerRiskView,DetailProjectView, DetailRiskView, DetailProjectAddPersonView,AsideModel, Util) {
+define(["backbone", "common/view/MainView", "./module/authority/view/LoginView", "./module/admin/view/AddUserView", "./module/ordinary/view/SearchProjectView", "./module/ordinary/view/SearchRiskView", "./module/ordinary/view/SearchMyJoinProjectView", "./module/ordinary/view/SearchMyHandlerRiskView", "./module/ordinary/view/DetailProjectView", "./module/ordinary/view/DetailRiskView", "./module/ordinary/view/DetailProjectAddPersonView", "common/model/AsideModel", "common/util"],
+    function (Backbone, MainView, LoginView, AdminAddUserView, SearchProjectView, SearchRiskView, SearchMyJoinProjectView, SearchMyHandlerRiskView, DetailProjectView, DetailRiskView, DetailProjectAddPersonView, AsideModel, Util) {
         var Routers = Backbone.Router.extend({
             initialize: function () {
                 console.log("Route initialize");
@@ -13,25 +13,14 @@ define(["backbone", "common/view/MainView", "./module/authority/view/LoginView",
                 "main": "main",
                 "admin/add": "adminAddUser",
 
-
-                "admin/searchMyJoinProjectView":"searchMyJoinProjectView",
-
-                "admin/searchMyHandlerRiskView":"searchMyHandlerRiskView",
-
-                "admin/searchRisk":"searchRisk",
-
-                "admin/searchProject":"searchProject",
-
-                "admin/detailProject/:id": "detailProject",
-
-                "admin/detailProject/:projectId/addPerson": "projectAddPerson",
-
-                "admin/detailProject/:projectId/addRisk": "projectAddRisk",
-
-                "manager": "adminAddUser",
-
-
-                "ordinary": "adminAddUser",
+                "ordinary/addProject": "adminAddUser",
+                "ordinary/searchMyJoinProjectView": "searchMyJoinProjectView",
+                "ordinary/searchMyHandlerRiskView": "searchMyHandlerRiskView",
+                "ordinary/searchRisk": "searchRisk",
+                "ordinary/searchProject": "searchProject",
+                "ordinary/detailProject/:id": "detailProject",
+                "ordinary/detailProject/:projectId/addPerson": "projectAddPerson",
+                "ordinary/detailProject/:projectId/addRisk": "projectAddRisk",
 
                 "teams": "getTeams",
                 "teams/:country": "getTeamsCountry",
@@ -40,9 +29,7 @@ define(["backbone", "common/view/MainView", "./module/authority/view/LoginView",
             },
 
             index: function () {
-                // new AdminAddUserView();
-                // this.navigate('login', {trigger: true, replace: true});
-                this.navigate('admin/detailProject/1', {trigger: true, replace: true});
+                this.navigate('login', {trigger: true, replace: true});
             },
 
             login: function () {
@@ -60,350 +47,102 @@ define(["backbone", "common/view/MainView", "./module/authority/view/LoginView",
                         that.navigate('login', {trigger: true, replace: true});
                     },
                     success: function (data) {
-                        that.navigate('admin/add', {trigger: true, replace: true});
+                        if (data === 'admin') {
+                            that.navigate('admin/add', {trigger: true, replace: true});
+                        } else if (data === 'ordinary') {
+                            that.navigate('ordinary', {trigger: true, replace: true});
+                        } else {
+                            that.navigate('login', {trigger: true, replace: true});
+                        }
                     }
                 });
             },
 
-            searchMyHandlerRiskView:function () {
-                var mainView = new MainView();
-
-                mainView.asideView.model.reset();
-
-                mainView.asideView.model.add(new AsideModel({
+            createOrdinaryAside: function (activeId, asideCollections) {
+                asideCollections.reset();
+                asideCollections.add(new AsideModel({
                     id: '0',
                     name: '创建项目',
-                    url: '#admin/add',
-                    active: false,
+                    url: '#ordinary/addProject',
+                    active: activeId == 0 ? true : false,
                 }));
 
-                mainView.asideView.model.add(new AsideModel({
+                asideCollections.add(new AsideModel({
                     id: '1',
                     name: '我创建的项目',
-                    url: '#admin/searchProject',
-                    active: false,
+                    url: '#ordinary/searchProject',
+                    active: activeId == 1 ? true : false,
                 }));
 
-                mainView.asideView.model.add(new AsideModel({
+                asideCollections.add(new AsideModel({
                     id: '2',
                     name: '我加入的项目',
-                    url: '#admin/searchMyJoinProjectView',
-                    active: false,
+                    url: '#ordinary/searchMyJoinProjectView',
+                    active: activeId == 2 ? true : false,
                 }));
 
-                mainView.asideView.model.add(new AsideModel({
+                asideCollections.add(new AsideModel({
                     id: '3',
                     name: '我创建的风险',
-                    url: '#admin/searchRisk',
-                    active: false,
+                    url: '#ordinary/searchRisk',
+                    active: activeId == 3 ? true : false,
                 }));
 
-                mainView.asideView.model.add(new AsideModel({
+                asideCollections.add(new AsideModel({
                     id: '4',
                     name: '我处理的风险',
-                    url: '#admin/searchMyHandlerRiskView',
-                    active: true,
+                    url: '#ordinary/searchMyHandlerRiskView',
+                    active: activeId == 4 ? true : false,
                 }));
-
-                mainView.contentView = new  SearchMyHandlerRiskView();
             },
 
-            searchMyJoinProjectView:function () {
+            searchMyHandlerRiskView: function () {
                 var mainView = new MainView();
+                this.createOrdinaryAside(4, mainView.asideView.model);
+                mainView.contentView = new SearchMyHandlerRiskView();
+            },
 
-                mainView.asideView.model.reset();
-
-                mainView.asideView.model.add(new AsideModel({
-                    id: '0',
-                    name: '创建项目',
-                    url: '#admin/add',
-                    active: false,
-                }));
-
-                mainView.asideView.model.add(new AsideModel({
-                    id: '1',
-                    name: '我创建的项目',
-                    url: '#admin/searchProject',
-                    active: false,
-                }));
-
-                mainView.asideView.model.add(new AsideModel({
-                    id: '2',
-                    name: '我加入的项目',
-                    url: '#admin/searchMyJoinProjectView',
-                    active: true,
-                }));
-
-                mainView.asideView.model.add(new AsideModel({
-                    id: '3',
-                    name: '我创建的风险',
-                    url: '#admin/searchRisk',
-                    active: false,
-                }));
-
-                mainView.asideView.model.add(new AsideModel({
-                    id: '4',
-                    name: '我处理的风险',
-                    url: '#admin/searchMyHandlerRiskView',
-                    active: false,
-                }));
-                mainView.contentView = new  SearchMyJoinProjectView();
+            searchMyJoinProjectView: function () {
+                var mainView = new MainView();
+                this.createOrdinaryAside(2, mainView.asideView.model);
+                mainView.contentView = new SearchMyJoinProjectView();
             },
 
             searchRisk: function () {
                 var mainView = new MainView();
-
-                mainView.asideView.model.reset();
-
-                mainView.asideView.model.add(new AsideModel({
-                    id: '0',
-                    name: '创建项目',
-                    url: '#admin/add',
-                    active: false,
-                }));
-
-                mainView.asideView.model.add(new AsideModel({
-                    id: '1',
-                    name: '我创建的项目',
-                    url: '#admin/searchProject',
-                    active: false,
-                }));
-
-                mainView.asideView.model.add(new AsideModel({
-                    id: '2',
-                    name: '我加入的项目',
-                    url: '#admin/searchMyJoinProjectView',
-                    active: false,
-                }));
-
-                mainView.asideView.model.add(new AsideModel({
-                    id: '3',
-                    name: '我创建的风险',
-                    url: '#admin/searchRisk',
-                    active: true,
-                }));
-
-                mainView.asideView.model.add(new AsideModel({
-                    id: '4',
-                    name: '我处理的风险',
-                    url: '#admin/searchMyHandlerRiskView',
-                    active: false,
-                }));
-                mainView.contentView = new  SearchRiskView();
+                this.createOrdinaryAside(3, mainView.asideView.model);
+                mainView.contentView = new SearchRiskView();
             },
 
             searchProject: function () {
                 var mainView = new MainView();
-
-                mainView.asideView.model.reset();
-
-                mainView.asideView.model.add(new AsideModel({
-                    id: '0',
-                    name: '创建项目',
-                    url: '#admin/add',
-                    active: false,
-                }));
-
-                mainView.asideView.model.add(new AsideModel({
-                    id: '1',
-                    name: '我创建的项目',
-                    url: '#admin/searchProject',
-                    active: true,
-                }));
-
-                mainView.asideView.model.add(new AsideModel({
-                    id: '2',
-                    name: '我加入的项目',
-                    url: '#admin/searchMyJoinProjectView',
-                    active: false,
-                }));
-
-                mainView.asideView.model.add(new AsideModel({
-                    id: '3',
-                    name: '我创建的风险',
-                    url: '#admin/searchRisk',
-                    active: false,
-                }));
-
-                mainView.asideView.model.add(new AsideModel({
-                    id: '4',
-                    name: '我处理的风险',
-                    url: '#admin/searchMyHandlerRiskView',
-                    active: false,
-                }));
-
+                this.createOrdinaryAside(1, mainView.asideView.model);
                 mainView.contentView = new SearchProjectView();
             },
 
             detailProject: function (id) {
                 var mainView = new MainView();
-
-                mainView.asideView.model.reset();
-
-                mainView.asideView.model.add(new AsideModel({
-                    id: '0',
-                    name: '创建项目',
-                    url: '#admin/add',
-                    active: false,
-                }));
-
-                mainView.asideView.model.add(new AsideModel({
-                    id: '1',
-                    name: '我创建的项目',
-                    url: '#admin/searchProject',
-                    active: true,
-                }));
-
-                mainView.asideView.model.add(new AsideModel({
-                    id: '2',
-                    name: '我加入的项目',
-                    url: '#admin/searchMyJoinProjectView',
-                    active: false,
-                }));
-
-                mainView.asideView.model.add(new AsideModel({
-                    id: '3',
-                    name: '我创建的风险',
-                    url: '#admin/searchRisk',
-                    active: false,
-                }));
-
-                mainView.asideView.model.add(new AsideModel({
-                    id: '4',
-                    name: '我处理的风险',
-                    url: '#admin/searchMyHandlerRiskView',
-                    active: false,
-                }));
-
+                this.createOrdinaryAside(1, mainView.asideView.model);
                 mainView.contentView = new DetailProjectView();
                 mainView.contentView.projectId = id;
-
             },
 
             adminAddUser: function () {
                 var mainView = new MainView();
-
-                mainView.asideView.model.reset();
-
-                mainView.asideView.model.add(new AsideModel({
-                    id: '0',
-                    name: '创建项目',
-                    url: '#admin/add',
-                    active: true,
-                }));
-
-                mainView.asideView.model.add(new AsideModel({
-                    id: '1',
-                    name: '我创建的项目',
-                    url: '#admin/searchProject',
-                    active: false,
-                }));
-
-                mainView.asideView.model.add(new AsideModel({
-                    id: '2',
-                    name: '我加入的项目',
-                    url: '#admin/searchMyJoinProjectView',
-                    active: false,
-                }));
-
-                mainView.asideView.model.add(new AsideModel({
-                    id: '3',
-                    name: '我创建的风险',
-                    url: '#admin/searchRisk',
-                    active: false,
-                }));
-
-                mainView.asideView.model.add(new AsideModel({
-                    id: '4',
-                    name: '我处理的风险',
-                    url: '#admin/searchMyHandlerRiskView',
-                    active: false,
-                }));
+                this.createOrdinaryAside(0, mainView.asideView.model);
                 mainView.contentView = new AdminAddUserView();
             },
 
             projectAddPerson: function (projectId) {
                 var mainView = new MainView();
-
-                mainView.asideView.model.reset();
-
-                mainView.asideView.model.add(new AsideModel({
-                    id: '0',
-                    name: '创建项目',
-                    url: '#admin/add',
-                    active: false,
-                }));
-
-                mainView.asideView.model.add(new AsideModel({
-                    id: '1',
-                    name: '我创建的项目',
-                    url: '#admin/searchProject',
-                    active: true,
-                }));
-
-                mainView.asideView.model.add(new AsideModel({
-                    id: '2',
-                    name: '我加入的项目',
-                    url: '#admin/searchMyJoinProjectView',
-                    active: false,
-                }));
-
-                mainView.asideView.model.add(new AsideModel({
-                    id: '3',
-                    name: '我创建的风险',
-                    url: '#admin/searchRisk',
-                    active: false,
-                }));
-
-                mainView.asideView.model.add(new AsideModel({
-                    id: '4',
-                    name: '我处理的风险',
-                    url: '#admin/searchMyHandlerRiskView',
-                    active: false,
-                }));
+                this.createOrdinaryAside(1, mainView.asideView.model);
                 mainView.contentView = new DetailProjectAddPersonView();
                 mainView.contentView.projectId = projectId;
             },
 
             projectAddRisk: function (projectId) {
                 var mainView = new MainView();
-
-                mainView.asideView.model.reset();
-
-                mainView.asideView.model.add(new AsideModel({
-                    id: '0',
-                    name: '创建项目',
-                    url: '#admin/add',
-                    active: false,
-                }));
-
-                mainView.asideView.model.add(new AsideModel({
-                    id: '1',
-                    name: '我创建的项目',
-                    url: '#admin/searchProject',
-                    active: true,
-                }));
-
-                mainView.asideView.model.add(new AsideModel({
-                    id: '2',
-                    name: '我加入的项目',
-                    url: '#admin/searchMyJoinProjectView',
-                    active: false,
-                }));
-
-                mainView.asideView.model.add(new AsideModel({
-                    id: '3',
-                    name: '我创建的风险',
-                    url: '#admin/searchRisk',
-                    active: false,
-                }));
-
-                mainView.asideView.model.add(new AsideModel({
-                    id: '4',
-                    name: '我处理的风险',
-                    url: '#admin/searchMyHandlerRiskView',
-                    active: false,
-                }));
+                this.createOrdinaryAside(1, mainView.asideView.model);
                 mainView.contentView = new DetailRiskView();
                 mainView.contentView.projectId = projectId;
             },

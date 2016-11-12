@@ -1,25 +1,23 @@
 /**
  * Created by 邹玉鑫 on 2016/11/11.
  */
-define(["common/view/BaseView", "../model/DetailProjectModel", "text!../template/detailProject.tpl", "text!../css/detailProject.css", "common/util"],
-    function (BaseView, DetailProjectModel, DetailProjectTpl, DetailProjectCss, Util) {
-        var DetailProjectView = BaseView.extend({
+define(["common/view/BaseView", "text!../template/detailProjectAddPerson.tpl", "text!../css/detailProjectAddPerson.css", "common/util"],
+    function (BaseView, DetailProjectAddPersonTpl, DetailProjectAddPersonCss, Util) {
+        var DetailProjectAddPersonView = BaseView.extend({
             initialize: function () {
-                DetailProjectView.__super__.initialize.call(this);
+                DetailProjectAddPersonView.__super__.initialize.call(this);
             },
             el: '#content',
-            title: '查看项目详细',
-            model: new DetailProjectModel,
-            tpl: DetailProjectTpl,
-            css: DetailProjectCss,
+            title: '邀请人员',
+            tpl: DetailProjectAddPersonTpl,
+            css: DetailProjectAddPersonCss,
             projectId: '',
             events: {
-                "click button.saveBtn": "saveBtn",
-                "click button.addPersonBtn": "addPersonBtn",
-                "click button.addRiskBtn": "addRiskBtn",
+                "click button.ok": "ok",
+                "click button.cancel": "cancel",
             },
             render: function () {
-                DetailProjectView.__super__.render.call(this);
+                DetailProjectAddPersonView.__super__.render.call(this);
                 var that = this;
                 // $.ajax({
                 //     type: "POST",
@@ -44,15 +42,12 @@ define(["common/view/BaseView", "../model/DetailProjectModel", "text!../template
                 //     createdAt: '创建时间1',
                 // }));
             },
-            saveBtn: function () {
+            ok: function () {
 
             },
-            addPersonBtn: function () {
-                window.location.href = "#admin/detailProject/" + this.projectId + "/addPerson";
-            },
-            addRiskBtn: function () {
-                window.location.href = "#admin/detailProject/" + this.projectId + "/addRisk";
-            },
+            cancel: function () {
+                window.location.href = "#ordinary/detailProject/" + this.projectId;
+            }
         });
-        return DetailProjectView;
+        return DetailProjectAddPersonView;
     });
