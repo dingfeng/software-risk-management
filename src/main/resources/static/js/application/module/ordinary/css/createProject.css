@@ -1,0 +1,32 @@
+#createProject {
+    width: 100%;
+    height: 100%;
+}
+
+#createProject form.createProject {
+
+}
+
+#createProject form.createProject div {
+    /*text-align: center;*/
+    height: 40px;
+}
+
+#createProject form.createProject .errMsg {
+    width: 100%;
+    text-align: center;
+    color: red;
+}
+
+#createProject form.createProject #projectName, #createProject form.createProject #description {
+    width: 200px;
+}
+
+#createProject form.createProject .submit {
+    width: 100px;
+    height: 30px;
+}
+
+#createProject form.createProject .submit:hover {
+    cursor: pointer;
+}

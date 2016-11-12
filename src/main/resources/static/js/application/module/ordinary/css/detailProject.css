@@ -1,0 +1,39 @@
+#detailProject {
+    width: 100%;
+    height:100%;
+}
+
+#detailProject div {
+    height: 40px;
+}
+
+#detailProject input, #detailProject textarea {
+    width: 200px;
+}
+
+#detailProject button {
+    width: 100px;
+    height: 30px;
+}
+
+#detailProject button:hover {
+    cursor: pointer;
+}
+
+#detailProject table {
+    border-collapse:collapse;
+    width: 100%;
+}
+
+#detailProject table th, #detailProject table td {
+    border:#333 solid 1px;
+}
+
+#detailProject table th {
+    height: 30px;
+}
+
+#searchProject table td {
+    height: 20px;
+    text-align: center;
+}

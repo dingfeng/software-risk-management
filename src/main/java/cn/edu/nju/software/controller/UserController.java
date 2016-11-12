@@ -499,7 +499,7 @@ public class UserController {
                 }
             }
 
-            for(Project project : userResultDTO.getData().getOwnProjects()){
+            for(Project project : userResultDTO.getData().getJoinProjects()){
                 ProjectVO projectVO = new ProjectVO();
                 projectVO.setId(project.getId());
                 projectVO.setUpdatedAt(fmt.format(project.getUpdatedAt()));
