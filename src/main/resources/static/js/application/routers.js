@@ -1,11 +1,11 @@
 define(["backbone",
         "common/view/MainView",
-        "./module/admin/view/AddUserView",
-         "./module/admin/view/adminSearchProjectView",
+        "./module/admin/view/AdminAddUserView",
+         "./module/admin/view/AdminSearchProjectView",
         "./module/authority/view/LoginView",
         "./module/ordinary/view/CreateProjectView",
         "./module/ordinary/view/SearchProjectView",
-        "./module/admin/view/SearchUserView",
+        "./module/admin/view/AdminSearchUserView",
         "./module/ordinary/view/SearchRiskView",
         "./module/ordinary/view/SearchMyJoinProjectView",
         "./module/ordinary/view/SearchMyHandlerRiskView",
@@ -14,7 +14,7 @@ define(["backbone",
         "./module/ordinary/view/DetailProjectAddPersonView",
         "common/model/AsideModel",
         "common/util"],
-    function (Backbone, MainView, LoginView, CreateProjectView, SearchProjectView, SearchRiskView, SearchMyJoinProjectView, SearchMyHandlerRiskView, DetailProjectView, DetailRiskView, DetailProjectAddPersonView, AsideModel, Util) {
+    function (Backbone, MainView, AdminAddUserView,AdminSearchProjectView,AdminSearchUserView,LoginView, CreateProjectView, SearchProjectView, SearchRiskView, SearchMyJoinProjectView, SearchMyHandlerRiskView, DetailProjectView, DetailRiskView, DetailProjectAddPersonView, AsideModel, Util) {
         var Routers = Backbone.Router.extend({
             initialize: function () {
                 console.log("Route initialize");
@@ -166,7 +166,7 @@ define(["backbone",
                               url: '#admin/searchProject',
                               active: true,
                 }));
-                mainView.contentView = new AddUserView();
+                mainView.contentView = new AdminAddUserView();
             },
             createProject: function () {
                 var mainView = new MainView();
@@ -210,35 +210,35 @@ define(["backbone",
                             url: '#admin/searchProject',
                             active: true,
                  }));
-                 mainView.contentView = new SearchUserView();
+                 mainView.contentView = new AdminSearchUserView();
             },
 
             adminSearchProject: function ()
             {
               var mainView = new MainView();
 
-                             mainView.asideView.model.reset();
+              mainView.asideView.model.reset();
 
-                             mainView.asideView.model.add(new AsideModel({
-                                 id: '0',
-                                 name: '创建用户',
-                                 url: '#admin/add',
-                                 active: false,
-                             }));
-                             mainView.asideView.model.add(new AsideModel({
-                                 id: '2',
-                                 name: '系统用户',
-                                 url: '#admin/searchUser',
-                                 active: true,
-                             }));
-                             mainView.asideView.model.add(new AsideModel({
-                                 id: '1',
-                                 name: '软件项目',
-                                 url: '#admin/searchProject',
-                                 active: true,
-                             }));
-                             mainView.contentView = new  SearchProjectView();
-            }
+              mainView.asideView.model.add(new AsideModel({
+                          id: '0',
+                          name: '创建用户',
+                          url: '#admin/add',
+                          active: false,
+               }));
+                mainView.asideView.model.add(new AsideModel({
+                        id: '2',
+                        name: '系统用户',
+                        url: '#admin/searchUser',
+                        active: true,
+                 }));
+                  mainView.asideView.model.add(new AsideModel({
+                       id: '1',
+                       name: '软件项目',
+                       url: '#admin/searchProject',
+                       active: true,
+                  }));
+                   mainView.contentView = new  AdminSearchProjectView();
+            },
 
             getTeams: function () {
                 // List all teams
