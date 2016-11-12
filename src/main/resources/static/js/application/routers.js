@@ -1,5 +1,5 @@
-define(["backbone", "common/view/MainView", "./module/authority/view/LoginView", "./module/admin/view/AddUserView", "./module/admin/view/SearchProjectView", "common/model/AsideModel", "common/util"],
-    function (Backbone, MainView, LoginView, AdminAddUserView, SearchProjectView, AsideModel, Util) {
+define(["backbone", "common/view/MainView", "./module/authority/view/LoginView", "./module/admin/view/AddUserView", "./module/admin/view/SearchProjectView", "./module/admin/view/SearchRiskView", "./module/admin/view/SearchMyJoinProjectView","./module/admin/view/SearchMyHandlerRiskView","common/model/AsideModel", "common/util"],
+    function (Backbone, MainView, LoginView, AdminAddUserView, SearchProjectView,SearchRiskView, SearchMyJoinProjectView,SearchMyHandlerRiskView,AsideModel, Util) {
         var Routers = Backbone.Router.extend({
             initialize: function () {
                 console.log("Route initialize");
@@ -13,7 +13,14 @@ define(["backbone", "common/view/MainView", "./module/authority/view/LoginView",
                 "main": "main",
                 "admin/add": "adminAddUser",
 
+                "admin/searchMyJoinProjectView":"searchMyJoinProjectView",
+
+                "admin/searchMyHandlerRiskView":"searchMyHandlerRiskView",
+
+                "admin/searchRisk":"searchRisk",
+
                 "admin/searchProject":"searchProject",
+
 
                 "manager": "adminAddUser",
 
@@ -51,6 +58,133 @@ define(["backbone", "common/view/MainView", "./module/authority/view/LoginView",
                 });
             },
 
+            searchMyHandlerRiskView:function () {
+                var mainView = new MainView();
+
+                mainView.asideView.model.reset();
+
+                mainView.asideView.model.add(new AsideModel({
+                    id: '0',
+                    name: '创建项目',
+                    url: '#admin/add',
+                    active: false,
+                }));
+
+                mainView.asideView.model.add(new AsideModel({
+                    id: '1',
+                    name: '我创建的项目',
+                    url: '#admin/searchProject',
+                    active: false,
+                }));
+
+                mainView.asideView.model.add(new AsideModel({
+                    id: '2',
+                    name: '我加入的项目',
+                    url: '#admin/searchMyJoinProjectView',
+                    active: false,
+                }));
+
+                mainView.asideView.model.add(new AsideModel({
+                    id: '3',
+                    name: '我创建的风险',
+                    url: '#admin/searchRisk',
+                    active: false,
+                }));
+
+                mainView.asideView.model.add(new AsideModel({
+                    id: '4',
+                    name: '我处理的风险',
+                    url: '#admin/searchMyHandlerRiskView',
+                    active: true,
+                }));
+
+                mainView.contentView = new  SearchMyHandlerRiskView();
+            },
+
+            searchMyJoinProjectView:function () {
+                var mainView = new MainView();
+
+                mainView.asideView.model.reset();
+
+                mainView.asideView.model.add(new AsideModel({
+                    id: '0',
+                    name: '创建项目',
+                    url: '#admin/add',
+                    active: false,
+                }));
+
+                mainView.asideView.model.add(new AsideModel({
+                    id: '1',
+                    name: '我创建的项目',
+                    url: '#admin/searchProject',
+                    active: false,
+                }));
+
+                mainView.asideView.model.add(new AsideModel({
+                    id: '2',
+                    name: '我加入的项目',
+                    url: '#admin/searchMyJoinProjectView',
+                    active: true,
+                }));
+
+                mainView.asideView.model.add(new AsideModel({
+                    id: '3',
+                    name: '我创建的风险',
+                    url: '#admin/searchRisk',
+                    active: false,
+                }));
+
+                mainView.asideView.model.add(new AsideModel({
+                    id: '4',
+                    name: '我处理的风险',
+                    url: '#admin/searchMyHandlerRiskView',
+                    active: false,
+                }));
+                mainView.contentView = new  SearchMyJoinProjectView();
+            },
+
+            searchRisk: function () {
+                var mainView = new MainView();
+
+                mainView.asideView.model.reset();
+
+                mainView.asideView.model.add(new AsideModel({
+                    id: '0',
+                    name: '创建项目',
+                    url: '#admin/add',
+                    active: false,
+                }));
+
+                mainView.asideView.model.add(new AsideModel({
+                    id: '1',
+                    name: '我创建的项目',
+                    url: '#admin/searchProject',
+                    active: false,
+                }));
+
+                mainView.asideView.model.add(new AsideModel({
+                    id: '2',
+                    name: '我加入的项目',
+                    url: '#admin/searchMyJoinProjectView',
+                    active: false,
+                }));
+
+                mainView.asideView.model.add(new AsideModel({
+                    id: '3',
+                    name: '我创建的风险',
+                    url: '#admin/searchRisk',
+                    active: true,
+                }));
+
+                mainView.asideView.model.add(new AsideModel({
+                    id: '4',
+                    name: '我处理的风险',
+                    url: '#admin/searchMyHandlerRiskView',
+                    active: false,
+                }));
+                mainView.contentView = new  SearchRiskView();
+            },
+
             searchProject: function () {
                 var mainView = new MainView();
 
@@ -69,22 +203,67 @@ define(["backbone", "common/view/MainView", "./module/authority/view/LoginView",
                     url: '#admin/searchProject',
                     active: true,
                 }));
+
+                mainView.asideView.model.add(new AsideModel({
+                    id: '2',
+                    name: '我加入的项目',
+                    url: '#admin/searchMyJoinProjectView',
+                    active: false,
+                }));
+
+                mainView.asideView.model.add(new AsideModel({
+                    id: '3',
+                    name: '我创建的风险',
+                    url: '#admin/searchRisk',
+                    active: false,
+                }));
+
+                mainView.asideView.model.add(new AsideModel({
+                    id: '4',
+                    name: '我处理的风险',
+                    url: '#admin/searchMyHandlerRiskView',
+                    active: false,
+                }));
                 mainView.contentView = new  SearchProjectView();
             },
 
             adminAddUser: function () {
                 var mainView = new MainView();
+
                 mainView.asideView.model.reset();
+
                 mainView.asideView.model.add(new AsideModel({
                     id: '0',
                     name: '创建项目',
                     url: '#admin/add',
                     active: true,
                 }));
+
                 mainView.asideView.model.add(new AsideModel({
                     id: '1',
                     name: '我创建的项目',
                     url: '#admin/searchProject',
+                    active: false,
+                }));
+
+                mainView.asideView.model.add(new AsideModel({
+                    id: '2',
+                    name: '我加入的项目',
+                    url: '#admin/searchMyJoinProjectView',
+                    active: false,
+                }));
+
+                mainView.asideView.model.add(new AsideModel({
+                    id: '3',
+                    name: '我创建的风险',
+                    url: '#admin/searchRisk',
+                    active: false,
+                }));
+
+                mainView.asideView.model.add(new AsideModel({
+                    id: '4',
+                    name: '我处理的风险',
+                    url: '#admin/searchMyHandlerRiskView',
                     active: false,
                 }));
                 mainView.contentView = new AdminAddUserView();
