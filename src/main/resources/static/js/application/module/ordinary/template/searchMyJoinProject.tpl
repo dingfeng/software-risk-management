@@ -17,7 +17,7 @@
             <td><%= item.createdBy %></td>
             <td><%= item.createdAt %></td>
             <td><%= item.updatedAt %></td>
-            <td><a href ="#" >查看详请</a></td>
+           <td><a href ="#ordinary/detailProject/<%= item.id %>" >详情</a></td>
         </tr>
         <% }); %>
     </table>

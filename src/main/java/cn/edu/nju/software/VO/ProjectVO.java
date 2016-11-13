@@ -1,11 +1,6 @@
 package cn.edu.nju.software.VO;
 
-import cn.edu.nju.software.entity.User;
 
-import javax.persistence.Column;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -43,15 +38,16 @@ public class ProjectVO {
 
     private List<RiskVO> riskVOs ;
 
-    public List<String> joiners;
-
-    public List<String> getJoiners() {
-        return joiners;
+    public String getJoinedNames() {
+        return joinedNames;
     }
 
-    public void setJoiners(List<String> joiners) {
-        this.joiners = joiners;
+    public void setJoinedNames(String joinedNames) {
+        this.joinedNames = joinedNames;
     }
+
+    public String joinedNames;
+
 
     public List<RiskVO> getRiskVOs() {
         return riskVOs;

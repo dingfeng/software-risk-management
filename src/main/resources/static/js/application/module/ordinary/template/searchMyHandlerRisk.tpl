@@ -13,6 +13,7 @@
             <th>所属项目</th>
             <th>创建时间</th>
             <th>编辑时间</th>
+            <th>查看详情</th>
         </tr>
         <% _.each(data, function (item) { %>
         <tr>
@@ -28,6 +29,7 @@
             <td><%= item.project %></td>
             <td><%= item.createdAt %></td>
             <td><%= item.updatedAt %></td>
+             <td><a href="#ordinary/detailProject/0/detailRisk/<%= item.id %>">详情</a></td>
         </tr>
         <% }); %>
     </table>

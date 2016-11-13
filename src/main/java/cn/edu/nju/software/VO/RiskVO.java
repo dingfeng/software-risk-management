@@ -62,16 +62,16 @@ public class RiskVO {
         return description;
     }
 
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
     }
 
     public String getHandler() {
@@ -109,7 +109,7 @@ public class RiskVO {
     private String description; //文本描述
 
 
-    private String author; //创建者
+    private String createdBy; //创建者
 
 
     private String handler; //处理者

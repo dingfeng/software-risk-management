@@ -12,7 +12,7 @@ define(["common/view/BaseView", "../model/DetailRiskModel", "text!../template/cr
             model: new DetailRiskModel,
             tpl: CreateRiskTpl,
             css: CreateRiskCss,
-            projectId: '',
+            projectId: '0',
             events: {
                 "click button.ok": "ok",
                 "click button.cancel": "cancel",
@@ -20,20 +20,20 @@ define(["common/view/BaseView", "../model/DetailRiskModel", "text!../template/cr
             render: function () {
                 CreateRiskView.__super__.render.call(this);
                 var that = this;
-                $.ajax({
-                    type: "POST",
-                    url: "/user/getProjectCreate",
-                    data: "projectId=" + that.projectId,
-                    // error: function () {
-                    //     window.location.href = "#login";
-                    // },
-                    success: function (data) {
-                        var obj = eval("(" + data + ")");
-                        _.each(obj.data, function (value) {
-                            that.model.add(new SearchProjectModel(value));
-                        });
-                    }
-                });
+                // $.ajax({
+                //     type: "POST",
+                //     url: "/user/getProjectCreate",
+                //     data: "projectId=" + that.projectId,
+                //     // error: function () {
+                //     //     window.location.href = "#login";
+                //     // },
+                //     success: function (data) {
+                //         var obj = eval("(" + data + ")");
+                //         _.each(obj.data, function (value) {
+                //             that.model.add(new SearchProjectModel(value));
+                //         });
+                //     }
+                // });
 
                 // this.model.add(new SearchProjectModel({
                 //     id: '编号1',
@@ -45,14 +45,15 @@ define(["common/view/BaseView", "../model/DetailRiskModel", "text!../template/cr
             },
             ok: function () {
                 var data = {};
-                $("form.createRisk").serializeArray().map(function (x) {
+                $("#createRisk form").serializeArray().map(function (x) {
                     data[x.name] = x.value;
                 });
+
                 this.model.set(data);
                 data.projectId = this.projectId;
                 $.ajax({
                     type: "POST",
-                    url: "/project/createProject",
+                    url: "/risk/createRisk",
                     data: data, //_.pick(data, 'projectName', 'description'),
                     // async: false,
                     error: function () {

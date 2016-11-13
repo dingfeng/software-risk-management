@@ -11,7 +11,7 @@ define(["common/view/BaseView", "text!../template/detailProjectAddPerson.tpl", "
             title: '邀请人员',
             tpl: DetailProjectAddPersonTpl,
             css: DetailProjectAddPersonCss,
-            projectId: '',
+            projectId: '0',
             events: {
                 "click button.ok": "ok",
                 "click button.cancel": "cancel",
@@ -24,7 +24,7 @@ define(["common/view/BaseView", "text!../template/detailProjectAddPerson.tpl", "
                 data.projectId = this.projectId;
                 $.ajax({
                     type: "POST",
-                    url: "/project/createProject",
+                    url: "/project/invite",
                     data: data,
                     // async: false,
                     error: function () {

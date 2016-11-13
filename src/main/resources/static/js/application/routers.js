@@ -15,7 +15,7 @@ define(["backbone",
         "./module/ordinary/view/DetailProjectAddPersonView",
         "common/model/AsideModel",
         "common/util"],
-    function (Backbone, MainView, AdminAddUserView,AdminSearchProjectView,AdminSearchUserView,LoginView, CreateProjectView, SearchProjectView, SearchRiskView, SearchMyJoinProjectView, SearchMyHandlerRiskView, DetailProjectView, CreateRiskView,  DetailRiskView, DetailProjectAddPersonView, AsideModel, Util) {
+    function (Backbone, MainView, AdminAddUserView,AdminSearchProjectView,AdminSearchUserView,LoginView, CreateProjectView, SearchProjectView, SearchRiskView, SearchMyJoinProjectView, SearchMyHandlerRiskView, DetailProjectView, DetailRiskView,CreateRiskView, DetailProjectAddPersonView, AsideModel, Util) {
         var Routers = Backbone.Router.extend({
             initialize: function () {
                 console.log("Route initialize");
@@ -141,14 +141,14 @@ define(["backbone",
             detailProject: function (id) {
                 var mainView = new MainView();
                 this.createOrdinaryAside(1, mainView.asideView.model);
-                mainView.contentView = new DetailProjectView();
+                mainView.contentView = new DetailProjectView(id);
                 mainView.contentView.projectId = id;
             },
 
             detailRisk: function(projectId, riskId) {
                 var mainView = new MainView();
                 this.createOrdinaryAside(1, mainView.asideView.model);
-                mainView.contentView = new DetailRiskView();
+                mainView.contentView = new DetailRiskView(riskId);
                 mainView.contentView.projectId = projectId;
                 mainView.contentView.riskId = riskId;
             },

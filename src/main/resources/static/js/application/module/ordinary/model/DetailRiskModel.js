@@ -14,7 +14,7 @@ define(["common/model/BaseModel"], function (BaseModel) {
             influence: '影响',
             trigger: '触发器',
             description: '文本描述',
-            author: '创建者',
+            createdBy: '创建者',
             handler: '处理者',
             project: '所属项目名',
             projectId: '所属项目id',

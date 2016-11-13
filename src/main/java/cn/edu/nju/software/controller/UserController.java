@@ -332,7 +332,7 @@ public class UserController {
                 riskVO.setId(risk.getId());
                 riskVO.setUpdatedAt(fmt.format(risk.getUpdatedAt()));
                 riskVO.setDescription(risk.getDescription());
-                riskVO.setAuthor(risk.getAuthor().getAccount());
+                riskVO.setCreatedBy(risk.getAuthor().getAccount());
                 riskVO.setCreatedAt(fmt.format(risk.getCreatedAt()));
                 riskVO.setHandler(risk.getHandler().getAccount());
                 riskVO.setProject(risk.getProject().getName());
@@ -388,7 +388,7 @@ public class UserController {
                 riskVO.setId(risk.getId());
                 riskVO.setUpdatedAt(fmt.format(risk.getUpdatedAt()));
                 riskVO.setDescription(risk.getDescription());
-                riskVO.setAuthor(risk.getAuthor().getAccount());
+                riskVO.setCreatedBy(risk.getAuthor().getAccount());
                 riskVO.setCreatedAt(fmt.format(risk.getCreatedAt()));
                 riskVO.setHandler(risk.getHandler().getAccount());
                 riskVO.setProject(risk.getProject().getName());

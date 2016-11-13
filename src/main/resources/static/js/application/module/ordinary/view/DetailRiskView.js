@@ -1,7 +1,8 @@
 define(["common/view/BaseView", "../model/DetailRiskModel", "text!../template/detailRisk.tpl", "text!../css/detailRisk.css", "common/util"],
     function (BaseView, DetailRiskModel, DetailRiskTpl, DetailRiskCss, Util) {
         var DetailRiskView = BaseView.extend({
-            initialize: function () {
+            initialize: function (Id) {
+                this.riskId = Id ;
                 DetailRiskView.__super__.initialize.call(this);
             },
             el: '#content',
@@ -9,8 +10,8 @@ define(["common/view/BaseView", "../model/DetailRiskModel", "text!../template/de
             model: new DetailRiskModel,
             tpl: DetailRiskTpl,
             css: DetailRiskCss,
-            projectId: '',
-            riskId: '',
+            projectId: '0',
+            riskId: ' ',
             events: {
                 "click button.ok": "ok",
                 "click button.cancel": "cancel",
@@ -18,20 +19,26 @@ define(["common/view/BaseView", "../model/DetailRiskModel", "text!../template/de
             render: function () {
                 DetailRiskView.__super__.render.call(this);
                 var that = this;
-                // $.ajax({
-                //     type: "POST",
-                //     url: "/user/getProjectCreate",
-                //     data: "sessionid=" + Util.getSessionId(),
-                //     // error: function () {
-                //     //     window.location.href = "#login";
-                //     // },
-                //     success: function (data) {
-                //         var obj =eval("("+data+")");
-                //         _.each(obj.data, function (value) {
-                //             that.model.add(new SearchProjectModel(value));
-                //         });
-                //     }
-                // });
+                $.ajax({
+                    type: "POST",
+                    url: "/risk/getRiskById",
+                    data: "riskId=" + this.riskId,
+                     error: function () {
+                         window.location.href = "#login";
+                     },
+                    success: function (data) {
+                        var obj =eval("("+data+")");
+
+                        alert(data);
+
+                        if(obj.isSuccess) {
+                            that.model.add(obj.data);
+                        }else{
+                            alert(obj.errMsg);
+                        }
+
+                    }
+                });
 
                 // this.model.add(new SearchProjectModel({
                 //     id: '编号1',

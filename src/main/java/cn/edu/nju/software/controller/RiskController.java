@@ -1,5 +1,6 @@
 package cn.edu.nju.software.controller;
 
+import cn.edu.nju.software.VO.RiskVO;
 import cn.edu.nju.software.entity.Project;
 import cn.edu.nju.software.entity.Risk;
 import cn.edu.nju.software.entity.User;
@@ -19,6 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -80,7 +83,7 @@ public class RiskController {
                              @RequestParam(value="influence", defaultValue="") String influence,
                              @RequestParam(value="trigger", defaultValue="") String trigger,
                              @RequestParam(value="description", defaultValue="") String description,
-                             @RequestParam(value="handlerId", defaultValue="") String handlerId,
+                             @RequestParam(value="handler", defaultValue="") String handlerId,
                              @RequestParam(value="projectId", defaultValue="") String projectId,
                              HttpSession httpSession) {
 
@@ -90,6 +93,16 @@ public class RiskController {
         try{
 
             ResultDTO<Risk> riskResultDTO = new ResultDTO<>();
+
+            ResultDTO<User> userResultDTO = new ResultDTO<>();
+
+            userResultDTO = userService.queryUserByName(handlerId);
+
+            if(!userResultDTO.isSuccess()){
+                jsonObject.put("isSuccess", false);
+                jsonObject.put("errMsg", "处理者信息错误");
+                return jsonObject.toJSONString();
+            }
 
             Risk risk = new Risk();
 
@@ -128,18 +141,8 @@ public class RiskController {
             risk.setProject(project);
 
             Long handlerIdLong  = null;
-            try {
-                handlerIdLong  = Long.parseLong(handlerId);
-            }catch (Exception e){
-                log.error("Exception in risk_create ",e);
-                jsonObject.put("isSuccess", false);
-                jsonObject.put("errMsg", "处理着信息错误");
-                return jsonObject.toJSONString();
-            }
 
-            User handler = new User();
-
-            handler.setId(handlerIdLong);
+            User handler = userResultDTO.getData();
 
             risk.setHandler(handler);
 
@@ -149,7 +152,7 @@ public class RiskController {
 
             risk.setDescription(description);
 
-            risk.setStatus(RiskStatus.TODO);
+            risk.setStatus(RiskStatus.DOING);
 
             risk.setUpdatedAt(new Date());
 
@@ -165,7 +168,7 @@ public class RiskController {
             }
 
             try{
-                setInfluence(risk,possibility);
+                setPossibility(risk,possibility);
             }catch (Exception e){
                 log.error("Exception in risk_create ",e);
                 jsonObject.put("isSuccess", false);
@@ -192,6 +195,57 @@ public class RiskController {
             return jsonObject.toJSONString();
         }
 
+    }
+
+    @RequestMapping("/getRiskById")
+    public String getRiskById( @RequestParam(value="riskId", defaultValue="") String riskId){
+        JSONObject jsonObject = new JSONObject();
+
+        try{
+            ResultDTO<Risk> queryRiskDTO = riskService.queryRiskById(riskId);
+
+            RiskVO  riskVO = new RiskVO();
+
+            if(!queryRiskDTO.isSuccess()){
+                if(queryRiskDTO.getErrorMsg() == null){
+                    jsonObject.put("isSuccess", false);
+                    jsonObject.put("errMsg", "risk不存在");
+                    return jsonObject.toJSONString();
+                }else{
+                    jsonObject.put("isSuccess", false);
+                    jsonObject.put("errMsg", "服务器异常");
+                    return jsonObject.toJSONString();
+                }
+            }
+
+            DateFormat fmt =new
+                    SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+            Risk risk = queryRiskDTO.getData();
+
+            riskVO.setId(risk.getId());
+            riskVO.setUpdatedAt(fmt.format(risk.getUpdatedAt()));
+            riskVO.setDescription(risk.getDescription());
+            riskVO.setCreatedBy(risk.getAuthor().getAccount());
+            riskVO.setCreatedAt(fmt.format(risk.getCreatedAt()));
+            riskVO.setHandler(risk.getHandler().getAccount());
+            riskVO.setProject(risk.getProject().getName());
+            riskVO.setTrigger(risk.getTrigger());
+            riskVO.setTitle(risk.getTitle());
+            riskVO.setInfluence(risk.getInfluence().getDescription());
+            riskVO.setPossibility(risk.getPossibility().getDescription());
+            riskVO.setStatus(risk.getStatus().getDescription());
+
+            jsonObject.put("data", riskVO);
+            jsonObject.put("isSuccess", true);
+            return jsonObject.toJSONString();
+
+        }catch (Exception e){
+            log.error("Exception in risk_getRiskById ",e);
+            jsonObject.put("isSuccess", false);
+            jsonObject.put("errMsg", "服务器异常");
+            return jsonObject.toJSONString();
+        }
     }
 
     //status不可认为改,是系统根据用户行为改的
@@ -259,7 +313,7 @@ public class RiskController {
             }
 
             try{
-                setInfluence(risk,possibility);
+                setPossibility(risk,possibility);
             }catch (Exception e){
                 log.error("Exception in risk_create ",e);
                 jsonObject.put("isSuccess", false);

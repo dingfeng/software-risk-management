@@ -4,7 +4,8 @@
 define(["common/view/BaseView", "../model/DetailProjectModel", "../model/DetailRiskModel", "../model/SearchRiskCollection", "text!../template/detailProject.tpl", "text!../css/detailProject.css", "common/util"],
     function (BaseView, DetailProjectModel, DetailRiskModel, SearchRiskCollection, DetailProjectTpl, DetailProjectCss, Util) {
         var DetailProjectView = BaseView.extend({
-            initialize: function () {
+            initialize: function (Id) {
+                this.projectId = Id;
                 this.model.get("riskList").on("add", this.setTpl, this);
                 DetailProjectView.__super__.initialize.call(this);
             },
@@ -13,7 +14,7 @@ define(["common/view/BaseView", "../model/DetailProjectModel", "../model/DetailR
             model: new DetailProjectModel,
             tpl: DetailProjectTpl,
             css: DetailProjectCss,
-            projectId: '',
+            projectId:'0',
             events: {
                 "click button.saveBtn": "saveBtn",
                 "click button.addPersonBtn": "addPersonBtn",
@@ -22,29 +23,34 @@ define(["common/view/BaseView", "../model/DetailProjectModel", "../model/DetailR
             render: function () {
                 DetailProjectView.__super__.render.call(this);
                 var that = this;
-                // $.ajax({
-                //     type: "POST",
-                //     url: "/user/getProjectCreate",
-                //     data: "projectId=" + this.projectId,
-                //     // error: function () {
-                //     //     window.location.href = "#login";
-                //     // },
-                //     success: function (data) {
-                //         var obj = eval("(" + data + ")");
-                //         that.model.set(obj.data);
-                //
-                //     }
-                // });
+                 $.ajax({
+                     type: "POST",
+                     url: "/project/detail",
+                     data: "projectId=" + this.projectId,
+                      error: function () {
+                          window.location.href = "#login";
+                      },
+                     success: function (data) {
+                         var obj = eval("(" + data + ")");
+                         that.model.set(obj.data);
 
-                this.model.set({
-                    id: '编号',
-                    name: '项目名',
-                    description: '描述',
-                    joinedNames: 'asd',
-                    createdBy: '创建人',
-                    createdAt: '创建时间',
-                    updatedAt: '编辑时间',
-                });
+                         alert(obj.data.riskVOs);
+
+                         _.each(obj.data.riskVOs, function (value) {
+                             that.model.get("riskList").add(value);
+                         });
+                     }
+                 });
+
+                // this.model.set({
+                //     id: '编号',
+                //     name: '项目名',
+                //     description: '描述',
+                //     joinedNames: 'asd',
+                //     createdBy: '创建人',
+                //     createdAt: '创建时间',
+                //     updatedAt: '编辑时间',
+                // });
                 this.model.get("riskList").add(new DetailRiskModel({
                     id: '编号',
                     title: '标题',
@@ -55,9 +61,11 @@ define(["common/view/BaseView", "../model/DetailProjectModel", "../model/DetailR
                     description: '文本描述',
                     author: '创建者',
                     handler: '处理者',
-                    project: '所属项目',
+                    project: '所属项目名',
+                    projectId: '所属项目id',
                     createdAt: '创建时间',
                     updatedAt: '编辑时间',
+
                 }));
             },
             saveBtn: function () {
@@ -68,14 +76,16 @@ define(["common/view/BaseView", "../model/DetailProjectModel", "../model/DetailR
                 this.model.set(data);
                 $.ajax({
                     type: "POST",
-                    url: "/project/createProject",
+                    url: "/project/updateProject",
                     data: _.pick(this.model.attributes, 'id', 'name', 'description'),
                     // async: false,
                     error: function () {
                         alert("服务器错误");
                     },
                     success: function (data) {
+
                         var obj = eval("(" + data + ")");
+
                         if (obj.isSuccess) {
                             alert("保存成功！");
                         } else {

@@ -41,7 +41,7 @@ public class ProjectController {
 
 
     @RequestMapping("/createProject")
-    public String createProject(@RequestParam(value="projectName", defaultValue="") String projectName , @RequestParam(value="description", defaultValue="") String description, HttpSession httpSession) {
+    public String createProject(@RequestParam(value="name", defaultValue="") String projectName , @RequestParam(value="description", defaultValue="") String description, HttpSession httpSession) {
 
         JSONObject jsonObject = new JSONObject();
 
@@ -88,18 +88,17 @@ public class ProjectController {
     }
 
     @RequestMapping("/updateProject")
-    public String updateProject(@RequestParam(value="projectName", defaultValue="") String projectName , @RequestParam(value="description", defaultValue="") String description , @RequestParam(value="projectId", defaultValue="") String projectId) {
+    public String updateProject(@RequestParam(value="name", defaultValue="") String projectName , @RequestParam(value="description", defaultValue="") String description , @RequestParam(value="id", defaultValue="") String projectId) {
 
         JSONObject jsonObject = new JSONObject();
 
         try{
-            String queryJsonString = queryProjectById(projectId);
 
-            JSONObject jsonObject1 = JSONObject.parseObject(queryJsonString);
+            ResultDTO<Project> queryJsonString = projectService.queryProjectById(projectId);
 
-            if(jsonObject1.get("isSuccess").equals(true) || jsonObject1.get("isSuccess").equals("true")){
+            if(queryJsonString.isSuccess()){
 
-                Project project = (Project)jsonObject1.get("data");
+                Project project = queryJsonString.getData();
 
                 project.setDescription(description);
 
@@ -120,7 +119,9 @@ public class ProjectController {
                 return jsonObject.toJSONString();
 
             }else{
-                return queryJsonString;
+                jsonObject.put("isSuccess", false);
+                jsonObject.put("errMsg", "服务器异常");
+                return jsonObject.toJSONString();
             }
 
 
@@ -135,13 +136,13 @@ public class ProjectController {
 
 
     @RequestMapping("/invite")
-    public String invite(@RequestParam(value="projectName", defaultValue="") String projectName , @RequestParam(value="userId", defaultValue="") String userId) {
+    public String invite(@RequestParam(value="projectId", defaultValue="") String projectId , @RequestParam(value="name", defaultValue="") String name) {
 
         JSONObject jsonObject = new JSONObject();
 
         try {
 
-            ResultDTO<Project> queryResultDTO = new ResultDTO<>();
+            ResultDTO<Project> queryResultDTO = projectService.queryProjectById(projectId);
 
             if(!queryResultDTO.isSuccess()){
                 if(queryResultDTO.getErrorMsg() == null ){
@@ -155,9 +156,17 @@ public class ProjectController {
                 }
             }
 
-            User user = new User();
 
-            user.setId(Long.parseLong(userId));
+
+            ResultDTO<User> userResultDTO = userService.queryUserByName(name);
+
+            if(!userResultDTO.isSuccess()){
+                jsonObject.put("isSuccess", false);
+                jsonObject.put("errMsg", "用户不存在");
+                return jsonObject.toJSONString();
+            }
+
+            User user = userResultDTO.getData();
 
             Project project = queryResultDTO.getData();
 
@@ -185,6 +194,14 @@ public class ProjectController {
             jsonObject.put("errMsg", "服务器异常");
             return jsonObject.toJSONString();
         }
+    }
+
+
+
+
+    @RequestMapping("/detail")
+    public String detail(@RequestParam(value="projectId", defaultValue="") String projectId){
+        return queryProjectById(projectId);
     }
 
     private String queryProjectById(String projectId ){
@@ -231,7 +248,7 @@ public class ProjectController {
                 riskVO.setId(risk.getId());
                 riskVO.setUpdatedAt(fmt.format(risk.getUpdatedAt()));
                 riskVO.setDescription(risk.getDescription());
-                riskVO.setAuthor(risk.getAuthor().getAccount());
+                riskVO.setCreatedBy(risk.getAuthor().getAccount());
                 riskVO.setCreatedAt(fmt.format(risk.getCreatedAt()));
                 riskVO.setHandler(risk.getHandler().getAccount());
                 riskVO.setProject(risk.getProject().getName());
@@ -245,12 +262,17 @@ public class ProjectController {
 
             projectVO.setRiskVOs(riskVOs);
 
-            List<String> joniners = new ArrayList<>();
+            StringBuffer joniners = new StringBuffer("");
             for(User user : project.getCollaborators()){
-                joniners.add(user.getAccount());
+                joniners.append(user.getAccount());
+                joniners.append(" , ");
             }
 
-            projectVO.setJoiners(joniners);
+            if(joniners.length()!=0) {
+                projectVO.setJoinedNames(joniners.toString().substring(0, joniners.length() - 1));
+            }else{
+                projectVO.setJoinedNames("暂无");
+            }
 
             jsonObject.put("isSuccess",true);
             jsonObject.put("data",projectVO);
