@@ -34,8 +34,6 @@ define(["common/view/BaseView", "../model/DetailProjectModel", "../model/DetailR
                          var obj = eval("(" + data + ")");
                          that.model.set(obj.data);
 
-                         alert(obj.data.riskVOs);
-
                          _.each(obj.data.riskVOs, function (value) {
                              that.model.get("riskList").add(value);
                          });
