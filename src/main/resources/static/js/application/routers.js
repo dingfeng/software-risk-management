@@ -170,19 +170,19 @@ define(["backbone",
                              id: '0',
                              name: '创建用户',
                              url: '#admin/add',
-                             active: false,
+                             active: true,
                 }));
                 mainView.asideView.model.add(new AsideModel({
                               id: '2',
                               name: '系统用户',
                               url: '#admin/searchUser',
-                              active: true,
+                              active: false,
                 }));
                 mainView.asideView.model.add(new AsideModel({
                               id: '1',
                               name: '软件项目',
                               url: '#admin/searchProject',
-                              active: true,
+                              active: false,
                 }));
                 mainView.contentView = new AdminAddUserView();
             },
@@ -226,7 +226,7 @@ define(["backbone",
                             id: '1',
                             name: '软件项目',
                             url: '#admin/searchProject',
-                            active: true,
+                            active: false,
                  }));
                  mainView.contentView = new AdminSearchUserView();
             },
@@ -247,7 +247,7 @@ define(["backbone",
                         id: '2',
                         name: '系统用户',
                         url: '#admin/searchUser',
-                        active: true,
+                        active: false,
                  }));
                   mainView.asideView.model.add(new AsideModel({
                        id: '1',
