@@ -23,7 +23,7 @@ define(["common/view/BaseView", "../model/SearchRiskCollection", "../model/Detai
                 var that = this;
                 $.ajax({
                     type: "POST",
-                    url: "/user/getRisksCreate",
+                    url: "/user/getRisksHandler",
                     data: "sessionid=" + Util.getSessionId(),
                     // error: function () {
                     //     window.location.href = "#login";

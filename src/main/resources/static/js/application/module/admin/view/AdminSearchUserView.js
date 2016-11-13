@@ -15,13 +15,7 @@ define(["common/view/BaseView", "../model/SearchUserCollection", "../model/Searc
             css: SearchUserCss,
             events: {
                 "click .item": "detail",
-                 "click .modify" : "modify",
                  "click .deleteUser" : "deleteUser"
-            },
-            modify : function (e)
-            {
-              console.log(e);
-              console.log("modify clicked");
             },
 
             deleteUser : function (e)
