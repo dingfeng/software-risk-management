@@ -36,6 +36,7 @@ define(["backbone",
                 "ordinary/searchRisk": "searchRisk",
                 "ordinary/searchProject": "searchProject",
                 "ordinary/detailProject/:id": "detailProject",
+                "ordinary/detailSingleRisk/:id": "detailSingleRisk",
                 "ordinary/detailProject/:projectId/addPerson": "projectAddPerson",
                 "ordinary/detailProject/:projectId/addRisk": "projectAddRisk",
                 "ordinary/detailProject/:projectId/detailRisk/:riskId": "detailRisk",
@@ -74,6 +75,13 @@ define(["backbone",
                         }
                     }
                 });
+            },
+
+            detailSingleRisk:function (riskId) {
+                var mainView = new MainView();
+                this.createOrdinaryAside(1, mainView.asideView.model);
+                mainView.contentView = new DetailRiskView(riskId);
+                mainView.contentView.riskId = riskId;
             },
 
             createOrdinaryAside: function (activeId, asideCollections) {

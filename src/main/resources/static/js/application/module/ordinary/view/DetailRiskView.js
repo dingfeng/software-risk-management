@@ -29,10 +29,8 @@ define(["common/view/BaseView", "../model/DetailRiskModel", "text!../template/de
                     success: function (data) {
                         var obj =eval("("+data+")");
 
-                        alert(data);
-
                         if(obj.isSuccess) {
-                            that.model.add(obj.data);
+                            that.model.set(obj.data);
                         }else{
                             alert(obj.errMsg);
                         }
@@ -53,11 +51,15 @@ define(["common/view/BaseView", "../model/DetailRiskModel", "text!../template/de
                 $("#detailRisk form").serializeArray().map(function (x) {
                     data[x.name] = x.value;
                 });
+
                 this.model.set(data);
+
+                data.riskId = this.riskId;
+
                 $.ajax({
                     type: "POST",
-                    url: "/project/createProject",
-                    data: this.model.attributes,
+                    url: "/risk/updateRisk",
+                    data: data,
                     // async: false,
                     error: function () {
                         alert("服务器错误");

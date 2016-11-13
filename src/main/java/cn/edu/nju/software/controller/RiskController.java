@@ -248,14 +248,10 @@ public class RiskController {
         }
     }
 
-    //status不可认为改,是系统根据用户行为改的
+
     @RequestMapping("/updateRisk")
     public String updateRisk(@RequestParam(value="status", defaultValue="") String status,
-                             @RequestParam(value="possibility", defaultValue="") String possibility,
-                             @RequestParam(value="influence", defaultValue="") String influence,
-                             @RequestParam(value="trigger", defaultValue="") String trigger,
                              @RequestParam(value="description", defaultValue="") String description,
-                             @RequestParam(value="handlerId", defaultValue="") String handlerId,
                              @RequestParam(value="riskId", defaultValue="") String riskId){
 
         JSONObject jsonObject = new JSONObject();
@@ -282,44 +278,19 @@ public class RiskController {
 
             Long handlerIdLong  = null;
 
-            try {
-                handlerIdLong  = Long.parseLong(handlerId);
-            }catch (Exception e){
-                log.error("Exception in risk_create ",e);
-                jsonObject.put("isSuccess", false);
-                jsonObject.put("errMsg", "处理着信息错误");
-                return jsonObject.toJSONString();
-            }
 
-            User handler = new User();
-
-            handler.setId(handlerIdLong);
-
-            risk.setHandler(handler);
-
-            risk.setTrigger(trigger);
 
             risk.setDescription(description);
 
             risk.setUpdatedAt(new Date());
 
-            try{
-                setInfluence(risk,influence);
-            }catch (Exception e){
-                log.error("Exception in risk_create ",e);
-                jsonObject.put("isSuccess", false);
-                jsonObject.put("errMsg", "非法的影响级别");
-                return jsonObject.toJSONString();
+
+            if("2".equals(status)){
+                risk.setStatus(RiskStatus.DONE);
+            }else{
+                risk.setStatus(RiskStatus.DOING);
             }
 
-            try{
-                setPossibility(risk,possibility);
-            }catch (Exception e){
-                log.error("Exception in risk_create ",e);
-                jsonObject.put("isSuccess", false);
-                jsonObject.put("errMsg", "非法的可能性");
-                return jsonObject.toJSONString();
-            }
 
             riskResultDTO = riskService.saveorUpdateRisk(risk);
 

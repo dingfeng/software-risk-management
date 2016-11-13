@@ -51,22 +51,22 @@ define(["common/view/BaseView", "../model/DetailProjectModel", "../model/DetailR
                 //     createdAt: '创建时间',
                 //     updatedAt: '编辑时间',
                 // });
-                this.model.get("riskList").add(new DetailRiskModel({
-                    id: '编号',
-                    title: '标题',
-                    possibility: '可能性',
-                    status: '状态',
-                    influence: '影响',
-                    trigger: '触发器',
-                    description: '文本描述',
-                    author: '创建者',
-                    handler: '处理者',
-                    project: '所属项目名',
-                    projectId: '所属项目id',
-                    createdAt: '创建时间',
-                    updatedAt: '编辑时间',
-
-                }));
+                // this.model.get("riskList").add(new DetailRiskModel({
+                //     id: '编号',
+                //     title: '标题',
+                //     possibility: '可能性',
+                //     status: '状态',
+                //     influence: '影响',
+                //     trigger: '触发器',
+                //     description: '文本描述',
+                //     author: '创建者',
+                //     handler: '处理者',
+                //     project: '所属项目名',
+                //     projectId: '所属项目id',
+                //     createdAt: '创建时间',
+                //     updatedAt: '编辑时间',
+                //
+                // }));
             },
             saveBtn: function () {
                 var data = {};

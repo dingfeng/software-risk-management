@@ -4,6 +4,7 @@ import cn.edu.nju.software.entity.User;
 import cn.edu.nju.software.enums.UserRole;
 import cn.edu.nju.software.service.UserService;
 import cn.edu.nju.software.util.ResultDTO;
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.base.Charsets;
 import com.google.common.hash.Hashing;
@@ -103,7 +104,10 @@ public class LoginController {
     @ResponseBody
     public String getUsername(HttpSession httpSession) {
        try{
-           return (String)httpSession.getAttribute("userName");
+           Map<String,String> map = new HashMap<>();
+           map.put("role",(String)httpSession.getAttribute("userRole"));
+           map.put("username",(String)httpSession.getAttribute("userName"));
+           return JSON.toJSONString(map);
        }catch (Exception e){
            log.error("exception in login_getUsername ",e);
            return "用户名异常";

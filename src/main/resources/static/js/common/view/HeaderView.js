@@ -28,8 +28,12 @@ define(["../util", "../view/BaseView", "../model/HeaderModel", "text!../template
                     },
                     success: function (data) {
                         if (data) {
+
+                            var obj = eval("(" + data + ")");
+
                             that.model.set({
-                                username: data,
+                                username: obj.username,
+                                role:obj.role,
                             });
                         } else {
                             window.location.href = "#login";

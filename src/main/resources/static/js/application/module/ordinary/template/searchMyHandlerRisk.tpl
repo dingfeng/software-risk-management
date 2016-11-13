@@ -24,12 +24,12 @@
             <td><%= item.influence %></td>
             <td><%= item.trigger %></td>
             <td><%= item.description %></td>
-            <td><%= item.author %></td>
+            <td><%= item.createdBy %></td>
             <td><%= item.handler %></td>
             <td><%= item.project %></td>
             <td><%= item.createdAt %></td>
             <td><%= item.updatedAt %></td>
-             <td><a href="#ordinary/detailProject/0/detailRisk/<%= item.id %>">详情</a></td>
+            <td><a href ="#ordinary/detailSingleRisk/<%= item.id %>" >详情</a></td>
         </tr>
         <% }); %>
     </table>
